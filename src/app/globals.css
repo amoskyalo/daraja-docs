@@ -1,0 +1,84 @@
+/* @import "tailwindcss"; */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+button,
+a,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.shadow-3xl {
+  box-shadow: 
+    0 35px 60px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.hover\:shadow-3xl:hover {
+  box-shadow: 
+    0 45px 80px -12px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+    
+.MuiListItemButton-gutters {
+    padding: 0px 1px !important;
+    height: 36px;
+    margin: 2px 0px;
+}
+
+.quill {
+  overflow: hidden !important;
+  height: 300px !important;
+  max-height: 300px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  transition: border-color 0.1s ease-in-out;
+}
+
+.quill:focus-within {
+  border: 1.7px solid #039fe0 !important;
+}
+
+.ql-toolbar.ql-snow {
+  border-top-right-radius: 4px !important;
+  border-top-left-radius: 4px !important;
+  border-color: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+  transition: border-color 0.1s ease-in-out;
+}
+
+.quill:focus-within .ql-toolbar.ql-snow {
+  border-bottom: 1.7px solid #039fe0 !important;
+}
+
+.ql-container.ql-snow {
+  border-bottom-right-radius: 4px !important;
+  border-bottom-left-radius: 4px !important;
+  overflow: auto !important;
+  flex: 1 !important;
+  border-color: transparent !important;
+}
+
+.ql-formats * {
+  color: #039fe0 !important;
+}
+
+.ql-stroke, .ql-fill {
+  stroke: #039fe0 !important;
+}
+  
+
+.ql-blank {
+  color: #039fe0 !important;
+}

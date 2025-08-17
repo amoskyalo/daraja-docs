@@ -1,0 +1,19 @@
+set -e
+
+echo "Updating Algolia docs..."
+if ! curl --silent --fail --request POST http://localhost:3000/api/index-docs; then
+  echo "Error: Failed to update Algolia docs. Please check if the dev server is running and try again."
+  exit 1
+fi
+
+echo "Running lint..."
+if ! pnpm lint; then
+  echo "Error: Linting failed. Please fix the issues above."
+  exit 1
+fi
+
+#echo "Running build..."
+#if ! pnpm build; then
+#  echo "Error: Build failed. Please fix the issues above."
+#  exit 1
+#fi

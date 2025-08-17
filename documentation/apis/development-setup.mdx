@@ -1,0 +1,111 @@
+# Development Setup
+
+This guide covers everything you need to set up your development environment for M-Pesa API integration.
+
+## Testing on localhost
+
+To test on localhost, an HTTP tunneling client will be required to the HTTP listener on your local host to make the services running there accessible over the internet.
+
+### Recommended Tunneling Solutions
+
+<Highlight>Ngrok</Highlight> and <Highlight>LocalTunnel</Highlight> are examples of HTTP tunneling clients that you
+could use to get a public IP and make your local host accessible over the internet.
+
+<Terminal title="Ngrok Setup:">
+{`# Install ngrok
+npm install -g ngrok
+
+# Expose local port 3000
+
+ngrok http 3000`}
+
+</Terminal>
+
+<Terminal title="LocalTunnel Setup:">
+{`# Install localtunnel
+npm install -g localtunnel
+
+# Expose local port 3000
+
+lt --port 3000`}
+
+</Terminal>
+
+<Note type="warning">
+    <NoteInfo>Always use HTTPS URLs from these tunneling services for production-like testing, as M-Pesa APIs require secure connections.</NoteInfo>
+</Note>
+
+## Creating a HTTP Server Listener
+
+M-Pesa APIs are asynchronous and require proper HTTP listeners to handle responses and callbacks.
+
+### How M-Pesa APIs Work
+
+- **Asynchronous Processing:** When a valid M-Pesa API request is received by the API Gateway, it is sent to M-Pesa where it is added to a queue.
+
+- **Response Forwarding:** M-Pesa then processes the requests in the queue and sends a response to the API Gateway which then forwards the response to the URL registered in the <Highlight>CallBackURL</Highlight> or <Highlight>ResultURL</Highlight> request parameter.
+
+- **Queue Management:** Whenever M-Pesa receives more requests than the queue can handle, M-Pesa responds by rejecting any more requests and the API Gateway sends a queue timeout response to the URL registered in the <Highlight>QueueTimeOutURL</Highlight> request parameter.
+
+### HTTP Listener Requirements
+
+To receive responses, either M-Pesa results or queue timeouts, an HTTP listener will be needed. The listener should be deployed to a server that can receive traffic over the internet.
+
+**Key Requirements:**
+
+- Deploy to a publicly accessible server
+- Use HTTP tunneling clients (Ngrok/LocalTunnel) for local development
+- Implement POST methods for receiving responses
+- Handle both success responses and timeout scenarios
+
+### Sample Implementation
+
+Sample HTTP listeners are provided in multiple programming languages:
+
+- Python
+- NodeJS
+- PHP
+- Java
+
+<Note type="error">
+    <NoteInfo>The API Gateway does not cache responses from M-Pesa. If the server running the HTTP listener is unavailable or inaccessible, the API Gateway will log a 503 error and discard the M-Pesa results.</NoteInfo>
+</Note>
+
+### HTTP Methods Configuration
+
+The HTTP listener should deploy <Highlight>POST methods</Highlight> for:
+
+- Receiving M-Pesa responses on <Highlight>CallBackURL</Highlight> or <Highlight>ResultURL</Highlight>
+- Receiving queue timeouts on <Highlight>QueueTimeOutURL</Highlight>
+
+## SSL Certificates
+
+Safaricom offers SSL Certificates that provide robust server authentication, data encryption and server security to ensure website security and protection against cyber threats.
+
+### Why SSL Certificates Matter
+
+- **Security:** Encrypt data transmission between your server and M-Pesa APIs
+- **Authentication:** Verify the identity of your server
+- **Trust:** Build customer confidence with secure connections
+- **Compliance:** Meet security requirements for financial transactions
+
+### Getting SSL Certificates
+
+For production deployments, consider getting SSL certificates to ensure secure communication with M-Pesa APIs. [Learn more about Safaricom SSL Certificates](https://safaricom.co.ke/business/enterprise/connectivity/ssl-certificates)
+
+<Note type="tip">
+    <NoteInfo>For development and testing, tunneling services like Ngrok provide HTTPS endpoints automatically, but you'll need proper SSL certificates for production environments.</NoteInfo>
+</Note>
+
+## Next Steps
+
+Once your development environment is set up:
+
+1. **Test your HTTP listeners** with sample requests
+2. **Verify callback URL accessibility** using tunneling tools
+3. **Review SSL certificate requirements** for your production environment
+4. **Move to Going Live section** when ready for production deployment
+
+<Note type="info">
+    <NoteInfo>Sample JSON responses for callback URLs and queue timeout URLs are provided in the 'Json Response' tab for each API endpoint in our documentation.</NoteInfo>
+</Note>

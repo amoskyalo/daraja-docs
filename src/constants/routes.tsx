@@ -58,7 +58,7 @@ const NAVIGATION: Navigation = [
         title: 'Blogs',
     },
     {
-        segment: 'resources/github',
+        segment: 'resources/community-projects',
         title: 'Community Projects',
     },
 ];

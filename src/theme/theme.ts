@@ -173,9 +173,9 @@ export const darkTheme = createTheme({
         },
         MuiTypography: {
             styleOverrides: {
-                root: {
-                    opacity: 0.8,
-                },
+                // root: {
+                //     opacity: 0.8,
+                // },
             },
         },
     },

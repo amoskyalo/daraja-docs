@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'Sasapay Developers Portal',
+    title: 'Daraja',
     description: '',
 };
 

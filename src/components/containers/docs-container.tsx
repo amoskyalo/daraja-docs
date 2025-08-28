@@ -1,26 +1,60 @@
 'use client';
 
-import { Grid } from '@mui/material';
-
+import { Grid, Breadcrumbs, Link as MUILink, Typography } from '@mui/material';
 import { useResponsiveness } from '@/hooks/useResponsiveness';
+import { useRouter } from 'next/navigation';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { apiList } from '@/constants/api-list';
 
 export default function DocsContainer({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <Grid
             id="docs-container"
             container
-            sx={{ height: '100%', overflowY: 'auto', position: 'relative', overflowX: 'hidden' }}
+            sx={{
+                height: '100%',
+                position: 'relative',
+                flex: 1,
+            }}
         >
             {children}
         </Grid>
     );
 }
 
-export const MainPanel = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+export const MainPanel = ({ children, slug }: Readonly<{ children: React.ReactNode; slug?: string }>) => {
     const { isMobile } = useResponsiveness();
+    const router = useRouter();
+    const doc = apiList.find((item: any) => item.slug === slug);
+    const breadcrumbs = [
+        <MUILink
+            underline="hover"
+            key="1"
+            color="inherit"
+            href="/apis"
+            onClick={(e) => {
+                e.preventDefault();
+                router.push('/apis');
+            }}
+        >
+            APIs
+        </MUILink>,
+        <Typography key="2" sx={{ color: 'text.primary', textTransform: 'capitalize' }}>
+            {doc?.title}
+        </Typography>,
+    ];
 
     return (
-        <Grid size={isMobile ? 12 : 9} sx={{ pl: 4, py: 2, pr: 16 }}>
+        <Grid size={isMobile ? 12 : 9} sx={{ pb: 4, pr: 10 }}>
+            {slug && (
+                <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="small" />}
+                    aria-label="breadcrumb"
+                    sx={{ pt: 2, pb: 2 }}
+                >
+                    {breadcrumbs}
+                </Breadcrumbs>
+            )}
             {children}
         </Grid>
     );
@@ -33,12 +67,13 @@ export const SidebarPanel = ({ children }: Readonly<{ children: React.ReactNode 
         <Grid
             size={isMobile ? 0 : 3}
             sx={{
-                p: 2,
-                height: '100%',
+                py: 2,
+                px: 2,
                 overflowY: 'auto',
                 position: 'sticky',
-                top: 0,
+                top: '66px',
                 display: isMobile ? 'none' : 'block',
+                height: 'calc(100vh - 66px)',
             }}
         >
             {children}

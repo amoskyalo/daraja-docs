@@ -21,7 +21,7 @@ const CommunityProjectsPage: React.FC = () => {
         { label: 'Kotlin', value: 'kotlin' },
         { label: 'Java', value: 'java' },
         { label: 'Dart', value: 'dart' },
-        { label: 'Go', value: 'go' }
+        { label: 'Go', value: 'go' },
     ];
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, newPage: number): void => {
@@ -36,14 +36,6 @@ const CommunityProjectsPage: React.FC = () => {
 
     const totalPages: number = data?.total_count ? Math.ceil(data.total_count / perPage) : 0;
 
-    if (isLoading) {
-        return (
-            <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-                <CircularProgress />
-            </Box>
-        );
-    }
-
     if (error) {
         return (
             <Box sx={{ p: 3 }}>
@@ -55,7 +47,7 @@ const CommunityProjectsPage: React.FC = () => {
     }
 
     return (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 3, pr: 6 }}>
             <Box>
                 <Typography variant="h5" fontWeight={600}>
                     Community Projects
@@ -73,7 +65,7 @@ const CommunityProjectsPage: React.FC = () => {
                 </Typography>
             </Box>
 
-            <Box sx={{ mt: 4, mb: 2 }}>
+            <Box sx={{ mt: 2, py: 2, position: 'sticky', top: 0, backdropFilter: 'blur(10px)', zIndex: 1 }}>
                 <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
                     {languages.map((language) => (
                         <Chip
@@ -87,73 +79,68 @@ const CommunityProjectsPage: React.FC = () => {
                 </Stack>
             </Box>
 
-            <Box sx={{ position: 'relative', mt: 2 }}>
-                {isFetching && (
+            <Box sx={{ position: 'relative' }}>
+                {isLoading || isFetching ? (
                     <Box
                         sx={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            backgroundColor: 'rgba(255, 255, 255, 0.7)',
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            zIndex: 1,
-                            borderRadius: 2,
+                            height: 300,
                         }}
                     >
                         <CircularProgress size={40} />
                     </Box>
-                )}
-
-                <Grid container spacing={3} sx={{ mt: 1 }}>
-                    {data?.items?.map((project: GitHubRepository) => (
-                        <Grid
-                            key={project.id}
-                            size={{ xs: 12, sm: 6, md: 4 }}
-                            sx={{ border: 2, borderColor: 'divider', borderRadius: 3, p: 2 }}
-                        >
-                            <Stack spacing={1} direction="row" alignItems="center">
-                                <Avatar src={project.owner.avatar_url} sx={{ height: 22, width: 22 }} />
-                                <Typography variant="h6">
-                                    <Link
-                                        href={project.html_url}
-                                        target="_blank"
+                ) : (
+                    <Grid container spacing={3} sx={{ mt: 1 }}>
+                        {!isFetching &&
+                            !isLoading &&
+                            data?.items?.map((project: GitHubRepository) => (
+                                <Grid
+                                    key={project.id}
+                                    size={{ xs: 12, sm: 6, md: 4 }}
+                                    sx={{ border: 2, borderColor: 'divider', borderRadius: 3, p: 2 }}
+                                >
+                                    <Stack spacing={1} direction="row" alignItems="center">
+                                        <Avatar src={project.owner.avatar_url} sx={{ height: 22, width: 22 }} />
+                                        <Typography variant="h6">
+                                            <Link
+                                                href={project.html_url}
+                                                target="_blank"
+                                                sx={{
+                                                    display: '-webkit-box',
+                                                    WebkitLineClamp: 1,
+                                                    WebkitBoxOrient: 'vertical',
+                                                    overflow: 'hidden',
+                                                    fontSize: 16,
+                                                }}
+                                            >
+                                                {project.owner.login}/{project.name}
+                                            </Link>
+                                        </Typography>
+                                    </Stack>
+                                    <Typography
+                                        variant="body2"
                                         sx={{
+                                            mt: 1,
                                             display: '-webkit-box',
-                                            WebkitLineClamp: 1,
+                                            WebkitLineClamp: 2,
                                             WebkitBoxOrient: 'vertical',
                                             overflow: 'hidden',
-                                            fontSize: 16,
                                         }}
                                     >
-                                        {project.owner.login}/{project.name}
-                                    </Link>
-                                </Typography>
-                            </Stack>
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    mt: 1,
-                                    display: '-webkit-box',
-                                    WebkitLineClamp: 2,
-                                    WebkitBoxOrient: 'vertical',
-                                    overflow: 'hidden',
-                                }}
-                            >
-                                {project.description}
-                            </Typography>
-                            <Stack sx={{ mt: 2 }} direction="row" spacing={0.5} alignItems="center">
-                                <StarIcon color="action" fontSize="inherit" />
-                                <Typography variant="caption" color="text.secondary">
-                                    {project.stargazers_count} GitHub stars
-                                </Typography>
-                            </Stack>
-                        </Grid>
-                    ))}
-                </Grid>
+                                        {project.description}
+                                    </Typography>
+                                    <Stack sx={{ mt: 2 }} direction="row" spacing={0.5} alignItems="center">
+                                        <StarIcon color="action" fontSize="inherit" />
+                                        <Typography variant="caption" color="text.secondary">
+                                            {project.stargazers_count} GitHub stars
+                                        </Typography>
+                                    </Stack>
+                                </Grid>
+                            ))}
+                    </Grid>
+                )}
             </Box>
 
             {totalPages > 1 && (

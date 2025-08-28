@@ -1,0 +1,46 @@
+# Authorization
+
+Gives you a time bound access token to call allowed APIs.
+
+**Endpoint:** https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials
+
+<Playground 
+    method = "GET"
+    endpoint = "oauth/v1/generate"
+    requestParameters={[
+        { name: 'Authorization', type: 'text', label: 'Authorization', headerKey: 'Authorization' },
+        { name: 'grant_type', type: 'text', label: 'Grant type', queryKey: 'grant_type', value: 'client_credentials' },
+    ]}
+>
+
+This API generates the tokens for authenticating your API calls. This is the first API you will engage with within the set of APIs available because all the other APIs require authentication information from this API to work.
+
+The test is automated so that you can easily generate access tokens via the simulator section of this API, just select the app you are testing, and the keys will auto-populate and then simulate the request. You will have your token that expires in 3600 seconds.
+
+You can also get the postman collection then access your Consumer Key and Consumer Secret under the Keys tab from My apps on Daraja, and paste them on username and password respectively.
+
+#### Request Parameters
+
+| Field      | Type  | Description                                                            | Example            |
+| ---------- | ----- | ---------------------------------------------------------------------- | ------------------ |
+| grant_type | Query | the client_credentials grant type is supported. Put this under Params. | client_credentials |
+
+#### Response Parameters
+
+| Field        | Type               | Description                       | Example                      |
+| ------------ | ------------------ | --------------------------------- | ---------------------------- |
+| access_token | JSON Response Item | Access token to access other APIs | c9SQxWWhmdVRlyh0zh8gZDTkubVF |
+| expires_in   | JSON Response Item | Token expiry time in seconds      | 3599                         |
+
+### Example Response
+
+<CodeExample title="Response Sample">
+```json
+{
+    "access_token": "c9SQxWWhmdVRlyh0zh8gZDTkubVF",
+    "expires_in": "3599"
+}
+```
+</CodeExample>
+
+</Playground>

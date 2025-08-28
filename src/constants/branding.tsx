@@ -4,7 +4,7 @@ import { Stack, Box } from '@mui/material';
 const branding = {
     component: ({ isMobile }: { isMobile: boolean }) => ({
         logo: (
-            <Box component="div" sx={{ ml: -1 }}>
+            <Box component="div">
                 <Stack direction="row" alignItems="center" sx={{ height: '100%', paddingTop: 0.5 }}>
                     <Image
                         src="/images/logo.png"

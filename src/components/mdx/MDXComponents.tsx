@@ -14,15 +14,17 @@ import {
     Link,
     Tab,
     Tabs,
-    IconButton,
+    useTheme,
+    Stack,
+    Tooltip,
 } from '@mui/material';
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import theme from '@/theme/theme';
 import { CodeContainer } from '@/components/containers/code-container';
+import { Playground } from '../containers/playground';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 type MDXElementProps = {
     children?: ReactNode;
@@ -48,17 +50,13 @@ interface CodeExampleProps {
     title?: string;
 }
 
-interface ParametersProps {
-    children?: ReactNode;
+interface LinkProps {
+    href: string;
+    method: string;
 }
 
 interface NoteProps {
-    type?: 'error' | 'info' | 'success' | 'warning';
-    children?: ReactNode;
-}
-
-interface TerminalProps {
-    title?: string;
+    type?: 'error' | 'info' | 'success' | 'warning' | 'alert' | 'tip';
     children?: ReactNode;
 }
 
@@ -72,6 +70,7 @@ export const MDXComponents = {
                 fontWeight: 'bold',
                 color: 'text.primary',
                 fontSize: '2rem',
+                opacity: 0.9,
             }}
             {...props}
         />
@@ -84,9 +83,10 @@ export const MDXComponents = {
             gutterBottom
             sx={{
                 fontWeight: 600,
-                // my: 2,
+                my: 2,
                 color: 'text.primary',
-                fontSize: '1.4rem',
+                fontSize: '1.5rem',
+                opacity: 0.9,
             }}
             {...props}
         />
@@ -99,9 +99,9 @@ export const MDXComponents = {
             gutterBottom
             sx={{
                 fontWeight: 600,
-                // my: 2,
+                my: 2,
                 color: 'text.primary',
-                // fontSize: '1.5rem',
+                opacity: 0.9,
             }}
             {...props}
         />
@@ -115,8 +115,9 @@ export const MDXComponents = {
             sx={{
                 fontWeight: 600,
                 fontSize: '1.1rem',
-                // my: 2,
+                my: 2,
                 color: 'text.primary',
+                opacity: 0.9,
             }}
             {...props}
         />
@@ -126,11 +127,11 @@ export const MDXComponents = {
         <Typography
             variant="body1"
             sx={{
-                lineHeight: 1.7,
-                mb: 2,
-                '& .body2': {
-                    border: '1px solid red',
-                },
+                lineHeight: '1.85rem',
+                fontSize: '1rem',
+                my: 2,
+                color: 'text.primary',
+                opacity: 0.8,
             }}
             {...props}
         />
@@ -142,7 +143,11 @@ export const MDXComponents = {
             sx={{
                 color: 'primary.main',
                 textDecoration: 'none',
-                '&:hover': { textDecoration: 'underline' },
+                fontWeight: 500,
+                '&:hover': {
+                    textDecoration: 'underline',
+                    color: 'primary.dark',
+                },
             }}
         />
     ),
@@ -156,7 +161,7 @@ export const MDXComponents = {
                 border: 0,
                 height: '1px',
                 backgroundColor: 'divider',
-                mb: 4,
+                my: 4,
             }}
         />
     ),
@@ -165,7 +170,9 @@ export const MDXComponents = {
         <Box component="strong" sx={{ fontWeight: 'bold', color: 'text.primary' }} {...props} />
     ),
 
-    em: (props: MDXElementProps) => <Box component="em" sx={{ fontStyle: 'italic', fontWeight: 'bold' }} {...props} />,
+    em: (props: MDXElementProps) => (
+        <Box component="em" sx={{ fontStyle: 'italic', fontWeight: 'bold', color: 'text.primary' }} {...props} />
+    ),
 
     Highlight: (props: MDXElementProps) => (
         <Typography
@@ -174,6 +181,7 @@ export const MDXComponents = {
             sx={{
                 fontWeight: 'bold',
                 color: 'primary.main',
+                opacity: 0.8,
             }}
             {...props}
         />
@@ -190,10 +198,11 @@ export const MDXComponents = {
                 paddingY: 0.3,
                 paddingX: 0.5,
                 maxHeight: 400,
+                color: 'text.primary',
                 ...(props.className?.includes('language-') && {
                     display: 'block',
-                    backgroundColor: '#1e1e1e',
-                    color: '#d4d4d4',
+                    backgroundColor: 'background.paper',
+                    color: 'text.primary',
                     paddingX: 2,
                     borderRadius: 2,
                     overflow: 'auto',
@@ -212,10 +221,12 @@ export const MDXComponents = {
                 borderTopRightRadius: 0,
                 overflow: 'auto',
                 padding: '0px !important',
+                backgroundColor: 'background.paper',
                 '& code': {
                     backgroundColor: 'transparent !important',
                     padding: '16px !important',
                     display: 'block',
+                    color: 'text.primary',
                 },
             }}
             {...props}
@@ -224,8 +235,17 @@ export const MDXComponents = {
 
     table: (props: MDXElementProps) => (
         <TableContainer
-            component={Paper}
-            sx={{ mb: 3, mt: 2, width: 'max-content', maxWidth: '100%', borderRadius: 2 }}
+            component={Box}
+            sx={{
+                mb: 3,
+                mt: 2,
+                width: 'max-content',
+                maxWidth: '100%',
+                '& .MuiTable-root': {
+                    borderCollapse: 'separate',
+                    borderSpacing: 0,
+                },
+            }}
         >
             <Table {...props} />
         </TableContainer>
@@ -234,15 +254,39 @@ export const MDXComponents = {
     thead: (props: MDXElementProps) => <TableHead {...props} />,
     tbody: (props: MDXElementProps) => <TableBody {...props} />,
     tr: (props: MDXElementProps) => <TableRow {...props} />,
-    td: (props: MDXElementProps) => <TableCell {...props} sx={{ border: 1, borderColor: 'divider' }} />,
+
+    td: (props: MDXElementProps) => (
+        <TableCell
+            {...props}
+            sx={{
+                border: 'none',
+                borderBottom: 1,
+                borderColor: 'divider',
+                color: 'text.primary',
+                backgroundColor: 'transparent',
+                padding: '12px 16px',
+                textAlign: 'left',
+                verticalAlign: 'top',
+                'tr:last-child &': {
+                    borderBottom: 'none',
+                },
+            }}
+        />
+    ),
+
     th: (props: MDXElementProps) => (
         <TableCell
             component="th"
             sx={{
                 fontWeight: 'bold',
-                backgroundColor: 'action.hover',
-                border: 1,
+                backgroundColor: 'transparent',
+                border: 'none',
+                borderBottom: 1,
                 borderColor: 'divider',
+                color: 'text.primary',
+                padding: '12px 16px',
+                textAlign: 'left',
+                verticalAlign: 'top',
             }}
             {...props}
         />
@@ -290,6 +334,31 @@ export const MDXComponents = {
         />
     ),
 
+    Link: (props: LinkProps) => (
+        <Stack
+            direction="row"
+            alignItems="center"
+            sx={{ border: 1, borderColor: 'divider', borderRadius: 1, px: 1, py: 0.5, mb: 2, width: 'max-content' }}
+        >
+            <Typography variant="body2" color="primary.main" sx={{ mr: 1, fontWeight: 'bold', fontSize: 14 }}>
+                {props.method} :
+            </Typography>
+            <Link
+                sx={{ fontSize: 14 }}
+                underline="none"
+                href={props.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="text.primary"
+            >
+                {props.href}
+            </Link>
+            <Tooltip title="Copy">
+                <ContentCopyIcon sx={{ fontSize: 14, ml: 1, cursor: 'pointer' }} />
+            </Tooltip>
+        </Stack>
+    ),
+
     ApiEndpoint: ({ method, endpoint, description }: ApiEndpointProps) => (
         <Paper elevation={0}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -324,16 +393,18 @@ export const MDXComponents = {
                     {endpoint}
                 </Typography>
             </Box>
-            <Typography variant="body2" color="text.secondary">
-                {description}
-            </Typography>
+            {description && (
+                <Typography variant="body2" color="text.secondary">
+                    {description}
+                </Typography>
+            )}
         </Paper>
     ),
 
     ResponseExample: ({ children }: ResponseExampleProps) => (
         <Box sx={{ mb: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                <Typography variant="body1" sx={{ mr: 2 }}>
+                <Typography variant="body1" sx={{ mr: 2, color: 'text.primary' }}>
                     Response Sample
                 </Typography>
             </Box>
@@ -387,6 +458,12 @@ export const MDXComponents = {
                     sx={{
                         borderBottom: 1,
                         borderColor: 'divider',
+                        '& .MuiTab-root': {
+                            color: 'text.secondary',
+                            '&.Mui-selected': {
+                                color: 'primary.main',
+                            },
+                        },
                     }}
                 >
                     {codeBlocks.map((block, index) => (
@@ -408,18 +485,22 @@ export const MDXComponents = {
         );
     },
 
-    Parameters: ({ children }: ParametersProps) => (
-        <Box sx={{ mb: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                Parameters
-            </Typography>
-            {children}
-        </Box>
+    Playground: ({ children, ...props }: any) => <Playground {...props}>{children}</Playground>,
+
+    
+    NoteInfo: (props: MDXElementProps) => (
+        <Typography
+            variant="body2"
+            sx={{
+                color: 'text.secondary',
+            }}
+            {...props}
+        />
     ),
 
-    NoteInfo: (props: MDXElementProps) => <Typography variant="body2" {...props} />,
-
     Note: ({ type = 'info', children }: NoteProps) => {
+        const theme = useTheme();
+
         const noteConfig = {
             info: {
                 icon: InfoOutlineIcon,
@@ -431,10 +512,20 @@ export const MDXComponents = {
                 title: 'Warning',
                 color: 'warning' as const,
             },
+            error: {
+                icon: ReportGmailerrorredIcon,
+                title: 'Error',
+                color: 'error' as const,
+            },
             alert: {
                 icon: ReportGmailerrorredIcon,
                 title: 'Caution',
                 color: 'error' as const,
+            },
+            success: {
+                icon: LightbulbOutlinedIcon,
+                title: 'Success',
+                color: 'success' as const,
             },
             tip: {
                 icon: LightbulbOutlinedIcon,
@@ -443,7 +534,7 @@ export const MDXComponents = {
             },
         };
 
-        const config = noteConfig[type as keyof typeof noteConfig] || noteConfig.info;
+        const config = noteConfig[type] || noteConfig.info;
 
         return (
             <Box
@@ -455,16 +546,17 @@ export const MDXComponents = {
                     paddingX: 2,
                     paddingY: 0.5,
                     maxWidth: '100%',
+                    backgroundColor: `${theme.palette[config.color].main}08`,
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                    {<config.icon color={config.color} fontSize="small" sx={{ mr: 1 }} />}
+                <Box sx={{ display: 'flex', alignItems: 'center', pt: 2 }}>
+                    <config.icon color={config.color} fontSize="small" sx={{ mr: 1 }} />
                     <Typography
-                        variant="subtitle2"
+                        variant="body1"
                         sx={{
                             fontWeight: 600,
-                            color: config.color,
-                            fontSize: '14px',
+                            color: `${config.color}.main`,
+                            fontSize: '16px',
                         }}
                     >
                         {config.title}
@@ -472,198 +564,6 @@ export const MDXComponents = {
                 </Box>
 
                 {children}
-            </Box>
-        );
-    },
-
-    Terminal: ({ title, children }: TerminalProps) => {
-        const [copied, setCopied] = useState(false);
-
-        const handleCopy = async () => {
-            const textContent = extractTextFromChildren(children);
-            if (textContent) {
-                try {
-                    await navigator.clipboard.writeText(textContent);
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                } catch (err) {
-                    console.error('Failed to copy text: ', err);
-                }
-            }
-        };
-
-        const extractTextFromChildren = (children: ReactNode): string => {
-            if (typeof children === 'string') return children;
-            if (Array.isArray(children)) {
-                return children.map(extractTextFromChildren).join('');
-            }
-            return '';
-        };
-
-        const highlightTerminalContent = (content: string) => {
-            const lines = content.split('\n');
-            return lines.map((line, index) => {
-                const trimmedLine = line.trim();
-
-                if (trimmedLine.startsWith('#')) {
-                    return (
-                        <Box key={index} sx={{ color: '#6a9955' }}>
-                            {line}
-                        </Box>
-                    );
-                }
-
-                if (line.includes('npm install')) {
-                    const parts = line.split(/(\s+)/);
-                    return (
-                        <Box key={index}>
-                            {parts.map((part, partIndex) => {
-                                if (part === 'npm' || part === 'install') {
-                                    return (
-                                        <span key={partIndex} style={{ color: '#f97316' }}>
-                                            {part}
-                                        </span>
-                                    );
-                                } else if (part === '-g') {
-                                    return (
-                                        <span key={partIndex} style={{ color: '#569cd6' }}>
-                                            {part}
-                                        </span>
-                                    );
-                                }
-                                return <span key={partIndex}>{part}</span>;
-                            })}
-                        </Box>
-                    );
-                }
-
-                if (trimmedLine.includes('ngrok') || trimmedLine.includes('lt ')) {
-                    const parts = line.split(/(\s+)/);
-                    return (
-                        <Box key={index}>
-                            {parts.map((part, partIndex) => {
-                                if (part === 'ngrok' || part === 'lt' || part === 'http' || part.startsWith('--')) {
-                                    return (
-                                        <span key={partIndex} style={{ color: '#f97316' }}>
-                                            {part}
-                                        </span>
-                                    );
-                                } else if (!isNaN(Number(part))) {
-                                    return (
-                                        <span key={partIndex} style={{ color: '#b5cea8' }}>
-                                            {part}
-                                        </span>
-                                    );
-                                }
-                                return <span key={partIndex}>{part}</span>;
-                            })}
-                        </Box>
-                    );
-                }
-
-                if (line.includes('npx ')) {
-                    const parts = line.split(/(\s+)/);
-                    return (
-                        <Box key={index}>
-                            {parts.map((part, partIndex) => {
-                                if (part === 'npx') {
-                                    return (
-                                        <span key={partIndex} style={{ color: '#9cdcfe' }}>
-                                            {part}
-                                        </span>
-                                    );
-                                } else if (part.includes('create-next-app')) {
-                                    return (
-                                        <span key={partIndex} style={{ color: '#4ec9b0' }}>
-                                            {part}
-                                        </span>
-                                    );
-                                }
-                                return <span key={partIndex}>{part}</span>;
-                            })}
-                        </Box>
-                    );
-                }
-
-                return <Box key={index}>{line}</Box>;
-            });
-        };
-
-        const content = extractTextFromChildren(children);
-
-        return (
-            <Box sx={{ mb: 3, mt: 2 }}>
-                {title && (
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            mb: 1,
-                            fontWeight: 600,
-                            color: 'text.primary',
-                        }}
-                    >
-                        {title}
-                    </Typography>
-                )}
-                <Paper
-                    sx={{
-                        backgroundColor: '#1a1a1a',
-                        color: '#ffffff',
-                        borderRadius: 2,
-                        overflow: 'hidden',
-                        position: 'relative',
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            pl: 2,
-                            pr: 1,
-                            py: 1,
-                            backgroundColor: '#2a2a2a',
-                            borderBottom: '1px solid #404040',
-                        }}
-                    >
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    color: '#cccccc',
-                                    fontSize: '0.875rem',
-                                    fontFamily: 'monospace',
-                                }}
-                            >
-                                &gt;_ Terminal
-                            </Typography>
-                        </Box>
-                        <IconButton
-                            onClick={handleCopy}
-                            sx={{
-                                color: copied ? '#4caf50' : '#cccccc',
-                                '&:hover': {
-                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                                },
-                            }}
-                        >
-                            <ContentCopyIcon sx={{ fontSize: 16 }} />
-                        </IconButton>
-                    </Box>
-
-                    <Box
-                        sx={{
-                            p: 2,
-                            fontFamily: 'monospace',
-                            fontSize: '0.875rem',
-                            lineHeight: 1.6,
-                        }}
-                    >
-                        <Box component="pre" sx={{ margin: 0, whiteSpace: 'pre-wrap' }}>
-                            {highlightTerminalContent(content)}
-                        </Box>
-                    </Box>
-                </Paper>
             </Box>
         );
     },

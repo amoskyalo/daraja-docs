@@ -16,9 +16,9 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL(`/${route_name}?tab=${initial_tab}`, request.url));
     }
 
-    if (isProtected_route > -1 && !token) {
-        return NextResponse.redirect(new URL('/auth/login', request.url));
-    }
+    // if (isProtected_route > -1 && !token) {
+    //     return NextResponse.redirect(new URL('/auth/login', request.url));
+    // }
 
     if (requested_route === '/dashboard/applications' && !page_active_tab) {
         return appendTab('dashboard/applications', 'sandbox');

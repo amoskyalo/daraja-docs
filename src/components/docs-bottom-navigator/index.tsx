@@ -23,13 +23,16 @@ const DocsBottomNavigator = ({ prevDoc, nextDoc }: any) => {
                     py: 4,
                 }}
             >
-                {[prevDoc, nextDoc].map(
-                    (doc, index) =>
-                        doc && (
+                {[prevDoc, nextDoc].map((doc, index) => (
+                    <Box key={index}>
+                        {doc && (
                             <Box
                                 key={index}
                                 sx={{ cursor: 'pointer', opacity: 0.8, '&:hover': { opacity: 1 } }}
-                                onClick={() => router.push(doc?.segment?.split('/').slice(1).join('/'))}
+                                onClick={() => {
+                                    const url = doc.slug ?? doc.segment?.split('/').slice(1).join('/');
+                                    router.push(url);
+                                }}
                             >
                                 <Typography variant="body2">{index === 0 ? 'Previous' : 'Next'}</Typography>
                                 <Stack sx={{ mt: 0.5 }} direction="row" alignItems="center" spacing={0.5}>
@@ -40,12 +43,13 @@ const DocsBottomNavigator = ({ prevDoc, nextDoc }: any) => {
                                     {index === 1 && <ArrowForwardIosIcon sx={{ fontSize: 16 }} />}
                                 </Stack>
                             </Box>
-                        ),
-                )}
+                        )}
+                    </Box>
+                ))}
             </Stack>
 
             <Stack direction="row" alignItems="center" justifyContent="center">
-                <Paper sx={{ border: 1, borderColor: 'divider', py: 1, borderRadius: 50, px: 2 }}>
+                <Paper sx={{ border: 1, borderColor: 'divider', py: 1, borderRadius: 50, pl: 2, pr: 1 }}>
                     <Stack direction="row" alignItems="center" spacing={0.5}>
                         <Typography variant="body2">Was this helpful?</Typography>
                         <Stack direction="row" alignItems="center">

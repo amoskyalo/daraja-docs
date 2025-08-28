@@ -8,6 +8,8 @@ So you have tested the APIs on sandbox and enjoyed the Simulator or Used Postman
 
 Going live has never been easy: Let's go through our checklist.
 
+---
+
 ### Requirements
 
 1. **M-PESA Account:** You have been issued with an M-PESA account, this is collection (PayBill or Till Number) or disbursement (B2C) account
@@ -22,9 +24,13 @@ Then you're ready to go live. Follow the simple steps on the Go Live page and yo
     <NoteInfo>If you have a PayBill/Till Number or B2C account with no admin, then reach out to the M-PESA Business onboarding team for creation of Admin role on the email: **m-pesabusiness[a]safaricom.co.ke**</NoteInfo>
 </Note>
 
+---
+
 ## M-Pesa API Certificates
 
 Security is paramount when handling financial transactions. M-Pesa API certificates are essential for encrypting security credentials.
+
+---
 
 ### Certificate Overview
 
@@ -37,6 +43,8 @@ The following are the M-Pesa API Certificates that you need for encryption of se
 - <Highlight>Transaction Status Query API</Highlight>
 - <Highlight>Reversal API</Highlight>
 
+---
+
 ### Download Certificates
 
 <ApiEndpoint method="GET" endpoint="Download Sandbox Certificate" description="For development and testing purposes" />
@@ -47,9 +55,11 @@ The following are the M-Pesa API Certificates that you need for encryption of se
 
 [Click to download M-Pesa public key certificate (Production)](https://developer.safaricom.co.ke/docs-assets/ProductionCertificate.cer)
 
-<Note type="warning">
+<Note type="info">
     <NoteInfo>These are **not** certificates to be installed for accessing the M-PESA Organization portal. These are specifically for API security credential encryption. Portal certificates are generated and installed differently.</NoteInfo>
 </Note>
+
+---
 
 ## How to Generate Security Credentials
 
@@ -93,9 +103,10 @@ cert_data = cert_file.read()
     # Base64 encode
     security_credential = base64.b64encode(encrypted).decode('utf-8')
     return security_credential
-
 ```
 </CodeExample>
+
+---
 
 ## Callback and IP Whitelisting
 
@@ -125,6 +136,8 @@ The IPs you should expect to receive callback from are as below and partners are
 - `196.201.212.69`
 
 <Note type="info"><NoteInfo>Whitelisting these IPs ensures that you only receive and process API notifications that are from the Safaricom API Gateway</NoteInfo></Note>
+
+---
 
 ## Production Deployment Checklist
 

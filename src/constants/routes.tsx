@@ -9,25 +9,25 @@ const NAVIGATION: Navigation = [
     {
         segment: 'dashboard/my-apps',
         title: 'My Apps',
-        icon: <AppWindow size={22} />,
+        icon: <AppWindow size={20} />,
     },
     {
-        segment: 'dashboard/apis',
+        segment: 'apis',
         title: 'APIs',
-        pattern: 'dashboard/apis{/:name}*',
-        icon: <Webhook size={24} />,
+        pattern: 'apis{/:name}*',
+        icon: <Webhook size={20} />,
     },
     {
         segment: 'dashboard/mini-apps',
         title: 'Mini Apps',
         pattern: 'dashboard/mini-apps',
-        icon: <Codesandbox size={22} />,
+        icon: <Codesandbox size={20} />,
     },
     {
         segment: 'dashboard/self-service',
         title: 'Self Service',
         pattern: 'dashboard/self-service',
-        icon: <MessageCircleQuestionMark size={22} />,
+        icon: <MessageCircleQuestionMark size={20} />,
     },
     {
         kind: 'header',

@@ -1,0 +1,69 @@
+# Dynamic QR
+
+Generates a dynamic M-PESA QR Code.
+
+**Endpoint:** https://sandbox.safaricom.co.ke/mpesa/qrcode/v1/generate
+
+<Playground 
+    method = "POST"
+    endpoint = "mpesa/qrcode/v1/generate"
+    requestParameters={[
+        { name: 'MerchantName', type: 'text', label: 'MerchantName', bodyKey: 'MerchantName', value: 'TEST_SUPERMARKET' },
+        { name: 'RefNo', type: 'text', label: 'RefNo', bodyKey: 'RefNo', value: 'Invoice Test' },
+        { name: 'Amount', type: 'number', label: 'Amount', bodyKey: 'Amount', value: '1' },
+        { name: 'TrxCode', type: 'text', label: 'TrxCode', bodyKey: 'TrxCode', value: 'BG' },
+        { name: 'CPI', type: 'text', label: 'CPI', bodyKey: 'CPI', value: '373132' },
+        { name: 'Size', type: 'text', label: 'Size', bodyKey: 'Size', value: '300' },
+    ]}
+>
+
+Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have My Safaricom App or M-PESA app, to scan a QR (Quick Response) code, to capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.
+
+#### Request Body
+
+<CodeExample title="Request Body">
+```json
+{
+  "MerchantName":"TEST_SUPERMARKET",
+  "RefNo":"Invoice Test",
+  "Amount":1,
+  "TrxCode":"BG",
+  "CPI":"373132",
+  "Size":"300"
+}
+```
+</CodeExample>
+
+#### Request Parameter Definition
+
+| Name         | Description                                                                                                                                                                                                                                             | Type    | Sample Values            |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------------ |
+| MerchantName | Name of the Company/M-Pesa Merchant Name                                                                                                                                                                                                                | String  | "TEST-Supermarket"       |
+| RefNo        | Transaction Reference                                                                                                                                                                                                                                   | String  | "xewr34fer4t"            |
+| Amount       | The total amount for the sale/transaction.                                                                                                                                                                                                              | Numeric | 2000                     |
+| TrxCode      | Transaction Type. The supported types are: **BG**: Pay Merchant (Buy Goods). **WA**: Withdraw Cash at Agent Till. **PB**: Paybill or Business number. **SM**: Send Money(Mobile number) **SB**: Sent to Business. Business number CPI in MSISDN format. | String  | - BG - WA - PB - SM - SB |
+| CPI          | Credit Party Identifier. Can be a Mobile Number, Business Number, Agent Till, Paybill or Business number, or Merchant Buy Goods.                                                                                                                        | String  | "174379"                 |
+| Size         | Size of the QR code image in pixels. QR code image will always be a square image.                                                                                                                                                                       | String  | "300"                    |
+
+#### Response Body
+
+<CodeExample title="Response Body">
+```json
+{
+    "ResponseCode": "AG_20191219_000043fdf61864fe9ff5",
+    "RequestID": "16738-27456357-1",
+    "ResponseDescription": "QR Code Successfully Generated.",
+    "QRCode": "iVBORw0KGgoAAAANSUhEUgAAASgAAAEsCAIAAAD2HxkiAAAhEElEQVR42U3d23rqIBAG4H/+pbhNv91C1srMxF17LIgdwtlVvxJ7AZwEON9hf34wjPoQjhXOHDLsi11TmkQsPMHhhCQTfu7MZYFMGf05mQAD6EX0wGUcjhKhCo7CJI3od0Rxqxr7HCuGf7oxB2A1jAmJ5ABPTEQ7iCpJJTSyKr1vfyQ2YvwWAhjGOEAgImCtOJ+AqIIGrAu+c45CgG7Ccc62/BtkRKttZE+JtMrnflvAZFQOQj/XiShpGMEtEf2XoZm6i7AhTa88EYgSZEqPEQJFnJo3fmBZAgGJFGJYt7M7O1j9eP6wlJvKkDNiRGRUG89QZQTcJgKQNAAAAJRUErKjggg=="
+}
+```
+</CodeExample>
+
+#### Response Parameter Definition
+
+| Name                | Description                                                  | Type   | Sample Values                                       |
+| ------------------- | ------------------------------------------------------------ | ------ | --------------------------------------------------- |
+| ResponseCode        | Used to return the Transaction Type.                         | String | An alpha-numeric string of fewer than 20 characters |
+| ResponseDescription | This is a response describing the status of the transaction. | String | QR Code Successfully Generated                      |
+| QRCode              | QR Code Image/Data/String.                                   | String | An alpha-numeric string containing the QR Code      |
+
+</Playground>

@@ -1,22 +1,35 @@
 'use client';
 
 import React from 'react';
-import { Stack, Typography, Box, Grid, Button } from '@mui/material';
+import { Stack, Typography, Box, Grid, Button, Chip } from '@mui/material';
 import { ChevronRight } from 'lucide-react';
 import { apiList } from '@/constants/api-list';
+import { useRouter } from 'next/navigation';
+
+const sections = ['All', 'Security', 'Payments', 'Disbursement', 'Experience'];
 
 const APIs = () => {
+    const router = useRouter();
+    const [selectedSection, setSelectedSection] = React.useState<string>(sections[0]);
+
+    const handleSectionChange = (section: string) => {
+        setSelectedSection(section);
+    };
     return (
-        <Stack spacing={3} sx={{ p: 2 }}>
-            <Box>
-                <Typography variant="h6" fontWeight={600}>
-                    SasaPay APIs
-                </Typography>
-                <Typography variant="body2" sx={{ maxWidth: '100ch', mt: 1 }}>
-                    SasaPay API provides a whole host of products that can facilitate you to improve your business
-                    processes and gain a better competitive edge. We expose endpoints for C2B, B2C, B2B, Utilities and
-                    Wallet as a Service(WAAS).
-                </Typography>
+        <Stack spacing={1} sx={{ pl: 3, pr: 6, pb: 3, pt: 1 }}>
+            <Box sx={{ py: 2, position: 'sticky', top: 0, backdropFilter: 'blur(10px)', zIndex: 1 }}>
+                <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
+                    {sections.map((section) => (
+                        <Chip
+                            key={section}
+                            label={section}
+                            onClick={() => handleSectionChange(section)}
+                            variant={selectedSection === section ? 'filled' : 'outlined'}
+                            color={selectedSection === section ? 'primary' : 'default'}
+                            sx={{ paddingX: 1 }}
+                        />
+                    ))}
+                </Stack>
             </Box>
 
             <Grid container spacing={2}>
@@ -35,6 +48,7 @@ const APIs = () => {
                                 variant="outlined"
                                 size="small"
                                 sx={{ mt: 2, textTransform: 'none', borderRadius: 25, paddingRight: 0.5 }}
+                                onClick={() => router.push(`/apis/documentation/${api.slug}`)}
                             >
                                 Explore
                                 <ChevronRight size={16} />

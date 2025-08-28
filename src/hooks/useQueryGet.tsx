@@ -20,10 +20,10 @@ export const useQueryGet = <TData, TParams>(args: GetParams<TData, TParams>) => 
                     snackbarToast.error('No internet connection.');
                 }
 
-                if (error.status === 401) {
-                    snackbarToast.error('Unauthorized');
-                    window.location.replace('/auth/login');
-                }
+                // if (error.status === 401) {
+                //     snackbarToast.error('Unauthorized');
+                //     window.location.replace('/auth/login');
+                // }
             }
         },
         ...options,

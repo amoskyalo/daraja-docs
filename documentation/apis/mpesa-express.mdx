@@ -1,0 +1,182 @@
+# M-Pesa Express Simulate
+
+Initiates online payment on behalf of a customer.
+
+<Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest" />
+
+<Playground 
+    method = "POST"
+    endpoint = "mpesa/stkpush/v1/processrequest"
+    requestParameters={[
+        { name: 'BusinessShortCode', type: 'text', label: 'BusinessShortCode', bodyKey: 'BusinessShortCode', value: '174379' },
+        { name: 'Password', type: 'text', label: 'Password', bodyKey: 'Password', value: 'MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNzY2YTAyODBkMTRhNzY3ODE0NDYzZDE4ZGQzZGI4ODBjDZIjdMD5YjEwZjc4E4ZTZiNzJhZGE' },
+        { name: 'Timestamp', type: 'text', label: 'Timestamp', bodyKey: 'Timestamp', value: '20160216165627' },
+        { name: 'TransactionType', type: 'text', label: 'TransactionType', bodyKey: 'TransactionType', value: 'CustomerPayBillOnline' },
+        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '1' },
+        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '254708374149' },
+        { name: 'PartyB', type: 'text', label: 'PartyB', bodyKey: 'PartyB', value: '174379' },
+        { name: 'PhoneNumber', type: 'text', label: 'PhoneNumber', bodyKey: 'PhoneNumber', value: '254708374149' },
+        { name: 'CallBackURL', type: 'text', label: 'CallBackURL', bodyKey: 'CallBackURL', value: 'https://mydomain.com/path' },
+        { name: 'AccountReference', type: 'text', label: 'AccountReference', bodyKey: 'AccountReference', value: 'Test' },
+        { name: 'TransactionDesc', type: 'text', label: 'TransactionDesc', bodyKey: 'TransactionDesc', value: 'Test' },
+    ]}
+>
+
+Lipa na M-PESA online API also known as M-PESA express (STK Push/NI push) is a Merchant/Business initiated C2B (Customer to Business) Payment.
+
+Once you, our merchant integrate with the API, you will be able to send a payment prompt on the customer's phone (Popularly known as STK Push Prompt) to your customer's M-PESA registered phone number requesting them to enter their M-PESA pin to authorize and complete payment.
+
+This eliminates the challenge of having to remember business pay bill numbers and account numbers and allows customers to confirm the transaction by entering their M-PESA PIN on their mobile phones. For the business, this API enables them to preset all the correct info in the payment request and reduce the chances of wrong payments being performed to their systems. It is a C2B transaction, but the initiator is the organization instead of the customer. Since the organization has the option of presetting all required variables in the request before sending the request, this API has no Validation-Confirmation process like C2B API.
+
+STK push simply means sim tool kit initiated push, this has now evolved to NI push (network initiated push).
+
+**The Lipa na M-PESA online API process is explained below:**
+
+1. The Merchant(Partner) captures and sets the API required parameters and sends the API request.
+2. The API receives the request and validates it internally first, then sends you an acknowledgment response.
+3. Through API Proxy an STK Push trigger request is sent to the M-PESA registered phone number of the customer's making the payment.
+4. The customer confirms by entering their M-PESA PIN.
+5. The response is sent back to M-PESA and is processed as below:
+    - M-PESA validates the customer's PIN
+    - M-PESA debits the customer's Mobile Wallet.
+    - M-PESA credits the Merchant (Partner) account.
+6. Once the request is processed send the RESULTS back to the API Management system which is then forwarded to the merchant via the callback URL specified in the REQUEST.
+7. The customer receives an SMS confirmation message of the payment.
+
+Now let's dive into the request;
+
+You will first generate an access token to allow you to make the API call. See how to generate an access token here Authorization API link. We've also automated this on the simulate request section.
+
+#### Request Body
+
+<CodeExample title="Request Body">
+```json
+{
+  "BusinessShortCode": "174379",
+  "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNzY2YTAyODBkMTRhNzY3ODE0NDYzZDE4ZGQzZGI4MGNDZIjdMD5YjEwZjc4E4ZTZiNzJhZGE",
+  "Timestamp": "20160216165627",
+  "TransactionType": "CustomerPayBillOnline",
+  "Amount": "1",
+  "PartyA": "254708374149",
+  "PartyB": "174379",
+  "PhoneNumber": "254708374149",
+  "CallBackURL": "https://mydomain.com/path",
+  "AccountReference": "Test",
+  "TransactionDesc": "Test"
+}
+```
+</CodeExample>
+
+#### Request Parameter Description
+
+| Name              | Description                                                                                                                                                                                                                                                                                                  | Parameter Type | Sample Values                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------- | --------------------------------------------------------------------------------------- |
+| BusinessShortCode | This is the organization's shortcode (Paybill or Buygoods - A 5 to 6-digit account number) used to identify an organization and receive the transaction.                                                                                                                                                     | Numeric        | Shortcode (5 to 6 digits) e.g. 654321                                                   |
+| Password          | This is the password used for encrypting the request sent: A base64 encoded string. (The base64 string is a combination of Shortcode+Passkey+Timestamp)                                                                                                                                                      | String         | base64.encode(Shortcode+Passkey+Timestamp)                                              |
+| Timestamp         | This is the Timestamp of the transaction, normally in the format of YEAR+MONTH+DATE+HOUR+MINUTE+SECOND (YYYYMMDDHHMMSS) Each part should be at least two digits apart from the year which takes four digits.                                                                                                 | Timestamp      | YYYYMMDDHHmmss                                                                          |
+| TransactionType   | This is the transaction type that is used to identify the transaction when sending the request to M-PESA. The transaction type for M-PESA Express is "CustomerPayBillOnline" for PayBill Numbers and "CustomerBuyGoodsOnline" for Till Numbers.                                                              | String         | CustomerPayBillOnline CustomerBuyGoodsOnline                                            |
+| Amount            | This is the Amount transacted normally a numeric value. Money that the customer pays to the Shortcode. Only whole numbers are supported.                                                                                                                                                                     | Numeric        | 10                                                                                      |
+| PartyA            | The phone number sending money. The parameter expected is a Valid Safaricom Mobile Number that is M-PESA registered in the format 2547XXXXXXXX                                                                                                                                                               | Numeric        | MSISDN (12 digits Mobile Number) e.g. 2547XXXXXXXX                                      |
+| PartyB            | The organization that receives the funds. The parameter expected is a 5 to 6-digit as defined in the Shortcode description above. This can be the same as the BusinessShortCode value above.                                                                                                                 | Numeric        | Shortcode (6 digits)                                                                    |
+| PhoneNumber       | The Mobile Number to receive the STK Pin Prompt. This number can be the same as PartyA value above.                                                                                                                                                                                                          | Numeric        | MSISDN (12 digits Mobile Number) e.g. 2547XXXXXXXX                                      |
+| CallBackURL       | A CallBack URL is a valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API.                                                                                                                                              | URL            | https://ip or domain:port/path e.g: https://mydomain.com/path https://0.0.0.0:9090/path |
+| AccountReference  | Account Reference: This is an Alpha-Numeric parameter that is defined by your system as an Identifier of the transaction for the CustomerPayBillOnline transaction type. Along with the business name, this value is also displayed to the customer in the STK Pin Prompt message. Maximum of 12 characters. | Alpha-Numeric  | Any combination of letters and numbers                                                  |
+| TransactionDesc   | This is any additional information/comment that can be sent along with the request from your system. Maximum of 13 Characters.                                                                                                                                                                               | String         | Any string between 1 and 13 characters.                                                 |
+
+#### Response Body
+
+<CodeExample title="Response Body">
+```json
+{
+    "MerchantRequestID": "29115-34620561-1",
+    "CheckoutRequestID": "ws_CO_191220191020363925",
+    "ResponseCode": "0",
+    "ResponseDescription": "Success. Request accepted for processing",
+    "CustomerMessage": "Success. Request accepted for processing"
+}
+```
+</CodeExample>
+
+#### Response Parameter Description
+
+| Name                | Description                                                                                                                                                                                                                       | Type    | Sample Values                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
+| MerchantRequestID   | This is a global unique Identifier for any submitted payment request.                                                                                                                                                             | String  | 16813-1590513-1                                                                                             |
+| CheckoutRequestID   | This is a global unique identifier of the processed checkout transaction request.                                                                                                                                                 | String  | ws_CO_DMZ_12321_23423476                                                                                    |
+| ResponseDescription | Response description is an acknowledgment message from the API that gives the status of the request submission. It usually maps to a specific ResponseCode value. It can be a Success submission message or an error description. | String  | -The service request has failed -The service request has been accepted successfully. - Invalid Access Token |
+| ResponseCode        | This is a Numeric status code that indicates the status of the transaction submission. 0 means successful submission and any other code means an error occurred.                                                                  | Numeric | 0 or 404.001.03                                                                                             |
+| CustomerMessage     | This is a message that your system can display to the customer as an acknowledgment of the payment request submission.                                                                                                            | String  | E.g.: Success. Request accepted for processing.                                                             |
+
+#### Result Body
+
+<CodeExample title="Result Body">
+```json
+{
+  "Body": {
+    "stkCallback": {
+      "MerchantRequestID": "29115-34620561-1",
+      "CheckoutRequestID": "ws_CO_191220191020363925",
+      "ResultCode": 0,
+      "ResultDesc": "The service request is processed successfully.",
+      "CallbackMetadata": {
+        "Item": [{
+          "Name": "Amount",
+          "Value": 1.00
+        },
+        {
+          "Name": "MpesaReceiptNumber",
+          "Value": "NLJ7RT61SV"
+        },
+        {
+          "Name": "TransactionDate",
+          "Value": 20191219102115
+        },
+        {
+          "Name": "PhoneNumber",
+          "Value": 254708374149
+        }]
+      }
+    }
+  }
+}
+```
+</CodeExample>
+
+#### Results Parameter Description
+
+| Name               | Description                                                                                                                                                                                                               | Type        | Sample Values                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| Body               | This is the root key for the entire Callback message.                                                                                                                                                                     | JSON Object | `{"Body":{} }`                                                                            |
+| stkCallback        | This is the first child of the Body.                                                                                                                                                                                      | JSON Object |                                                                                           |
+| MerchantRequestID  | This is a global unique Identifier for any submitted payment request. This is the same value returned in the acknowledgment message of the initial request.                                                               | String      | 29115-34620561-1                                                                          |
+| CheckoutRequestID  | This is a globally unique identifier of the processed checkout transaction request. This is the same value returned in the acknowledgment message of the initial request.                                                 | String      | ws_CO_191220191020363925                                                                  |
+| ResultCode         | This is a numeric status code that indicates the status of the transaction processing. 0 means successful processing and any other code means an error occurred or the transaction failed.                                | Numeric     | 0 1032                                                                                    |
+| ResultDesc         | The result description is a message from the API that gives the status of the request processing. It usually maps to a specific ResultCode value. It can be a Success processing message or an error description message. | String      | E.g: 0: The service request is processed successfully. 1032: Request canceled by the user |
+| CallbackMetadata   | This is the JSON object that holds more details for the transaction. It is only returned for successful transactions.                                                                                                     | JSON Object |                                                                                           |
+| Item               | This is a JSON Array, within the CallbackMetadata, that holds additional transaction details in JSON objects. Since this array is returned under the CallbackMetadata, it is only returned for successful transactions.   | JSON Array  |                                                                                           |
+| Amount             | This is the Amount that was transacted                                                                                                                                                                                    | Decimal     | 10500.5                                                                                   |
+| MpesaReceiptNumber | This is the unique M-PESA transaction ID for the payment request. The same value is sent to the customer by SMS upon successful processing.                                                                               | String      | LHG31AA5TX                                                                                |
+| Balance            | This is the Balance of the account for the shortcode used as partyB.                                                                                                                                                      | Decimal     | 32009.9                                                                                   |
+| TransactionDate    | This is a timestamp that represents the date and time that the transaction was completed in the format YYYYMMDDHHmmss                                                                                                     | TimeStamp   | 20170827163400                                                                            |
+| PhoneNumber        | This is the number of the customer who made the payment.                                                                                                                                                                  | PhoneNumber | 0722000000                                                                                |
+
+#### Unsuccessful results body structure
+
+Whenever you receive an error in your callback URL, the unsuccessful transaction will have a body results as below and, the error details will be captured under the Items ResultCode and ResultDesc; You can view a list of possible Lipa na M-PESA online errors on the errors tab.
+
+<CodeExample title="Unsuccessful Result Body">
+```json
+{
+  "Body": {
+    "stkCallback": {
+      "MerchantRequestID": "29115-34620561-1",
+      "CheckoutRequestID": "ws_CO_191220191020363925",
+      "ResultCode": 1032,
+      "ResultDesc": "Request canceled by user."
+    }
+  }
+}
+```
+</CodeExample>
+
+</Playground>

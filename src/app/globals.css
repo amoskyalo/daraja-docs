@@ -51,29 +51,23 @@ body {
 }
 
 .MuiContainer-root {
-  max-width: 100% !important;
+  max-width: clamp(320px, 90vw, 1400px) !important;
 }
 
 @media (min-width: 600px) {
   .MuiContainer-root {
-    max-width: 600px !important;
-  }
-}
-
-@media (min-width: 900px) {
-  .MuiContainer-root {
-    max-width: 900px !important;
+    max-width: clamp(600px, 85vw, 1000px) !important;
   }
 }
 
 @media (min-width: 1200px) {
   .MuiContainer-root {
-    max-width: 1000px !important;
+    max-width: clamp(900px, 90vw, 1400px) !important;
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 2560px) {
   .MuiContainer-root {
-    max-width: 1300px !important;
+    max-width: clamp(1200px, 60vw, 1600px) !important;
   }
 }

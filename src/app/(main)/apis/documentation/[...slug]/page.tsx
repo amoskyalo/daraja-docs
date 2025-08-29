@@ -1,6 +1,6 @@
 import { getDocumentationBySlug } from '@/lib/mdx';
 import { MDXRenderer } from '@/components/mdx/MDXRenderer';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import DocsBottomNavigator from '@/components/docs-bottom-navigator';
 import DocsContainer, { MainPanel, SidebarPanel } from '@/components/containers/docs-container';
 import TableOfContents from '@/components/table-of-contents';
@@ -18,15 +18,15 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
 
     if (!doc) {
         return (
-            <Container maxWidth="lg" sx={{ py: 4 }}>
-                <Box sx={{ textAlign: 'center' }}>
-                    <Typography variant="h4" color="error">
-                        Page not found
+            <Container maxWidth="lg">
+                <Stack direction="column" alignItems="center" justifyContent="center" sx={{ height: '100%' }}>
+                    <Typography variant="h4" sx={{fontWeight: 'bold'}}>
+                       404
                     </Typography>
-                    <Typography variant="body1" sx={{ mt: 2 }}>
-                        The documentation file could not be found.
+                    <Typography variant="body1">
+                        The documentation file could not be found, or it may have been moved.
                     </Typography>
-                </Box>
+                </Stack>
             </Container>
         );
     }

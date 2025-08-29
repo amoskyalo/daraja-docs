@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Stack, Typography, Box, Grid, Button, Chip } from '@mui/material';
-import { ChevronRight } from 'lucide-react';
+import { Stack, Typography, Box, Grid, Chip } from '@mui/material';
 import { apiList } from '@/constants/api-list';
 import { useRouter } from 'next/navigation';
 
@@ -43,16 +42,14 @@ const APIs = () => {
                                 {api.description}
                             </Typography>
 
-                            <Button
-                                disableElevation
+                            <Chip
                                 variant="outlined"
-                                size="small"
                                 sx={{ mt: 2, textTransform: 'none', borderRadius: 25, paddingRight: 0.5 }}
                                 onClick={() => router.push(`/apis/documentation/${api.slug}`)}
-                            >
-                                Explore
-                                <ChevronRight size={16} />
-                            </Button>
+                                label="Explore"
+                                color='primary'
+                            />
+                          
                         </Box>
                     </Grid>
                 ))}

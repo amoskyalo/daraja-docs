@@ -52,7 +52,8 @@ export default function AppThemeProvider({ children }: Readonly<ThemeProviderPro
         return null;
     }
 
-    const theme = isDark ? darkTheme : lightTheme;
+    //const theme = isDark ? darkTheme : lightTheme;
+    const theme = darkTheme;
 
     return (
         <ThemeContext.Provider value={{ isDark, toggleTheme }}>

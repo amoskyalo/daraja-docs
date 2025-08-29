@@ -1,7 +1,7 @@
 import { Stack, Typography, ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
 import NAVIGATION from '@/constants/routes';
 
-const drawerWidth = 300;
+const drawerWidth = 275;
 
 const LeftNav = () => {
     return (

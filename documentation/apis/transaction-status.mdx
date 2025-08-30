@@ -1,0 +1,178 @@
+# Transaction Status
+
+Check the status of a transaction
+
+<Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query" />
+
+<Playground 
+    method = "POST"
+    endpoint = "mpesa/transactionstatus/v1/query"
+    requestParameters={[
+        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'testapiuser' },
+        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'ClONZlMYBpc65lmpJ7nvnrDMu0MVHvA5qDQs0PjEO928B1GFwDdde1IFL0KgwsEKMU6SQKG4ZZUxjC' },
+        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'TransactionStatusQuery' },
+        { name: 'TransactionID', type: 'text', label: 'TransactionID', bodyKey: 'TransactionID', value: 'NEF61H8J60' },
+        { name: 'OriginatorConversationID', type: 'text', label: 'OriginatorConversationID', bodyKey: 'OriginatorConversationID', value: 'AG_20190826_0000777ab7d848b9e721' },
+        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '600782' },
+        { name: 'IdentifierType', type: 'text', label: 'IdentifierType', bodyKey: 'IdentifierType', value: '4' },
+        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'http://myservice:3080/transactionstatus/result' },
+        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'http://myservice:3080/timeout' },
+        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'OK' },
+        { name: 'Occasion', type: 'text', label: 'Occasion', bodyKey: 'Occasion', value: 'OK' },
+    ]}
+>
+
+Check the status of a transaction.
+
+#### Request Body
+
+<CodeExample title="Request Body">
+```json
+{
+  "Initiator": "testapiuser",
+  "SecurityCredential": "ClONZlMYBpc65lmpJ7nvnrDMu0MVHvA5qDQs0PjEO928B1GFwDdde1IFL0KgwsEKMU6SQKG4ZZUxjC",
+  "CommandID": "TransactionStatusQuery",
+  "TransactionID": "NEF61H8J60",
+  "OriginatorConversationID": "AG_20190826_0000777ab7d848b9e721",
+  "PartyA": "600782",
+  "IdentifierType": "4",
+  "ResultURL": "http://myservice:3080/transactionstatus/result",
+  "QueueTimeOutURL": "http://myservice:3080/timeout",
+  "Remarks": "OK",
+  "Occasion": "OK"
+}
+```
+</CodeExample>
+
+#### Request Parameter Definition
+
+| Name | Description | Type | Sample Values |
+|------|-------------|------|---------------|
+| CommandID | Takes only the 'TransactionStatusQuery' Command ID. | String | TransactionStatusQuery |
+| PartyA | Organization/MSISDN receiving the transaction | Numeric | Shortcode (6-9 digits) MSISDN (12 Digits) |
+| IdentifierType | Type of organization receiving the transaction | Numeric | 4 – Organization shortcode |
+| Remarks | Comments that are sent along with the transaction | String | A sequence of characters up to 100 |
+| Initiator | The name of the initiator initiating the request. | Alpha-Numeric | This is the credential/username used to authenticate the transaction request |
+| SecurityCredential | Encrypted credential of the user getting transaction status | String | Encrypted password for the initiator to authenticate the transaction request |
+| QueueTimeoutURL | The path that stores information of timeout transaction | URL | https://ip:port or domain:port/path |
+| TransactionID | Unique identifier to identify a transaction on Mpesa | Alpha-Numeric | LXXXXXX1234 |
+| ResultURL | The path that stores information of a transaction. | URL | https://ip:port/path or domain:port/path |
+| Occasion | Optional parameter | String | A sequence of characters up to 100 |
+| OriginatorConversationID | This is a global unique identifier for the transaction request returned by the API proxy upon successful request submission. If you don't have the M-PESA transaction ID you can use this to query. | String | AG_20190826_0000777ab7d848b9e721 |
+
+#### Response Body
+
+<CodeExample title="Response Body">
+```json
+{
+  "OriginatorConversationID": "1236-7134259-1",
+  "ConversationID": "AG_20210709_1234409f86436c583e3f",
+  "ResponseCode": "0",
+  "ResponseDescription": "Accept the service request successfully."
+}
+```
+</CodeExample>
+
+#### Response Parameter Definition
+
+| Name | Description | Parameter Type | Sample Value |
+|------|-------------|---------------|--------------|
+| OriginatorConversationID | The unique request ID for tracking a transaction | Alpha-Numeric | Alpha-Numeric String of less than 20 characters e.g: 1236-7134259-1 |
+| ConversationID | The unique request ID returned my M-PESA for each request made | Alpha-Numeric | Alpha Numeric String of less than 20 characters e.g: AG_20210709_1234409f86436c583e3f |
+| ResponseCode | The numeric status code indicates the status transaction processing. 0 means success and any other code means an error occurred or the transaction failed. **Success** submission message or an **error** description | Number | 0 or 1 or or 2001 or 21 |
+| ResponseDescription | Response description message | String | Accept the service request successfully |
+
+#### Results Body
+
+<CodeExample title="Results Body">
+```json
+{
+  "Result": {
+    "ConversationID": "AG_20180223_000049334ae97d86f75",
+    "OriginatorConversationID": "3213-416199-2",
+    "ReferenceData": {
+      "ReferenceItem": {
+        "Key": "Occasion"
+      }
+    },
+    "ResultCode": 0,
+    "ResultDesc": "The service request is processed successfully.",
+    "ResultParameters": {
+      "ResultParameter": [
+        {
+          "Key": "DebitPartyName",
+          "Value": "600310 - Safaricom333"
+        },
+        {
+          "Key": "DebitPartyName",
+          "Value": "254708374149 - John Doe"
+        },
+        {
+          "Key": "OriginatorConversationID",
+          "Value": "3211-416020-3"
+        },
+        {
+          "Key": "InitiatedTime",
+          "Value": "20180223054112"
+        },
+        {
+          "Key": "DebitAccountType",
+          "Value": "Utility Account"
+        },
+        {
+          "Key": "DebitPartyCharges",
+          "Value": "Fee For B2C Payment|KES|22.40"
+        },
+        {
+          "Key": "TransactionReason"
+        },
+        {
+          "Key": "ReasonType",
+          "Value": "Business Payment to Customer via API"
+        },
+        {
+          "Key": "TransactionStatus",
+          "Value": "Completed"
+        },
+        {
+          "Key": "FinalisedTime",
+          "Value": "20180223054112"
+        },
+        {
+          "Key": "Amount",
+          "Value": "300"
+        },
+        {
+          "Key": "ConversationID",
+          "Value": "AG_20180223_000041b09c22e613d6c9"
+        },
+        {
+          "Key": "ReceiptNo",
+          "Value": "MBN31H462N"
+        }
+      ]
+    },
+    "ResultType": 0,
+    "TransactionID": "MBN0000000"
+  }
+}
+```
+</CodeExample>
+
+#### Results Parameter Definition
+
+| Name | Description | Type | Sample Values |
+|------|-------------|------|---------------|
+| ConversationID | The unique identifier generated by M-PESA for a request. | String | AG_20180223_000049334ae97d86f75 |
+| OriginatorConversationID | The unique identifier of the request message. This is auto-generated by M-PESA for third-party/Organizations. Its value comes from the response message. It can be used to check the status of the transaction. | String | 3213-416199-2 |
+| ReferenceData | It is used to carry some reference data that M-PESA need not analyze but need to record into the transaction log. | ReferenceData | n/a |
+| ReferenceItem | it is used to carry some reference data that MM needs not analyze but needs to record in the transaction log. | ParameterType [1..unbounded] | n/a |
+| ResultCode | It indicates whether M-PESA processes the request successfully or not. The max length is 10. | String | 0 |
+| ResultDesc | Its value is a description of the parameter Result Code. The max length is 1024. | String | The service request is processed successfully. |
+| ResultParameters | It is used to carry specific parameters for reversals API. | n/a | n/a |
+| Key | It indicates a parameter name. | String | DebitPartyName |
+| Value | It indicates a parameter value. | String | 600310 - Safaricom333 |
+| ResultType | 0: completed 1: waiting for further messages. | Integer | 0 |
+| TransactionID | It's only for transactions. When the request is a transaction request, M-PESA will generate a unique identifier for the transaction. | String | MBN0000000 |
+
+</Playground>

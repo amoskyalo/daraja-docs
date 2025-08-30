@@ -37,7 +37,7 @@ const LeftNav = () => {
 
                 return (
                     <ListItemButton
-                        selected={index === 2}
+                        selected={index === 11}
                         key={item.title}
                         sx={{
                             '&.Mui-selected': {

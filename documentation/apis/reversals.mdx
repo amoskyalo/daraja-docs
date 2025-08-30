@@ -1,0 +1,170 @@
+# Reversals
+
+Reverses an M-Pesa transaction.
+
+<Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request" />
+
+<Playground 
+    method = "POST"
+    endpoint = "mpesa/reversal/v1/request"
+    requestParameters={[
+        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'TestInit610' },
+        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: '[encrypted password]' },
+        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'TransactionReversal' },
+        { name: 'TransactionID', type: 'text', label: 'TransactionID', bodyKey: 'TransactionID', value: '[original trans_id]' },
+        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '[trans_amount]' },
+        { name: 'ReceiverParty', type: 'text', label: 'ReceiverParty', bodyKey: 'ReceiverParty', value: '600610' },
+        { name: 'RecieverIdentifierType', type: 'text', label: 'RecieverIdentifierType', bodyKey: 'RecieverIdentifierType', value: '11' },
+        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'https://ip:port/' },
+        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'https://ip:port/' },
+        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'Test' },
+        { name: 'Occasion', type: 'text', label: 'Occasion', bodyKey: 'Occasion', value: 'work' },
+    ]}
+>
+
+Reverses a C2B M-Pesa transaction.
+
+Once a customer pays and there is a need to reverse the transaction, the organization will use this API to reverse the amount.
+
+## Important parameters:
+
+**TransactionID**
+
+This is the Mpesa Transaction ID of the transaction which you wish to reverse.
+
+**Amount**
+
+The amount transacted in the transaction is to be reversed, down to the cent.
+
+**Receiver Party**
+
+Your Org's shortcode.
+
+#### Request Body
+
+<CodeExample title="Request Body">
+```json
+{
+  "Initiator": "TestInit610",
+  "SecurityCredential": "[encrypted password]",
+  "CommandID": "TransactionReversal",
+  "TransactionID": "[original trans_id]",
+  "Amount": "[trans_amount]",
+  "ReceiverParty": "600610",
+  "RecieverIdentifierType": "11",
+  "ResultURL": "https://ip:port/",
+  "QueueTimeOutURL": "https://ip:port/",
+  "Remarks": "Test",
+  "Occasion": "work"
+}
+```
+</CodeExample>
+
+#### Request Parameter Definition
+
+| Name                   | Description                                                      | Type          | Sample Values                                                                 |
+| ---------------------- | ---------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------- |
+| CommandID              | Takes only the 'TransactionReversal' Command id.                 | String        | TransactionReversal                                                           |
+| ReceiverParty          | The organization that receives the transaction.                  | Numeric       | Shortcode (6-9 digits)                                                        |
+| RecieverIdentifierType | Type of organization that receives the transaction.              | String        | 11                                                                            |
+| Remarks                | Comments that are sent along with the transaction.               | String        | test                                                                          |
+| Initiator              | The name of the initiator to initiate the request.               | Alpha-Numeric | This is the credential/username used to authenticate the transaction request  |
+| SecurityCredential     | Encrypted Credential of the user getting transaction amount.     | String        | Encrypted password for the initiator to authenticate the transaction request. |
+| QueueTimeOutURL        | The path that stores information about the time-out transaction. | URL           | https://ip or domain:port/path                                                |
+| ResultURL              | The path that stores information about the transaction.          | URL           | https://ip or domain:port/path                                                |
+| TransactionID          | Organization Receiving the funds.                                | String        | LKXXXX1234                                                                    |
+| Occasion               | Optional Parameter.                                              | String        | Sequence of characters up to 100                                              |
+
+#### Response Body
+
+<CodeExample title="Response Body">
+```json
+{
+  "OriginatorConversationID": "71840-27539181-07",
+  "ConversationID": "AG_20210709_12346c8e6f8858d7b70a",
+  "ResponseCode": "0",
+  "ResponseDescription": "Accept the service request successfully."
+}
+```
+</CodeExample>
+
+#### Response Parameter Definition
+
+| Name                     | Description                                                       | Type          | Sample Values                                                            |
+| ------------------------ | ----------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------ |
+| OriginatorConversationID | The unique request ID for tracking a transaction.                 | Alpha-Numeric | the alpha-numeric string of less then 20 characters eg 71840-27539181-07 |
+| ConversationID           | The unique request ID is returned by mpesa for each request made. | Alpha-Numeric | AG_20210709_12346c8e6f8858d7b70a                                         |
+| ResponseDescription      | Response Description message                                      | String        | Accept the service request successfully                                  |
+
+#### Results Body
+
+<CodeExample title="Results Body">
+```json
+{
+  "Result": {
+    "ResultType": "0",
+    "ResultCode": "21",
+    "ResultDesc": "The service request is processed successfully",
+    "OriginatorConversationID": "8521-4298025-1",
+    "ConversationID": "AG_20181005_00004d7ee675c0c7ee0b",
+    "TransactionID": "MJ561H6X5O",
+    "ResultParameters": {
+      "ResultParameter": [
+        {
+          "Key": "DebitAccountBalance",
+          "Value": "Utility Account|KES|51661.00|51661.00|0.00|0.00"
+        },
+        {
+          "Key": "Amount",
+          "Value": "100"
+        },
+        {
+          "Key": "TransCompletedTime",
+          "Value": "20181005153225"
+        },
+        {
+          "Key": "OriginalTransactionID",
+          "Value": "MJ551H6X5D"
+        },
+        {
+          "Key": "Charge",
+          "Value": "0"
+        },
+        {
+          "Key": "CreditPartyPublicName",
+          "Value": "254708374149 - John Doe"
+        },
+        {
+          "Key": "DebitPartyPublicName",
+          "Value": "601315 - Safaricom1338"
+        }
+      ]
+    },
+    "ReferenceData": {
+      "ReferenceItem": {
+        "Key": "QueueTimeoutURL",
+        "Value": "https://internalsandbox.safaricom.co.ke/mpesa/reversalresults/v1/submit"
+      }
+    }
+  }
+}
+```
+</CodeExample>
+
+#### Results Parameter Definition
+
+| Name                     | Description                                                                                                                                                                                                     | Type                         | Sample Values                                  |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ---------------------------------------------- |
+| ResultCode               | It indicates whether M-PESA processes the request successfully or not. The max length is 10.                                                                                                                    | String                       | 0                                              |
+| ResultDesc               | Its value is a description of the parameter Result Code. The max length is 1024.                                                                                                                                | String                       | The service request is processed successfully. |
+| ResultType               | 0: completed 1: waiting for further messages.                                                                                                                                                                   | Integer                      | 0                                              |
+| OriginatorConversationID | The unique identifier of the request message. This is auto-generated by M-PESA for third-party/Organizations. Its value comes from the response message. It can be used to check the status of the transaction. | String                       | 16917-22577599-3                               |
+| ConversationID           | The unique identifier generated by M-PESA for a request.                                                                                                                                                        | String                       | AG_20200206_00005e091a8ec6b9eac5               |
+| TransactionID            | It's only for transactions. When the request is a transaction request, M-PESA will generate a unique identifier for the transaction.                                                                            | String                       | OA90000000                                     |
+| ResultParameters         | It is used to carry specific parameters for reversals API.                                                                                                                                                      | n/a                          | n/a                                            |
+| Key                      | It indicates a parameter name.                                                                                                                                                                                  | String                       | DebitAccountBalance                            |
+| Value                    | It indicates a parameter value.                                                                                                                                                                                 | String                       | MJ551H6X5D                                     |
+| ReferenceData            | It is used to carry some reference data that M-PESA need not analyze but need to record into the transaction log.                                                                                               | ReferenceData                | n/a                                            |
+| ReferenceItem            | it is used to carry some reference data that M-Pesa need not analyze but needs to record in the transaction log.                                                                                                | ParameterType [1..unbounded] | n/a                                            |
+
+</Playground>

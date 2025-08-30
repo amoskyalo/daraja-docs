@@ -51,7 +51,7 @@ const NAVIGATION: Navigation = [
     },
     {
         kind: 'header',
-        title: 'Resources',
+        title: 'Community Resources',
     },
     {
         segment: 'resources/going-live-and-certificates',
@@ -59,7 +59,7 @@ const NAVIGATION: Navigation = [
     },
     {
         segment: 'resources/community-projects',
-        title: 'Community Projects',
+        title: 'Github',
     },
 ];
 

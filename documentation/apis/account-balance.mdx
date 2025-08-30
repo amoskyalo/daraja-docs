@@ -1,0 +1,169 @@
+# Account Balance
+
+Enquire the balance on an M-Pesa BuyGoods (Till Number)
+
+<Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query" />
+
+<Playground 
+    method = "POST"
+    endpoint = "mpesa/accountbalance/v1/query"
+    requestParameters={[
+        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'testapiuser' },
+        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'SAFVNlChWJfVtXEZMBuVo+a1Hwr+Dtruv3/2v8=' },
+        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'AccountBalance' },
+        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '600000' },
+        { name: 'IdentifierType', type: 'text', label: 'IdentifierType', bodyKey: 'IdentifierType', value: '4' },
+        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'ok' },
+        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'http://myservice:3080/queuetimeouturl' },
+        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'http://myservice:3080/result' },
+    ]}
+>
+
+The Account Balance API is used to request the account balance of a short code. This can be used for both B2C, buy goods and pay bill accounts.
+
+Below are the detailed accounts for the B2C, buy goods, and pay bill short codes:
+
+| B2C Accounts  | Pay bill Accounts | Buy Goods Accounts      | Description                                                                                                                                  |
+| ------------- | ----------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Utility       | Utility           | Merchant                | • This is the account that receives payments in both paybill and Buy goods.<br/>• A utility account in B2C is for the disbursement of funds. |
+| Working (MMF) | Working           | Working                 | • It's a transition account that holds money awaiting settlement to the bank or your individual M-PESA account.                              |
+| Charges paid  | Charges paid      | Charges paid            | • This account deducts charges incurred depending on the business tariff you are in.                                                         |
+|               |                   | Organization Settlement | • After charges are deducted, money passes here to the working account.                                                                      |
+
+**PS:** 3rd party can only check the balance of their own shortcode. In case the initiator is associated with the Merchant HO, it can request a balance query of the merchant store within the hierarchy.
+
+## Sequence Diagram to show the flow of transaction
+
+<img
+    src="/acc-bal.png"
+    alt="Account Balance API Flow Diagram"
+    style={{ width: '50%', height: 'auto', }}
+/>
+
+## Account Balance API transaction process flow:
+
+1. The Organization sets all the required parameters in the request and sends it to https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query.
+
+2. API Management platform (Daraja) receives the request validates, authorizes, and authenticates the partner to access the API, sends it to M-PESA, and a (synchronous) acknowledgment back to the Organization.
+
+3. M-PESA receives the request and validates it internally first, then sends you an acknowledgement response.
+
+4. M-PESA processes the request, then sends back the response via the callback URL specified in the initial request.
+
+5. As of now, there are no repeat callbacks for failed callbacks, thus if M-PESA is unable to send the callback to you, you will need to check the status of that transaction
+
+Now let's dive into the request:
+
+You will first generate an access token to allow you to make the API call. See how to generate an access token here <Highlight>Authorization API link</Highlight>.
+
+#### Request Body
+
+<CodeExample title="Request Body">
+```json
+{
+  "Initiator": "testapiuser",
+  "SecurityCredential": "SAFVNlChWJfVtXEZMBuVo+a1Hwr+Dtruv3/2v8=",
+  "CommandID": "AccountBalance",
+  "PartyA": "600000",
+  "IdentifierType": "4",
+  "Remarks": "ok",
+  "QueueTimeOutURL": "http://myservice:3080/queuetimeouturl",
+  "ResultURL": "http://myservice:3080/result"
+}
+```
+</CodeExample>
+
+#### Request Body Parameters Definition
+
+| Name               | Description                                                                                                                                                                                                                                                                                                               | Type                                        | Sample Values                                                                                                                                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CommandID          | A unique command is passed to the M-PESA system. Max length is 64.                                                                                                                                                                                                                                                        | String                                      | AccountBalance                                                                                                                                                                                                                                                                |
+| PartyA             | The shortcode of the organization querying for the account balance.                                                                                                                                                                                                                                                       | Numeric                                     | 600772                                                                                                                                                                                                                                                                        |
+| IdentifierType     | Type of organization querying for the account balance.                                                                                                                                                                                                                                                                    | Numeric(Till Number Organization shortcode) | 4                                                                                                                                                                                                                                                                             |
+| Remarks            | Comments that are sent along with the transaction                                                                                                                                                                                                                                                                         | String sequence of characters up to 100     | tests                                                                                                                                                                                                                                                                         |
+| Initiator          | This is the credential/username used to authenticate the transaction request                                                                                                                                                                                                                                              | Alpha-Numeric                               | Testapi772                                                                                                                                                                                                                                                                    |
+| SecurityCredential | Base64 encoded string of the M-PESA short code and password, which is encrypted using M-PESA public key and validates the transaction on M-PESA Core system. It indicates the Encrypted credential of the initiator getting the account balance. Its value must match the inputted value of the parameter IdentifierType. | String                                      | EToK4INRxdIhQjhPXi/FGxt061viOjh4hfAAwb17gaeP1JfKu4T/ui/6qb9JM9JfN/Y6S1O8U/c2s/ZqKxe+6WfrFMeYMC803hVgULn/8taf+8NE5JAib5BqULSo7KcM2Uu5teiGTZOBL/Dv39DDeprNrtxcaYPmLc0frDm U4hiMvZ6GLy95uVsOvGJGK1Ow TkPLIo5VKanKaFe2C0DXXAdZRua0I4pCto17JM60 KlhM2KlcPXQ8H4nr0f ammry502DvCQ==" |
+| QueueTimeoutURL    | The end-point that receives a timeout message.                                                                                                                                                                                                                                                                            | URL                                         | https://ip:port/path or domain:port/path                                                                                                                                                                                                                                      |
+| ResultURL          | It indicates the destination URL which Daraja should send the result message to.                                                                                                                                                                                                                                          | URL                                         | https://ip:port/path or domain:port/path                                                                                                                                                                                                                                      |
+
+#### Response Body
+
+<CodeExample title="Response Body">
+```json
+{
+  "OriginatorConversationID": "",
+  "ConversationID": "",
+  "ResponseCode": "",
+  "ResponseDescription": ""
+}
+```
+</CodeExample>
+
+#### Response Body Parameter Definition
+
+| Name                     | Description                                                                                                                                                                                                                                           | Type   | Sample Values                           |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------------- |
+| OriginatorConversationID | The unique identifier of the request message.<br/>• This is auto-generated by M-PESA for a third party/Organization.<br/>• It can be used to check the status of the transaction.<br/>• Must be unique for every transaction.<br/>• Max length is 128 | String | 515-5258779-3                           |
+| ConversationID           | The unique identifier generated by M-Pesa for a previous request message. It is used to support communication multi-times between the third party and M-Pesa for one operation/transaction.                                                           | String | AG_20200123_0000417fed8ed666e976        |
+| ResponseCode             | It indicates whether Mobile Money accepts the request or not.                                                                                                                                                                                         | String | 0                                       |
+| ResponseDescription      | Its value is a description of the parameter Response Code.                                                                                                                                                                                            | String | Accept the service request successfully |
+
+#### Result Body
+
+<CodeExample title="Result Body">
+```json
+{
+  "Result": {
+    "ResultType": "0",
+    "ResultCode": "0",
+    "ResultDesc": "The service request is processed successfully",
+    "OriginatorConversationID": "16917-22577599-3",
+    "ConversationID": "AG_20200206_00005e091a8ec6b9eac5",
+    "TransactionID": "OA90000000",
+    "ResultParameters": {
+      "ResultParameter": [
+        {
+          "Key": "AccountBalance",
+          "Value": "Working Account|KES|700000.00|700000.00|0.00|0.008&Float Account|KES|0.00|0.00|0.00|0.008&Utility Account|KES|228037.00|228037.00|0.00|0.008&Charges Paid Account|KES|-1540.00|-1540.00|0.00|0.008&Organization Settlement Account|KES|0.00|0.00|0.00|0.00"
+        },
+        {
+          "Key": "BOCompletedTime",
+          "Value": "20200109125710"
+        }
+      ]
+    },
+    "ReferenceData": {
+      "ReferenceItem": {
+        "Key": "QueueTimeoutURL",
+        "Value": "https://internalsandbox.safaricom.co.ke/mpesa/abresults/v1/submit"
+      }
+    }
+  }
+}
+```
+</CodeExample>
+
+#### Result Body Parameter Definition
+
+| Name                                 | Description                                                                                                                                                                                                                                                                                                                               | Type                        | Sample Values                    |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | -------------------------------- |
+| Result Type                          | 0: completed 1: waiting for further messages                                                                                                                                                                                                                                                                                              | Integer                     | 0                                |
+| Result Code                          | It indicates whether Mobile Money processes the request successfully or not. Max length is 10                                                                                                                                                                                                                                             | String                      | 0                                |
+| OriginatorConversationID             | The unique identifier of the request message.<br/>• This is auto-generated by M-PESA for third-party/Organisations. Its value comes from the response message.<br/>• It can be used to check the status of the transaction.                                                                                                               | String                      | 16917-22577599-3                 |
+| ConversationID                       | The unique identifier generated by M-Pesa for a request.                                                                                                                                                                                                                                                                                  | String                      | AG_20200206_00005e091a8ec6b9eac5 |
+| TransactionID                        | It's only for transactions. When the request is a transaction request, M-Pesa will generate a unique identifier for the transaction.                                                                                                                                                                                                      | String                      | OA90000000                       |
+| ResultParameters                     | It is used to carry specific parameters for the account balance query. For each account, the fields are presented in the following order and separated by vertical bars (\|): Format: &lt;Account Type Alias&gt;\|&lt;Currency&gt;\|&lt;Current Balance&gt;\|&lt;Available Balance&gt;\|&lt;Reserved Balance&gt;\|&lt;Unclear Balance&gt; |                             |                                  |
+| Key                                  | It indicates a parameter name.                                                                                                                                                                                                                                                                                                            | String                      |                                  |
+| Value                                | It indicates a parameter value.                                                                                                                                                                                                                                                                                                           | String                      |                                  |
+| Working Account Available Funds      | Mmf account available balance.                                                                                                                                                                                                                                                                                                            | Decimal                     | Working Account                  |
+| Working Account: Uncleared Funds     | Mmf account uncleared balance.                                                                                                                                                                                                                                                                                                            | Decimal                     | 700000.00                        |
+| Working Account Reserved Funds       | A charge paid account reserved balance.                                                                                                                                                                                                                                                                                                   | Decimal                     | 0.00                             |
+| Charges Paid Account Available Funds | A charge paid account available balance.                                                                                                                                                                                                                                                                                                  | Decimal                     | Charges Paid Account             |
+| Charges Paid Account Uncleared Funds | A charge paid account uncleared balance.                                                                                                                                                                                                                                                                                                  | Decimal                     | 1540.00                          |
+| Charges Paid Account Reserved Funds  | A charge paid account reserved balance.                                                                                                                                                                                                                                                                                                   | Decimal                     | 0.00                             |
+| Utility Account Available Funds      | Utility account available balance.                                                                                                                                                                                                                                                                                                        | Decimal                     | Utility Account                  |
+| Utility Account Uncleared Funds      | Utility account uncleared balance.                                                                                                                                                                                                                                                                                                        | Decimal                     | 228037.00                        |
+| Reference Item                       | It is used to carry some reference data that M-Pesa need not analyze but needs to record in the transaction log.                                                                                                                                                                                                                          | ParameterType[1..unbounded] |                                  |
+| ReferenceData                        | Utility account uncleared balance. It is used to carry some reference data that M-Pesa need not analyze but needs to record in the transactions log.                                                                                                                                                                                      | ReferenceData               |                                  |
+
+</Playground>

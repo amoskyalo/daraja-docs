@@ -1,0 +1,230 @@
+# B2C Account Top Up
+
+This API enables you to load funds to a B2C shortcode directly for disbursement.
+
+<Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest" />
+
+<Playground 
+    method = "POST"
+    endpoint = "mpesa/b2b/v1/paymentrequest"
+    requestParameters={[
+        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'testapi' },
+        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'IAJVUHDGJ6yDU3aop/WI9oSPhkW3DV1h7EAt3iRyymTZh1jpzCNnI/xFKZNoOOF8PUFgjmEOih...' },
+        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'BusinessPayToBulk' },
+        { name: 'SenderIdentifierType', type: 'text', label: 'SenderIdentifierType', bodyKey: 'SenderIdentifierType', value: '4' },
+        { name: 'RecieverIdentifierType', type: 'text', label: 'RecieverIdentifierType', bodyKey: 'RecieverIdentifierType', value: '4' },
+        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '239' },
+        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '600979' },
+        { name: 'PartyB', type: 'text', label: 'PartyB', bodyKey: 'PartyB', value: '600000' },
+        { name: 'AccountReference', type: 'text', label: 'AccountReference', bodyKey: 'AccountReference', value: '353353' },
+        { name: 'Requester', type: 'text', label: 'Requester', bodyKey: 'Requester', value: '254708374149' },
+        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'OK' },
+        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'https://mydomain/path/timeout' },
+        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'https://mydomain/path/result' },
+    ]}
+>
+
+This API enables you to load funds to a B2C shortcode directly for disbursement.
+
+The transaction moves money from your MMF/Working account to the recipient's utility account.
+
+</Playground>
+
+## Request Body
+
+<CodeExample>
+```json
+{
+  "Initiator": "testapi",
+  "SecurityCredential": "IAJVUHDGJ6yDU3aop/WI9oSPhkW3DV1h7EAt3iRyymTZh1jpzCNnI/xFKZNoOOF8PUFgjmEOih...",
+  "CommandID": "BusinessPayToBulk",
+  "SenderIdentifierType": "4",
+  "RecieverIdentifierType": "4",
+  "Amount": "239",
+  "PartyA": "600979",
+  "PartyB": "600000",
+  "AccountReference": "353353",
+  "Requester": "254708374149",
+  "Remarks": "OK",
+  "QueueTimeOutURL": "https://mydomain/path/timeout",
+  "ResultURL": "https://mydomain/path/result"
+}
+```
+</CodeExample>
+
+## Request Parameter Definition
+
+| Name                     | Description                                                                                                                                                                                                    | Type   | Sample Values                                                                               |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------- |
+| `CommandID`              | For this API use `BusinessPayToBulk` only.                                                                                                                                                                     | String | `BusinessPayToBulk`                                                                         |
+| `Initiator`              | The M-Pesa API operator username. This user needs Org Business Pay to Bulk API initiator role on M-Pesa                                                                                                        | String | `Username`, `user_name`                                                                     |
+| `SecurityCredential`     | The encrypted password of the M-Pesa API operator. The process for encrypting the initiator password has been described under docs. An online encryption tool is available under the test credentials section. | String | `32SzVdmCvjpmQfw3X2RK8UAv7xuhhkgjfgHAJSGFA.../Gulsuiduisa304dXxFC5+3lslkk2TDJY/Lh6ESVwtq==` |
+| `PartyA`                 | Your shortcode. The shortcode from which money will be deducted.                                                                                                                                               | Number | `Shortcode (5-6 digits) e.g., 600979`                                                       |
+| `SenderIdentifierType`   | The type of shortcode from which money is deducted. For this API, only `"4"` is allowed.                                                                                                                       | Number | `4`                                                                                         |
+| `PartyB`                 | The shortcode to which money will be moved                                                                                                                                                                     | Number | `600000`                                                                                    |
+| `RecieverIdentifierType` | The type of shortcode to which money is credited. This API supports type `4` only                                                                                                                              | Number | `4`                                                                                         |
+| `Requester`              | Optional. The consumer's mobile number on behalf of whom you are paying.                                                                                                                                       | Mobile | `254708374149`                                                                              |
+| `Amount`                 | The transaction amount.                                                                                                                                                                                        | Number | `300`                                                                                       |
+| `Remarks`                | Any additional information to be associated with the transaction.                                                                                                                                              | String | `Sentence of up to 100 characters.`                                                         |
+| `QueueTimeOutURL`        | A URL that will be used to notify your system in case the request times out before processing.                                                                                                                 | URL    | `https://ip or domain: port/path`                                                           |
+| `ResultURL`              | A URL that will be used to send transaction results after processing.                                                                                                                                          | URL    | `https://ip or domain: port/path`                                                           |
+
+## Response Body
+
+<CodeExample>
+```json
+{
+  "OriginatorConversationID": "5118-111210482-1",
+  "ConversationID": "AG_20230420_26d50420_20107599fd5662ef6dd054",
+  "ResponseCode": "0",
+  "ResponseDescription": "Accept the service request successfully."
+}
+```
+</CodeExample>
+
+## Response Parameter Definition
+
+| Name                       | Description                                                                      | Type   | Sample Values                              |
+| -------------------------- | -------------------------------------------------------------------------------- | ------ | ------------------------------------------ |
+| `OriginatorConversationID` | Unique request identifier assigned by Daraja upon successful request submission. | String | `String of less then 20 characters`        |
+| `ConversationID`           | Unique request identifier assigned by M-Pesa upon successful request submission. | String | `AG_123456778909B3`                        |
+| `ResponseCode`             | Status code for request submission. `0`(zero) indicates successful submission.   | String | `0`                                        |
+| `ResponseDescription`      | A descriptive message of the request submission status.                          | String | `Accept the service request successfully.` |
+
+## Successful Result Body
+
+<CodeExample>
+```json
+{
+  "Result": {
+    "ResultType": "0",
+    "ResultCode": "0",
+    "ResultDesc": "The service request is processed successfully",
+    "OriginatorConversationID": "626f6ddf-ab37-4650-b882-b1de92ec9aa4",
+    "ConversationID": "12345677dfdf89099B3",
+    "TransactionID": "QKA81LK5CY",
+    "ResultParameters": {
+      "ResultParameter": [
+        {
+          "Key": "DebitAccountBalance",
+          "Value": "{Amount={CurrencyCode=KES, MinimumAmount=618683, BasicAmount=6186.83}}"
+        },
+        {
+          "Key": "Amount",
+          "Value": "190.00"
+        },
+        {
+          "Key": "DebitPartyAffectedAccountBalance",
+          "Value": "Working Account|KES|346568.83|6186.83|340382.00|0.00"
+        },
+        {
+          "Key": "TransCompletedTime",
+          "Value": "20221110110717"
+        },
+        {
+          "Key": "DebitPartyCharges",
+          "Value": ""
+        },
+        {
+          "Key": "ReceiverPartyPublicName",
+          "Value": "600000- Biller Company"
+        },
+        {
+          "Key": "Currency",
+          "Value": "KES"
+        },
+        {
+          "Key": "InitiatorAccountCurrentBalance",
+          "Value": "{Amount={CurrencyCode=KES, MinimumAmount=59949000, BasicAmount=599490.00}}"
+        }
+      ]
+    },
+    "ReferenceData": {
+      "ReferenceItem": [
+        {"Key": "BillReferenceNumber", "Value": "19008"},
+        {"Key": "QueueTimeoutURL", "Value": "https://internalapi.safaricom.co.ke/mpesa/abresults/v1/submit"},
+        {"Key": "Occassion"}
+      ]
+    }
+  }
+}
+```
+</CodeExample>
+
+## Successful Result Parameter Definition
+
+| Name                               | Description                                                                                                                                                              | Type        | Sample Values                                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------- | 
+| `Result`                           | The root parameter encloses the entire result message.                                                                                                                   | JSON Object | `"Result": {}`                                                                                 |
+| `ResultType`                       | A status code indicating whether the transaction was already sent to your listener. The usual value is `0`.                                                              | Number      | `0`                                                                                            |
+| `ResultCode`                       | A transaction result status code. `0`(zero) indicates successful processing.                                                                                             | Number      | `0`                                                                                            |
+| `ResultDesc`                       | A descriptive message for the transaction result.                                                                                                                        | String      | `The service request is processed successfully.`                                               |
+| `OriginatorConversationId`         | Unique request identifier assigned by API gateway upon successful request submission.                                                                                    | String      | `AG_2376487236_1267232989KIJHKH`                                                               |
+| `ConversationId`                   | Unique request identifier assigned by M-Pesa upon successful request submission.                                                                                         | String      | `236543-276372-2`                                                                              |
+| `TransactionID`                    | Unique M-PESA transaction ID for the payment request.                                                                                                                    | String      | `LHG31AA5TX`                                                                                   |
+| `ResultParameters`                 | This is a JSON object that holds more details for the transaction.                                                                                                       | JSON Object | `"Result": {"ResultParameters": {"": []}}`                                                     |
+| `ResultParameter`                  | A JSON array within the ResultParameters that holds additional transaction details as JSON objects.                                                                      | JSON Object | `"Result": {"ResultParameters": {"ResultParameter": []}}`                                      |
+| `TransactionID`                    | Unique M-PESA receipt number for the payment request.                                                                                                                    | String      | `LHG31AA5TX`                                                                                   |
+| `Amount`                           | The transaction amount that was transacted. Returned as one of the key-value objects under the ResultParameter array.                                                    | Number      | `100`                                                                                          |
+| `TransactionCompletedTime`         | A 14-digit timestamp indicating the date and time the transaction completed on M-PESA. Returned as one of the key-value objects under the ResultParameter array.         | Number      | `20171206163233`                                                                               |
+| `ReceiverPartyPublicName`          | The public name of the credit party/organization. Returned as one of the key-value objects under the ResultParameter array.                                              | String      | `600000 - saf test org`                                                                        |
+| `DebitPartyCharges`                | Transaction fee deducted on the debit party if applicable. Value is empty if no charges apply. Returned as one of the key-value objects under the ResultParameter array. | Number      | `1`                                                                                            |
+| `Currency`                         | A currency code of the transaction amount. Returned as one of the key-value objects under the ResultParameter array.                                                     | String      | `KES`                                                                                          |
+| `DebitPartyAffectedAccountBalance` | The balance in the organization's account from which funds were deducted under the shortcode. Returned as one of the key-value objects under the ResultParameter array.  | String      | `Working Account                                                                               |
+| `DebitAccountCurrentBalance`       | The balance in the organization's account from which funds were deducted under the shortcode. Returned as one of the key-value objects under the ResultParameter array.  | String      | `{Amount={CurrencyCode=KES, MinimumAmount=59949000, BasicAmount=599490.00}}`                   |
+| `InitiatorAccountCurrentBalance`   | The balance in the organization accounts from which funds were deducted under the shortcode. Returned as one of the key-value objects under the ResultParameter array.   | String      | `{Amount={CurrencyCode=KES, MinimumAmount=59949000, BasicAmount=599490.00}}`                   |
+| `ReferenceData`                    | This JSON object holds more details for the transaction reference data.                                                                                                  | JSON Object | `"ReferenceData": {"ReferenceItem": []}`                                                       |
+| `ReferenceItem`                    | A JSON array that holds JSON Objects with additional transaction details.                                                                                                |             | `ReferenceItem : [{"Key": "BillReferenceNumber", "Value": "19008"}, {"Key": "", "Value": ""}]` |
+
+## Unsuccessful Result Body
+
+<CodeExample>
+```json
+{
+  "Result": {
+    "ResultType": 0,
+    "ResultCode": 2001,
+    "ResultDesc": "The initiator information is invalid.",
+    "OriginatorConversationID": "12337-235089183-5",
+    "ConversationID": "AG_20200120_000065726505fa9ae5c0",
+    "TransactionID": "OAK0000000",
+    "ResultParameters": {
+      "ResultParameter": {
+        "Key": "BillReferenceNumber",
+        "Value": 12323333
+      }
+    },
+    "ReferenceData": {
+      "ReferenceItem": [
+        {
+          "Key": "BillReferenceNumber",
+          "Value": 12323333
+        },
+        {
+          "Key": "QueueTimeoutURL",
+          "Value": "https://internalapi.safaricom.co.ke/mpesa/abresults/v1/submit"
+        },
+        {
+          "Key": "Occassion"
+        }
+      ]
+    }
+  }
+}
+```
+</CodeExample>
+
+## Failed Result Parameter Definition
+
+| Name                       | Description                                                                                                                                                                    | Type        | Sample Values                                                                                  |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------- |
+| `Result`                   | The root parameter encloses the entire result message.                                                                                                                         | JSON Object | `"Result": {}`                                                                                 |
+| `ConversationId`           | This is a global unique identifier for the transaction request returned by the M-Pesa upon successful request submission.                                                      | String      | `236543-276372-2`                                                                              |
+| `OriginatorConversationId` | This is a global unique identifier for the transaction request returned by the API proxy upon successful request submission.                                                   | String      | `AG_2376487236_1267232989KIJHKH`                                                               |
+| `ResultDesc`               | This is a message from the API that gives the status of the request processing and usually maps to a specific result code value.                                               | String      | `The initiator information is invalid.`                                                        |
+| `ResultType`               | This is a status code that indicates whether the transaction was already sent to your listener. Usual value is `0`.                                                            | Number      | `0`                                                                                            |
+| `ResultCode`               | This is a numeric status code that indicates the status of the transaction processing. `0` means success and any other code means an error occurred or the transaction failed. | Number      | `2001`                                                                                         |
+| `ResultParameters`         | This is a JSON object that holds more details for the transaction in a key-value format.                                                                                       | JSON Object | `ResultParameters: {"ResultParameter": {"Key": "BOCompletedTime", "Value": "20200120164825"}}` |
+| `TransactionID`            | Unique M-PESA transaction ID for the payment request. A generic value is passed for certain failure scenarios.                                                                 | String      | `OAK0000000`                                                                                   |
+| `ReferenceData`            | This JSON object holds more details for the transaction reference data.                                                                                                        | JSON Object | `"ReferenceData": {"ReferenceItem": []}`                                                       |
+| `ReferenceItem`            | A JSON array within the that holds JSON Objects with additional transaction details                                                                                            |             | `ReferenceItem : [{"Key": "BillReferenceNumber", "Value": "19008"}, {"Key": "", "Value": ""}]` |

@@ -1,7 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Box, Grid, Stack, Typography, Link, Avatar, Pagination, CircularProgress, Chip } from '@mui/material';
+import {
+    Box,
+    Grid,
+    Stack,
+    Typography,
+    Link,
+    Avatar,
+    Pagination,
+    CircularProgress,
+    Chip,
+    Tabs,
+    Tab,
+} from '@mui/material';
 import { getCommunityProjects } from './services';
 import StarIcon from '@mui/icons-material/Star';
 import { GitHubRepository } from './types';
@@ -47,7 +59,14 @@ const CommunityProjectsPage: React.FC = () => {
     }
 
     return (
-        <Box sx={{ p: 3, pr: 6 }}>
+        <Box
+            sx={{
+                p: { xs: 1, md: 1, lg: 3 },
+                pr: { xs: 1, md: 1, lg: 6 },
+                width: '100%',
+                overflowX: 'hidden',
+            }}
+        >
             <Box>
                 <Typography variant="h5" fontWeight={600}>
                     Community Projects
@@ -66,7 +85,12 @@ const CommunityProjectsPage: React.FC = () => {
             </Box>
 
             <Box sx={{ mt: 2, py: 2, position: 'sticky', top: 0, backdropFilter: 'blur(10px)', zIndex: 1 }}>
-                <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
+                <Tabs
+                    value={0}
+                    variant="scrollable"
+                    sx={{ border: 'none', minHeight: 34 }}
+                    indicatorColor={'transparent' as any}
+                >
                     {languages.map((language) => (
                         <Chip
                             key={language.value}
@@ -74,9 +98,10 @@ const CommunityProjectsPage: React.FC = () => {
                             onClick={() => handleLanguageChange(language.value)}
                             variant={selectedLanguage === language.value ? 'filled' : 'outlined'}
                             color={selectedLanguage === language.value ? 'primary' : 'default'}
+                            sx={{ mr: 1 }}
                         />
                     ))}
-                </Stack>
+                </Tabs>
             </Box>
 
             <Box sx={{ position: 'relative' }}>
@@ -92,7 +117,7 @@ const CommunityProjectsPage: React.FC = () => {
                         <CircularProgress size={40} />
                     </Box>
                 ) : (
-                    <Grid container spacing={3} sx={{ mt: 1 }}>
+                    <Grid container spacing={3}>
                         {!isFetching &&
                             !isLoading &&
                             data?.items?.map((project: GitHubRepository) => (

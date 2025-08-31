@@ -13,7 +13,7 @@ export default function TableOfContents({ headings }: Readonly<TableOfContentsPr
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
-        const container = document.getElementById('docs-container');
+        const container = document.getElementById('layout');
 
         const handleScroll = () => {
             if (container && container?.scrollTop >= 100) {
@@ -31,7 +31,7 @@ export default function TableOfContents({ headings }: Readonly<TableOfContentsPr
     }, []);
 
     const handleScrollTop = () => {
-        const container = document.getElementById('docs-container');
+        const container = document.getElementById('layout');
         container?.scrollTo({ top: 0, behavior: 'smooth' });
     };
 

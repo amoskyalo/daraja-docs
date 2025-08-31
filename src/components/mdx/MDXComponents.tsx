@@ -338,13 +338,30 @@ export const MDXComponents = {
         <Stack
             direction="row"
             alignItems="center"
-            sx={{ border: 1, borderColor: 'divider', borderRadius: 1, px: 1, py: 0.5, mb: 2, width: 'max-content' }}
+            sx={{
+                border: 1,
+                borderColor: 'divider',
+                borderRadius: 1,
+                px: 1,
+                py: 0.5,
+                mb: 2,
+                width: 'max-content',
+                maxWidth: '100%',
+                overflow: 'hidden',
+                flexWrap: 'nowrap',
+            }}
         >
             <Typography variant="body2" color="primary.main" sx={{ mr: 1, fontWeight: 'bold', fontSize: 14 }}>
                 {props.method} :
             </Typography>
             <Link
-                sx={{ fontSize: 14 }}
+                sx={{
+                    fontSize: 14,
+                    flex: 1,
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                }}
                 underline="none"
                 href={props.href}
                 target="_blank"
@@ -487,7 +504,6 @@ export const MDXComponents = {
 
     Playground: ({ children, ...props }: any) => <Playground {...props}>{children}</Playground>,
 
-    
     NoteInfo: (props: MDXElementProps) => (
         <Typography
             variant="body2"

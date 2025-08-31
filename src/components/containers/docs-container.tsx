@@ -1,6 +1,6 @@
 'use client';
 
-import { Grid, Breadcrumbs, Link as MUILink, Typography } from '@mui/material';
+import { Grid, Breadcrumbs, Link as MUILink, Typography, Box } from '@mui/material';
 import { useResponsiveness } from '@/hooks/useResponsiveness';
 import { useRouter } from 'next/navigation';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -45,7 +45,7 @@ export const MainPanel = ({ children, slug }: Readonly<{ children: React.ReactNo
     ];
 
     return (
-        <Grid size={isMobile ? 12 : 9} sx={{ pb: 4, pr: 10 }}>
+        <Grid size={isMobile ? 12 : 9} sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: { xs: 2, md: 2, lg: 10 } }}>
             {slug && (
                 <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="small" />}
@@ -55,7 +55,7 @@ export const MainPanel = ({ children, slug }: Readonly<{ children: React.ReactNo
                     {breadcrumbs}
                 </Breadcrumbs>
             )}
-            {children}
+            <Box sx={{ mt: slug ? 0 : 2 }}>{children}</Box>
         </Grid>
     );
 };

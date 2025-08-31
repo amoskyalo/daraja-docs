@@ -51,12 +51,12 @@ body {
 }
 
 .MuiContainer-root {
-  max-width: clamp(320px, 90vw, 1400px) !important;
+  max-width: clamp(320px, 95vw, 1400px) !important;
 }
 
 @media (min-width: 600px) {
   .MuiContainer-root {
-    max-width: clamp(600px, 85vw, 1000px) !important;
+    max-width: clamp(600px, 95vw, 1000px) !important;
   }
 }
 

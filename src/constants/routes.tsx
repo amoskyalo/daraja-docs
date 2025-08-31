@@ -7,24 +7,24 @@ const NAVIGATION: Navigation = [
         title: 'Main',
     },
     {
-        segment: 'dashboard/my-apps',
+        segment: '/dashboard/my-apps',
         title: 'My Apps',
         icon: <AppWindow size={20} />,
     },
     {
-        segment: 'apis',
+        segment: '/apis',
         title: 'APIs',
         pattern: 'apis{/:name}*',
         icon: <Webhook size={20} />,
     },
     {
-        segment: 'dashboard/mini-apps',
+        segment: '/dashboard/mini-apps',
         title: 'Mini Apps',
         pattern: 'dashboard/mini-apps',
         icon: <Codesandbox size={20} />,
     },
     {
-        segment: 'dashboard/self-service',
+        segment: '/dashboard/self-service',
         title: 'Self Service',
         pattern: 'dashboard/self-service',
         icon: <MessageCircleQuestionMark size={20} />,
@@ -34,19 +34,19 @@ const NAVIGATION: Navigation = [
         title: 'Documentation',
     },
     {
-        segment: 'documentation/introduction',
+        segment: '/documentation/introduction',
         title: 'Introduction',
     },
     {
-        segment: 'documentation/terminologies',
+        segment: '/documentation/terminologies',
         title: 'Terminologies',
     },
     {
-        segment: 'documentation/development-setup',
+        segment: '/documentation/development-setup',
         title: 'Development Setup',
     },
     {
-        segment: 'documentation/going-live-and-certificates',
+        segment: '/documentation/going-live-and-certificates',
         title: 'Going Live & Certificates',
     },
     {
@@ -54,11 +54,11 @@ const NAVIGATION: Navigation = [
         title: 'Community Resources',
     },
     {
-        segment: 'resources/going-live-and-certificates',
+        segment: '/resources/blogs',
         title: 'Blogs',
     },
     {
-        segment: 'resources/community-projects',
+        segment: '/resources/community-projects',
         title: 'Github',
     },
 ];

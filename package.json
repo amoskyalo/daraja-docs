@@ -29,6 +29,7 @@
         "lucide-react": "^0.536.0",
         "next": "15.4.6",
         "next-mdx-remote": "^4.4.1",
+        "path-to-regexp": "^8.2.0",
         "prismjs": "^1.30.0",
         "react": "19.1.0",
         "react-dom": "19.1.0",

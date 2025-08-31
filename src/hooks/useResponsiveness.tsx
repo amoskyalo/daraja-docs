@@ -9,7 +9,7 @@ export const useResponsiveness = () => {
     const isLaptop = useMediaQuery('(max-width: 1439px)');
     const isDesktop = useMediaQuery('(min-width: 1824px)');
 
-    const onSmallScreen = isMobile || isMiniTablet || isTablet;
+    const isSmallScreen = isMobile || isMiniTablet || isTablet;
 
-    return { isMobile, isMiniTablet, isTablet, isLaptop, isDesktop, onSmallScreen };
+    return { isMobile, isMiniTablet, isTablet, isLaptop, isDesktop, isSmallScreen };
 };

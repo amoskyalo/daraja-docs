@@ -3,12 +3,14 @@
 import { useQueryPosts } from './services';
 import { Box, Typography, Stack, CircularProgress, Grid, Link, Pagination } from '@mui/material';
 import Image from 'next/image';
+import { useResponsiveness } from '@/hooks/useResponsiveness';
 
 const BlogsPage = () => {
     const { data, isLoading, isFetching } = useQueryPosts();
+    const { isSmallScreen } = useResponsiveness();
 
     return (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3, px: { xs: 1, md: 1, lg: 3 } }}>
             <Box>
                 <Typography variant="h5" fontWeight={600}>
                     Daraja API Blogs & Tutorials
@@ -56,7 +58,7 @@ const BlogsPage = () => {
                                                 alt={blog.title}
                                                 width={500}
                                                 height={300}
-                                                style={{ borderRadius: 2, width: '100%', height: 120 }}
+                                                style={{ borderRadius: 2, width: '100%', height: isSmallScreen ? 150 : 120 }}
                                             />
                                             <Typography variant="body1" sx={{ fontWeight: 700, fontSize: 18 }}>
                                                 {blog.title}

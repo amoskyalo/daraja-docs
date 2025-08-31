@@ -10,9 +10,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <Suspense fallback={<LinearProgress />}>
-                <Stack direction="column" sx={{ height: 'calc(100vh - 1px)', overflow: 'auto', position: 'relative' }}>
+                <Stack
+                    id="layout"
+                    direction="column"
+                    sx={{ height: 'calc(100vh - 1px)', overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
+                >
                     <Header />
-                    <Container maxWidth="lg" sx={{ px: '0px !important', flex: 1,  }}>
+                    <Container maxWidth="lg" sx={{ px: '0px !important', flex: 1 }}>
                         <Stack
                             direction="row"
                             justifyContent="space-between"

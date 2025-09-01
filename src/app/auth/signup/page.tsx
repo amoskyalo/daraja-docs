@@ -5,18 +5,20 @@ import Link from 'next/link';
 import TextFeldInput from '@/components/inputs/TextFeldInput';
 import { Formik, Form } from 'formik';
 import { utils } from '@/utils';
-import { userSignupService, initialValues, validationSchema } from './services';
 import PhoneNumberInput from '@/components/inputs/phoneNumberInput';
 
 export default function SignupPage() {
-    const { onSubmit, loading } = userSignupService();
-
     return (
         <Formik
             validateOnBlur={false}
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
+            initialValues={{
+                first_name: '',
+                last_name: '',
+                phone_number: '',
+                email: '',
+                password: '',
+            }}
+            onSubmit={(values) => console.log(values)}
         >
             {(formik) => (
                 <Box sx={{ width: 350 }}>
@@ -90,13 +92,11 @@ export default function SignupPage() {
                             </Box>
 
                             <Button
-                                disabled={loading}
                                 type="submit"
                                 fullWidth
                                 size="large"
                                 variant="contained"
                                 sx={{ height: 40 }}
-                                startIcon={loading ? <CircularProgress size={20} /> : null}
                             >
                                 Register now
                             </Button>

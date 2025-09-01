@@ -10,6 +10,7 @@
         "prepare": "husky"
     },
     "dependencies": {
+        "@apollo/client": "^4.0.3",
         "@emotion/cache": "^11.14.0",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
@@ -17,11 +18,10 @@
         "@mui/material": "^7.3.1",
         "@mui/material-nextjs": "^7.3.0",
         "@mui/x-data-grid": "^8.9.2",
-        "@tanstack/react-query": "^5.84.1",
         "@toolpad/core": "^0.16.0",
         "algoliasearch": "^5.35.0",
-        "axios": "^1.11.0",
         "formik": "^2.4.6",
+        "graphql": "^16.11.0",
         "gray-matter": "^4.0.3",
         "install": "^0.13.0",
         "jsdom": "^26.1.0",
@@ -38,6 +38,7 @@
         "rehype-slug": "^6.0.0",
         "remark": "^15.0.1",
         "remark-gfm": "^3.0.1",
+        "rxjs": "^7.8.2",
         "unist-util-visit": "^5.0.0",
         "yup": "^1.7.0"
     },

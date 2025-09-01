@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useContext, useMemo, useState } from 'react';
-import { useQueryGet } from '@/hooks/useQueryGet';
 import { User, UserAuthType } from './types';
 import { usePathname } from 'next/navigation';
 
@@ -18,12 +17,14 @@ export const LoginCredentialsContextProvider = ({ children }: { children: React.
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
 
-    const { data: user, isLoading } = useQueryGet<User, any>({
-        url: 'profile',
-        options: { refetchOnWindowFocus: false, enabled: !pathname.includes('/docs') },
-    });
+    // const { data: user, isLoading } = useQueryGet<User, any>({
+    //     url: 'profile',
+    //     options: { refetchOnWindowFocus: false, enabled: !pathname.includes('/docs') },
+    // });
 
-    const values = useMemo(() => ({ user: user?.data, isLoading }), [user, isLoading]);
+    // const values = useMemo(() => ({ user: user?.data, isLoading }), [user, isLoading]);
+
+    const values = null;
 
     return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };

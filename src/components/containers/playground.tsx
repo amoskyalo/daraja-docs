@@ -4,7 +4,6 @@ import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 // import ReactJson from "react-json-view";
-import { useQueryGet } from "@/hooks/useQueryGet";
 import TextFeldInput from "../inputs/TextFeldInput";
 import WebhookRoundedIcon from "@mui/icons-material/WebhookRounded";
 import { SelectFieldInput } from "../inputs/SelectFieldInput";
@@ -118,11 +117,6 @@ export const Playground = ({ children, requestParameters, endpoint, method, type
                 return null;
         }
     };
-
-    const { data: applications } = useQueryGet<any, any>({
-        url: "applications",
-        options: { enabled: Boolean(user?.id) },
-    });
 
     const credentials = btoa(
         `${selectedProject?.application?.client_id}:${selectedProject?.application?.client_secret}`
@@ -348,7 +342,7 @@ export const Playground = ({ children, requestParameters, endpoint, method, type
                                 },
                             }}
                         >
-                            {applications?.data?.map((project: any, index: number) => (
+                            {/* {applications?.data?.map((project: any, index: number) => (
                                 <MenuItem
                                     key={index}
                                     onClick={() => {
@@ -364,7 +358,7 @@ export const Playground = ({ children, requestParameters, endpoint, method, type
                                     />
                                     {project.application.name}
                                 </MenuItem>
-                            ))}
+                            ))} */}
                         </Menu>
                     </Stack>
 

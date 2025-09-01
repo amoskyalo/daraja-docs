@@ -61,6 +61,14 @@ const NAVIGATION: Navigation = [
         segment: '/resources/community-projects',
         title: 'Github',
     },
+    {
+        kind: 'header',
+        title: 'Support',
+    },
+    {
+        segment: '/documentation/faqs',
+        title: 'FAQs',
+    },
 ];
 
 export default NAVIGATION;

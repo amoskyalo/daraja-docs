@@ -1,12 +1,19 @@
 'use client';
 
-import { useQueryPosts } from './services';
 import { Box, Typography, Stack, CircularProgress, Grid, Link, Pagination } from '@mui/material';
 import Image from 'next/image';
 import { useResponsiveness } from '@/hooks/useResponsiveness';
+import { useQuery } from '@apollo/client/react';
+import { GET_BLOGS } from './graphql';
+import { Response } from './types';
 
 const BlogsPage = () => {
-    const { data, isLoading, isFetching } = useQueryPosts();
+    const { data, loading } = useQuery<Response>(GET_BLOGS, {
+        variables: {
+            first: 50,
+        },
+    });
+
     const { isSmallScreen } = useResponsiveness();
 
     return (
@@ -28,7 +35,7 @@ const BlogsPage = () => {
             </Box>
 
             <Box sx={{ position: 'relative', mt: 3 }}>
-                {isLoading || isFetching ? (
+                {loading ? (
                     <Box
                         sx={{
                             display: 'flex',
@@ -41,65 +48,67 @@ const BlogsPage = () => {
                     </Box>
                 ) : (
                     <Grid container spacing={3} sx={{ mt: 1 }}>
-                        {!isFetching &&
-                            !isLoading &&
-                            data?.map((blog) => (
-                                <Grid key={blog.url} size={{ xs: 12, sm: 6, md: 3 }} sx={{ cursor: 'pointer' }}>
-                                    <Link
-                                        underline="none"
-                                        color="text.primary"
-                                        href={blog.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <Stack spacing={1}>
-                                            <Image
-                                                src={blog.coverImage ?? ''}
-                                                alt={blog.title}
-                                                width={500}
-                                                height={300}
-                                                style={{ borderRadius: 2, width: '100%', height: isSmallScreen ? 150 : 120 }}
-                                            />
-                                            <Typography variant="body1" sx={{ fontWeight: 700, fontSize: 18 }}>
-                                                {blog.title}
-                                            </Typography>
-                                            <Typography
-                                                variant="body2"
-                                                color="text.secondary"
-                                                sx={{
-                                                    wordBreak: 'break-word',
-                                                    overflowWrap: 'break-word',
-                                                    whiteSpace: 'pre-wrap',
-                                                }}
-                                            >
-                                                {blog.description}
-                                            </Typography>
-                                        </Stack>
-                                    </Link>
-                                </Grid>
-                            ))}
+                        {data?.response?.edges?.map((blog) => (
+                            <Grid key={blog.node.id} size={{ xs: 12, sm: 6, md: 3 }} sx={{ cursor: 'pointer' }}>
+                                <Link
+                                    underline="none"
+                                    color="text.primary"
+                                    href={blog.node.id}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <Stack spacing={1}>
+                                        <Image
+                                            src={blog?.node.coverImage?.url ?? blog?.node.bannerImage?.url ?? ''}
+                                            alt={blog?.node.title}
+                                            width={500}
+                                            height={300}
+                                            style={{
+                                                borderRadius: 2,
+                                                width: '100%',
+                                                height: 150,
+                                            }}
+                                        />
+                                        <Typography variant="body1" sx={{ fontWeight: 700, fontSize: 18 }}>
+                                            {blog?.node.title}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                            sx={{
+                                                wordBreak: 'break-word',
+                                                overflowWrap: 'break-word',
+                                                whiteSpace: 'pre-wrap',
+                                            }}
+                                        >
+                                            {blog?.node.brief}
+                                        </Typography>
+                                    </Stack>
+                                </Link>
+                            </Grid>
+                        ))}
                     </Grid>
                 )}
             </Box>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                    <Pagination
-                        count={10}
-                        page={1}
-                        // onChange={handlePageChange}
-                        color="primary"
-                        size="large"
-                        showFirstButton
-                        showLastButton
-                        disabled={isFetching}
-                    />
-                </Box>
+                <Pagination
+                    count={10}
+                    page={1}
+                    //onChange={handlePageChange}
+                    color="primary"
+                    size="large"
+                    showFirstButton
+                    showLastButton
+                    disabled={loading}
+                />
+            </Box>
 
-                <Box sx={{ textAlign: 'center', mt: 2 }}>
-                    <Typography variant="caption" color="text.secondary">
-                        Page {1} of {10}
-                    </Typography>
-                </Box>
+            <Box sx={{ textAlign: 'center', mt: 2 }}>
+                <Typography variant="caption" color="text.secondary">
+                    Page {1} of {10}
+                </Typography>
+            </Box>
         </Box>
     );
 };

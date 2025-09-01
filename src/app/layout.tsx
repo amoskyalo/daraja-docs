@@ -4,7 +4,7 @@ import './globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import AppThemeProvider from '@/theme/ThemeProvider';
 import { SnackbarContainer } from '@/components/snackbar';
-import QueryClientProvider from '@/context/query-context';
+import ApolloClientProvider from '@/context/apollo-context';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -31,9 +31,7 @@ export default function RootLayout({
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <AppThemeProvider>
                     <SnackbarContainer />
-                    <QueryClientProvider>
-                        {children}
-                    </QueryClientProvider>
+                    <ApolloClientProvider>{children}</ApolloClientProvider>
                 </AppThemeProvider>
             </body>
         </html>

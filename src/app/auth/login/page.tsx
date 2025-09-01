@@ -6,18 +6,27 @@ import Link from 'next/link';
 import TextFeldInput from '@/components/inputs/TextFeldInput';
 import { Formik, Form } from 'formik';
 import { utils } from '@/utils';
-import { initialValues, validationSchema, userLoginService } from './services';
 
 export default function LoginPage() {
     const [rememberMe, setRememberMe] = useState(false);
-    const { onLoginSubmit, loading } = userLoginService();
 
     return (
         <Formik
             validateOnBlur={false}
-            initialValues={initialValues}
-            onSubmit={onLoginSubmit}
-            validationSchema={validationSchema}
+            initialValues={{ email: '', password: '' }}
+            onSubmit={(values) => console.log(values)}
+            validationSchema={utils.getValidationSchema([
+                {
+                    name: 'email',
+                    type: 'email',
+                    errorMessage: 'Please enter a valid email address',
+                },
+                {
+                    name: 'password',
+                    type: 'password',
+                    errorMessage: 'Please enter a valid password',
+                },
+            ])}
         >
             {(formik) => (
                 <Box sx={{ width: 375, borderRadius: 4, p: 4 }}>
@@ -95,8 +104,6 @@ export default function LoginPage() {
                             </Box>
 
                             <Button
-                                disabled={loading}
-                                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
                                 type="submit"
                                 fullWidth
                                 size="small"

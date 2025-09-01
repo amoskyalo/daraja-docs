@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 import { OTPInput } from '@/components/inputs/OTPInput';
 import { useRouter } from 'next/navigation';
 import { useLoginCredentials } from '@/context/auth-context';
-import { userVerifyOTP } from './services';
 
 const otpInitialValues = {
     otp: '',
@@ -17,7 +16,6 @@ const OtpVerifyPage = () => {
     const [timer, setTimer] = useState(60);
     const [canResend, setCanResend] = useState(false);
     const { loginCredentials } = useLoginCredentials();
-    const { onOtpSubmit, loading } = userVerifyOTP({ loginCredentials });
     const router = useRouter();
 
     const otpValidationSchema = utils.getValidationSchema([
@@ -65,7 +63,7 @@ const OtpVerifyPage = () => {
         <Formik
             validateOnBlur={false}
             initialValues={otpInitialValues}
-            onSubmit={onOtpSubmit}
+            onSubmit={(values) => console.log(values)}
             validationSchema={otpValidationSchema}
         >
             {(formik) => (
@@ -113,8 +111,6 @@ const OtpVerifyPage = () => {
                             </Box>
 
                             <Button
-                                disabled={loading}
-                                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
                                 type="submit"
                                 fullWidth
                                 size="large"

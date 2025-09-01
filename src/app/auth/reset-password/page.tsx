@@ -8,7 +8,6 @@ import { OTPInput } from '@/components/inputs/OTPInput';
 import { useRouter } from 'next/navigation';
 import { useLoginCredentials } from '@/context/auth-context';
 import TextFeldInput from '@/components/inputs/TextFeldInput';
-import { resetPasswordService } from './servces';
 
 const otpInitialValues = {
     otp: '',
@@ -19,7 +18,6 @@ const ResetPasswordPage = () => {
     const [timer, setTimer] = useState(60);
     const [canResend, setCanResend] = useState(false);
     const { loginCredentials } = useLoginCredentials();
-    const { resetPassword, loading } = resetPasswordService();
     const router = useRouter();
 
     const otpValidationSchema = utils.getValidationSchema([
@@ -67,7 +65,7 @@ const ResetPasswordPage = () => {
         <Formik
             validateOnBlur={false}
             initialValues={otpInitialValues}
-            onSubmit={resetPassword}
+            onSubmit={(values) => console.log(values)}
             validationSchema={otpValidationSchema}
         >
             {(formik) => (
@@ -129,8 +127,6 @@ const ResetPasswordPage = () => {
                             </Box>
 
                             <Button
-                                disabled={loading}
-                                startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
                                 type="submit"
                                 fullWidth
                                 size="large"

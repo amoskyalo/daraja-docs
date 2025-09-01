@@ -4,7 +4,6 @@ import { Box, Typography, Button, CircularProgress, Container, Stack } from '@mu
 import TextFeldInput from '@/components/inputs/TextFeldInput';
 import { Formik, Form } from 'formik';
 import { utils } from '@/utils';
-import { forgetPasswordService } from './services';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useRouter } from 'next/navigation';
 
@@ -14,7 +13,6 @@ const initialValues = {
 
 export default function ForgetPasswordPage() {
     const router = useRouter();
-    const { requestPasswordReset, loading } = forgetPasswordService();
 
     const validationSchema = utils.getValidationSchema([
         {
@@ -38,7 +36,7 @@ export default function ForgetPasswordPage() {
                 <Formik
                     validateOnBlur={false}
                     initialValues={initialValues}
-                    onSubmit={requestPasswordReset}
+                    onSubmit={(values) => console.log(values)}
                     validationSchema={validationSchema}
                 >
                     {(formik) => (
@@ -79,8 +77,6 @@ export default function ForgetPasswordPage() {
                                     </Box>
 
                                     <Button
-                                        disabled={loading}
-                                        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
                                         type="submit"
                                         fullWidth
                                         size="small"

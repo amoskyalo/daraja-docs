@@ -1,6 +1,5 @@
 import { DataGridProps, GridColDef } from '@mui/x-data-grid';
 import { ReactNode } from 'react';
-import { urls } from '@/api/urls';
 
 export type DataGridToolbarProps = {
     onAdd?: () => void;
@@ -37,10 +36,6 @@ export type GridProps<TData, TParams> = Omit<DataGridProps, 'columns'> &
         openFormOnNewPage?: boolean;
         hasNew?: boolean;
         hasActions?: boolean;
-        apiConfig: {
-            getApi: keyof typeof urls;
-            deleteApi?: keyof typeof urls;
-        };
         columns: (GridColDef & { mobileWidth?: number })[];
         params?: TParams;
         dataKey?: keyof TData;

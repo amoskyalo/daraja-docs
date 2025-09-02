@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
 
-const protected_routes: string[] = ['/dashboard/applications'];
+const protected_routes: string[] = ['/my-apps'];
 
 export async function middleware(request: NextRequest) {
     const cookieStore = await cookies();
@@ -16,9 +16,9 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL(`/${route_name}?tab=${initial_tab}`, request.url));
     }
 
-    // if (isProtected_route > -1 && !token) {
-    //     return NextResponse.redirect(new URL('/auth/login', request.url));
-    // }
+    if (isProtected_route > -1 && !token) {
+        return NextResponse.redirect(new URL('/auth/login', request.url));
+    }
 
     if (requested_route === '/dashboard/applications' && !page_active_tab) {
         return appendTab('dashboard/applications', 'sandbox');

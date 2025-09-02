@@ -59,7 +59,11 @@ const BlogsPage = () => {
                                 >
                                     <Stack spacing={1}>
                                         <Image
-                                            src={blog?.node.coverImage?.url ?? blog?.node.bannerImage?.url ?? ''}
+                                            src={
+                                                blog?.node.coverImage?.url ??
+                                                blog?.node.bannerImage?.url ??
+                                                'https://repository-images.githubusercontent.com/238495337/29524700-6c7a-11eb-8061-fe8c40a59af3'
+                                            }
                                             alt={blog?.node.title}
                                             width={500}
                                             height={300}

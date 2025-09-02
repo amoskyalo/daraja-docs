@@ -59,7 +59,7 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
         >
             <Stack sx={{ pt: 1, pl: 2, pr: 1 }} direction="row" alignItems="center" justifyContent="space-between">
                 <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
-                    {title}
+                    {title ?? 'Response'}
                 </Typography>
 
                 <Box sx={{ position: 'relative' }}>

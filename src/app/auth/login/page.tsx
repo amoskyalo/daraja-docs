@@ -1,123 +1,111 @@
 'use client';
 
-import { useState } from 'react';
-import { Box, Typography, Button, Checkbox, FormControlLabel, Link as MuiLink, CircularProgress } from '@mui/material';
-import Link from 'next/link';
+import { Box, Typography, Button, Link, Stack, CircularProgress } from '@mui/material';
 import TextFeldInput from '@/components/inputs/TextFeldInput';
 import { Formik, Form } from 'formik';
 import { utils } from '@/utils';
+import { initialValues, validationSchema, useLogin } from './services';
 
 export default function LoginPage() {
-    const [rememberMe, setRememberMe] = useState(false);
+    const { handleLogin, loading } = useLogin();
 
     return (
-        <Formik
-            validateOnBlur={false}
-            initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => console.log(values)}
-            validationSchema={utils.getValidationSchema([
-                {
-                    name: 'email',
-                    type: 'email',
-                    errorMessage: 'Please enter a valid email address',
-                },
-                {
-                    name: 'password',
-                    type: 'password',
-                    errorMessage: 'Please enter a valid password',
-                },
-            ])}
-        >
-            {(formik) => (
-                <Box sx={{ width: 375, borderRadius: 4, p: 4 }}>
-                    <Box>
-                        <Typography
-                            variant="h5"
-                            sx={{
-                                fontWeight: 'bold',
-                                color: 'text.primary',
-                                textAlign: 'center',
-                            }}
-                        >
-                            Welcome Back
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            sx={{
-                                mb: 2,
-                                fontWeight: 'medium',
-                                color: 'text.primary',
-                                textAlign: 'center',
-                            }}
-                        >
-                            Enter your credentials to log in to your developer account
-                        </Typography>
-                    </Box>
+        <Stack direction="row" justifyContent="center" alignItems="center" sx={{ height: '100%' }}>
+            <Formik
+                validateOnBlur={false}
+                initialValues={initialValues}
+                onSubmit={(values) => handleLogin(values)}
+                validationSchema={validationSchema}
+            >
+                {(formik) => (
+                    <Box sx={{ width: 375, borderRadius: 4, p: 4 }}>
+                        <Box>
+                            <Typography
+                                variant="h5"
+                                sx={{
+                                    fontWeight: 'bold',
+                                    color: 'text.primary',
+                                    textAlign: 'center',
+                                }}
+                            >
+                                Account Login
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    mb: 3,
+                                    fontWeight: 'medium',
+                                    color: 'text.primary',
+                                    textAlign: 'center',
+                                    opacity: 0.8,
+                                }}
+                            >
+                                Enter your email or username and password to login
+                            </Typography>
+                        </Box>
 
-                    <Box sx={{ width: '100%' }}>
-                        <Form>
-                            <Box sx={{ mb: 2 }}>
-                                <TextFeldInput
-                                    fullWidth
-                                    type="email"
-                                    label="E-mail"
-                                    placeholder="Enter your email address"
-                                    {...utils.getFormikFieldProps({ formik, field: 'email' })}
-                                />
-                            </Box>
+                        <Box sx={{ width: '100%' }}>
+                            <Form>
+                                <Box sx={{ mb: 2 }}>
+                                    <TextFeldInput
+                                        fullWidth
+                                        type="email"
+                                        label="E-mail or username"
+                                        placeholder="Enter your email address or username"
+                                        {...utils.getFormikFieldProps({ formik, field: 'email' })}
+                                    />
+                                </Box>
 
-                            <Box sx={{ mb: 2 }}>
-                                <TextFeldInput
-                                    fullWidth
-                                    type="password"
-                                    label="Password"
-                                    placeholder="Enter your password"
-                                    isPassword
-                                    {...utils.getFormikFieldProps({ formik, field: 'password' })}
-                                />
-                            </Box>
+                                <Box sx={{ mb: 1 }}>
+                                    <TextFeldInput
+                                        fullWidth
+                                        type="password"
+                                        label="Password"
+                                        placeholder="Enter your password"
+                                        isPassword
+                                        {...utils.getFormikFieldProps({ formik, field: 'password' })}
+                                    />
+                                </Box>
 
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={rememberMe}
-                                            onChange={(e) => setRememberMe(e.target.checked)}
-                                            size="small"
-                                        />
-                                    }
-                                    label="Remember me"
-                                />
-                                <MuiLink
-                                    href="/auth/forget-password"
+                                <Box
                                     sx={{
-                                        color: 'primary.main',
-                                        textDecoration: 'none',
-                                        fontWeight: 'medium',
-                                        '&:hover': {
-                                            textDecoration: 'underline',
-                                        },
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        alignItems: 'center',
+                                        mb: 3,
                                     }}
                                 >
-                                    Forgot password?
-                                </MuiLink>
-                            </Box>
+                                    <Link
+                                        href="/auth/forget-password"
+                                        sx={{
+                                            color: 'primary.main',
+                                            textDecoration: 'none',
+                                            fontSize: '14px',
+                                            '&:hover': {
+                                                textDecoration: 'underline',
+                                            },
+                                        }}
+                                    >
+                                        Forgot password?
+                                    </Link>
+                                </Box>
 
-                            <Button
-                                type="submit"
-                                fullWidth
-                                size="small"
-                                variant="contained"
-                                sx={{ height: 40 }}
-                            >
-                                Log in
-                            </Button>
+                                <Button
+                                    startIcon={loading ? <CircularProgress size={18} color="inherit" /> : null}
+                                    type="submit"
+                                    fullWidth
+                                    size="small"
+                                    variant="contained"
+                                    sx={{ height: 40 }}
+                                    disabled={loading}
+                                >
+                                    Login
+                                </Button>
 
-                            <Box sx={{ textAlign: 'center', mt: 2 }}>
-                                <Typography variant="body2" color="text.secondary">
-                                    Don&apos;t have an account?{' '}
-                                    <Link href="/auth/signup" passHref>
-                                        <MuiLink
+                                <Box sx={{ textAlign: 'center', mt: 2 }}>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Don&apos;t have an account?{' '}
+                                        <Link
                                             sx={{
                                                 color: 'primary.main',
                                                 textDecoration: 'none',
@@ -127,15 +115,15 @@ export default function LoginPage() {
                                                 },
                                             }}
                                         >
-                                            Sign up
-                                        </MuiLink>
-                                    </Link>
-                                </Typography>
-                            </Box>
-                        </Form>
+                                            Go to Sign up
+                                        </Link>
+                                    </Typography>
+                                </Box>
+                            </Form>
+                        </Box>
                     </Box>
-                </Box>
-            )}
-        </Formik>
+                )}
+            </Formik>
+        </Stack>
     );
 }

@@ -38,9 +38,13 @@ const Header = () => {
     }, [searchModalOpen]);
 
     return (
-        <AppBar position="sticky" elevation={0} sx={{ boxShadow: 'none', borderBottom: 1, borderColor: 'divider' }}>
+        <AppBar
+            position="sticky"
+            elevation={0}
+            sx={{ boxShadow: 'none', borderBottom: 1, borderColor: 'divider', backgroundColor: 'background.default' }}
+        >
             <Container maxWidth="lg" sx={{ px: '0px !important' }}>
-                <Toolbar sx={{  px: '0px !important' }}>
+                <Toolbar sx={{ px: '0px !important' }}>
                     <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
                         <Stack direction="row" alignItems="center" sx={{ height: '100%', paddingTop: 0.5 }}>
                             <Image

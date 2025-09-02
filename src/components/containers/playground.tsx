@@ -7,7 +7,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import TextFeldInput from "../inputs/TextFeldInput";
 import WebhookRoundedIcon from "@mui/icons-material/WebhookRounded";
 import { SelectFieldInput } from "../inputs/SelectFieldInput";
-import { useAuth } from "@/context/auth-context";
+// import { useAuth } from "@/context/auth-context";
 import Image from "next/image";
 import { Formik, Form } from "formik";
 import { utils } from "@/utils";
@@ -51,15 +51,15 @@ export const Playground = ({ children, requestParameters, endpoint, method, type
 
     // const { simulateRequest, response, loading } = useSimulateApis();
     // const { copied, Copy } = useCopyToClipboard();
-    const { user } = useAuth();
+    // const { user } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
 
     const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
-        if (newValue === 1 && !user?.id) {
-            router.push(`/auth/login?redirect=${pathname}`);
-            return;
-        }
+        // if (newValue === 1 && !user?.id) {
+        //     router.push(`/auth/login?redirect=${pathname}`);
+        //     return;
+        // }
 
         setActiveTab(newValue);
     };

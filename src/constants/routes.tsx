@@ -7,7 +7,7 @@ const NAVIGATION: Navigation = [
         title: 'Main',
     },
     {
-        segment: '/dashboard/my-apps',
+        segment: '/my-apps',
         title: 'My Apps',
         icon: <AppWindow size={20} />,
     },

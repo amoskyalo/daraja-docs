@@ -1,4 +1,4 @@
-import { GridColDef, GridRowId, GridValidRowModel, DataGrid } from '@mui/x-data-grid';
+import { GridColDef, GridRowId, DataGrid } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from '@/hooks/useSearchParams';
 import DataGridActions from '@/components/datagrid/datagrid-actions';
@@ -37,7 +37,7 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
         hideToolbar = false,
         checkboxSelection = true,
         actions = ['edit', 'delete'],
-        apiConfig,
+        rows,
         ...otherProps
     } = props;
 
@@ -53,20 +53,18 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
         ...rest,
     } as TParams & QueryParams;
 
-    const { getApi } = apiConfig;
-
     const [id, setId] = useState<GridRowId | null>(null);
     const [record, setRecord] = useState<any>(null);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [formOpen, setFormOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
 
-    // useEffect(() => {
-    //     if (record) {
-    //         const updatedRecord = response?.data?.find((item: any) => item.id === record.id);
-    //         setRecord(updatedRecord);
-    //     }
-    // }, [response, record]);
+    useEffect(() => {
+        if (record) {
+            const updatedRecord = rows?.find((item: any) => item.id === record.id);
+            setRecord(updatedRecord);
+        }
+    }, [rows, record]);
 
     const handleDelete = () => {
         setDeleteLoading(true);
@@ -124,7 +122,7 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
                   ]
                 : []),
         ],
-        [columns, hasActions, actionsWidth, actions, renderCustomOption]
+        [columns, hasActions, actionsWidth, actions, renderCustomOption],
     );
 
     const reset = () => {
@@ -135,7 +133,7 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
     };
 
     // const totalNumberOfPages = response?.data?.totalCount ? Math.ceil(response?.data?.totalCount / limit) : 1;
-    // const footer = () => <DataGridFooter loading={isLoading} count={totalNumberOfPages} />;
+    const footer = () => <DataGridFooter loading={false} count={10} />;
 
     return {
         render: () => (
@@ -145,9 +143,8 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
                         {...otherProps}
                         disableRowSelectionOnClick
                         disableColumnMenu={true}
-                        //loading={isLoading || isRefetching}
                         columns={utils.customizeGridColumns(updatedColumns)}
-                        //rows={(response?.data ?? []) as GridValidRowModel[]}
+                        rows={rows}
                         getRowId={(row) => row?.id ?? row?.order_id}
                         checkboxSelection={checkboxSelection}
                         onFilterModelChange={({ quickFilterValues }) =>
@@ -158,7 +155,7 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
                         getRowClassName={({ indexRelativeToCurrentPage }) =>
                             indexRelativeToCurrentPage % 2 === 0 ? 'even-row' : 'odd-row'
                         }
-                        //slots={{ footer, ...(!hideToolbar && { toolbar: DataGridToolbar }) }}
+                        slots={{ footer, ...(!hideToolbar && { toolbar: DataGridToolbar }) }}
                         slotProps={{
                             toolbar: {
                                 onFilter,
@@ -228,7 +225,6 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
         reset,
         setId,
         record,
-        //refetch,
         formOpen,
         setRecord,
         queryparams,

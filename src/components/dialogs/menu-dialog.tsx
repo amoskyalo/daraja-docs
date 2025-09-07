@@ -24,8 +24,12 @@ export const MenuDialog = ({ anchorEl, setAnchorEl, children }: MenuDialogProps)
             }}
             sx={{
                 '& .MuiPaper-root': {
-                    marginTop: 2,
                     minWidth: 150,
+                    elevation: 0,
+                    boxShadow: 0,
+                    border: 1,
+                    borderColor: 'divider',
+                    borderRadius: 2
                 },
             }}
         >

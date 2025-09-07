@@ -6,8 +6,8 @@ export const useApps = () => {
     const [apps, setApps] = useState([]);
 
     const [getApps, { loading, error }] = useMutation(GET_APPS, {
-        onCompleted: (data) => {
-            console.log(data);
+        onCompleted: (res: any) => {
+            setApps(res?.response?.apps);
         },
         onError: (error) => {
             console.log(error);
@@ -16,7 +16,7 @@ export const useApps = () => {
 
     useEffect(() => {
         getApps();
-    }, [])
+    }, []);
 
     return { apps, loading, error, refetch: getApps };
 };

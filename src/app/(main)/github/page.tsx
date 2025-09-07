@@ -109,7 +109,7 @@ const CommunityProjectsPage: React.FC = () => {
                             <Grid
                                 key={project.id}
                                 size={{ xs: 12, sm: 6, md: 4 }}
-                                sx={{ border: 1, borderColor: 'divider', borderRadius: 3, p: 2 }}
+                                sx={{ border: 1, borderColor: 'divider', borderRadius: 2, p: 2 }}
                             >
                                 <Stack spacing={1} direction="row" alignItems="center">
                                     <Avatar src={project.owner.avatar_url} sx={{ height: 22, width: 22 }} />

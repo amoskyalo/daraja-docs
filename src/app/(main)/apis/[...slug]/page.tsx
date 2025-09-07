@@ -37,7 +37,7 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
 
     return (
         <DocsContainer>
-            <MainPanel slug={param.slug.join('/') ?? ""}>
+            <MainPanel>
                 {doc.frontMatter?.description && (
                     <Box sx={{ mb: 3, p: 2, backgroundColor: 'action.hover', borderRadius: 1 }}>
                         <Typography variant="body2" color="text.secondary">

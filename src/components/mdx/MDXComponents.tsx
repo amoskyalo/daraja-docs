@@ -334,47 +334,49 @@ export const MDXComponents = {
         />
     ),
 
-    Link: (props: LinkProps) => (
-        <Stack
-            direction="row"
-            alignItems="center"
-            sx={{
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 1,
-                px: 1,
-                py: 0.5,
-                mb: 2,
-                width: 'max-content',
-                maxWidth: '100%',
-                overflow: 'hidden',
-                flexWrap: 'nowrap',
-            }}
-        >
-            <Typography variant="body2" color="primary.main" sx={{ mr: 1, fontWeight: 'bold', fontSize: 14 }}>
-                {props.method} :
-            </Typography>
-            <Link
+    Link: (props: LinkProps) => {
+        return (
+            <Stack
+                direction="row"
+                alignItems="center"
                 sx={{
-                    fontSize: 14,
-                    flex: 1,
+                    border: 1,
+                    borderColor: 'divider',
+                    borderRadius: 1,
+                    px: 1,
+                    py: 0.5,
+                    mb: 2,
+                    width: 'max-content',
+                    maxWidth: '100%',
                     overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
+                    flexWrap: 'nowrap',
                 }}
-                underline="none"
-                href={props.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                color="text.primary"
             >
-                {props.href}
-            </Link>
-            <Tooltip title="Copy">
-                <ContentCopyIcon sx={{ fontSize: 14, ml: 1, cursor: 'pointer' }} />
-            </Tooltip>
-        </Stack>
-    ),
+                <Typography variant="body2" color="primary.main" sx={{ mr: 1, fontWeight: 'bold', fontSize: 14 }}>
+                    {props.method} :
+                </Typography>
+                <Link
+                    sx={{
+                        fontSize: 14,
+                        flex: 1,
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                    }}
+                    underline="none"
+                    href={props.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    color="text.primary"
+                >
+                    {props.href}
+                </Link>
+                <Tooltip title="Copy">
+                    <ContentCopyIcon sx={{ fontSize: 14, ml: 1, cursor: 'pointer' }} />
+                </Tooltip>
+            </Stack>
+        );
+    },
 
     ApiEndpoint: ({ method, endpoint, description }: ApiEndpointProps) => (
         <Paper elevation={0}>

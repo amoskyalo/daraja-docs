@@ -1,21 +1,62 @@
 'use client';
 
-import { Box, Typography, Tabs, Tab } from '@mui/material';
+import { Box, Typography, Tabs, Tab, Stack, Button } from '@mui/material';
 import { useApps } from './services';
 import { gridConstructor } from '@/ui-models/datagrid-constructor';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
+import AddIcon from '@mui/icons-material/Add';
 
 const MyAppsPage = () => {
     const { apps, loading, error, refetch } = useApps();
 
-    const { render } = new gridConstructor({
+    const { render, setFormOpen } = new gridConstructor({
         grid: {
             columns: [
-                { field: 'app', headerName: 'App' },
-                { field: 'ConsumerKey', headerName: 'Consumer Key' },
-                { field: 'ConsumerSecret', headerName: 'Consumer Secret' },
+                { field: 'app', headerName: 'App', width: 200 },
+                {
+                    field: 'CreatedAt',
+                    headerName: 'Created On',
+                    width: 150,
+                    valueGetter: (__, row) =>
+                        new Date(parseInt(row.CreatedAt)).toLocaleString('en-GB', {
+                            dateStyle: 'short',
+                            timeStyle: 'short',
+                        }),
+                },
+                { field: 'domain', headerName: 'Domain' },
+                { field: 'expired', headerName: 'Expired', type: 'boolean' },
+                { field: 'status', headerName: 'Status' },
+                {
+                    field: 'products',
+                    headerName: 'Total products',
+                    valueGetter: (__, row) => row.products.length,
+                    headerAlign: 'center',
+                    align: 'center',
+                },
                 { field: 'ShortCode', headerName: 'Short Code' },
             ],
-            rows: [],
+            rows: apps ?? [],
+            loading,
+            actions: ['options'],
+            options: [
+                {
+                    name: 'Secrets',
+                    onClick: () => {},
+                    icon: <RemoveRedEyeOutlinedIcon fontSize="small" />,
+                },
+                {
+                    name: 'Products',
+                    onClick: () => {},
+                    icon: <LabelOutlinedIcon fontSize="small" />,
+                },
+                {
+                    name: 'Delete',
+                    onClick: () => {},
+                    icon: <DeleteOutlineOutlinedIcon fontSize="small" color="error" />,
+                },
+            ],
         },
     }).grid();
 
@@ -29,11 +70,27 @@ const MyAppsPage = () => {
                 apps are marked red.
             </Typography>
 
-            <Tabs value={0} sx={{ mt: 2, borderBottom: 1, borderColor: 'divider' }}>
-                <Tab label="Sandbox" />
-                <Tab label="Production" />
-                <Tab label="Revoked" />
-            </Tabs>
+            <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                sx={{ mt: 2, borderBottom: 1, borderColor: 'divider' }}
+            >
+                <Tabs value={0}>
+                    <Tab label="Sandbox" />
+                    <Tab label="Production" />
+                    <Tab label="Revoked" />
+                </Tabs>
+
+                <Button
+                    variant="outlined"
+                    sx={{ height: 34 }}
+                    startIcon={<AddIcon />}
+                    onClick={() => setFormOpen(true)}
+                >
+                    New app
+                </Button>
+            </Stack>
             {render()}
         </Box>
     );

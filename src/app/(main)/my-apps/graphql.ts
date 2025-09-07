@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const GET_APPS = gql`
     mutation {
-        getMyApps {
+        response: getMyApps {
             apps {
                 no
                 app
@@ -13,6 +13,10 @@ export const GET_APPS = gql`
                     apiproduct
                     status
                 }
+                CreatedAt
+                domain
+                expired
+                status
             }
         }
     }

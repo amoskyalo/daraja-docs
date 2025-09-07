@@ -1,9 +1,9 @@
-import { Stack, Typography, ListItemButton, ListItemText, ListItemIcon, Link, Drawer } from '@mui/material';
-import NAVIGATION from '@/constants/routes';
+import { Stack, ListItemButton, ListItemText, Link, Drawer } from '@mui/material';
 import { useRouter, usePathname } from 'next/navigation';
 import { useResponsiveness } from '@/hooks/useResponsiveness';
+import { NAVTABS } from '@/constants/routes';
 
-const DRAWER_WIDTH = 275;
+const DRAWER_WIDTH = 300;
 
 const LeftNav = () => {
     const router = useRouter();
@@ -15,6 +15,8 @@ const LeftNav = () => {
     }
 
     const isSmallScreen = isMobile || isMiniTablet || isTablet;
+
+    const NAVITEMS = NAVTABS.find((item) => item.parent === pathname.split('/')[1])?.items;
 
     function renderNavList() {
         return (
@@ -29,39 +31,23 @@ const LeftNav = () => {
                     position: { md: 'relative', lg: 'sticky' },
                     top: '66px',
                     height: { md: 'auto', lg: 'calc(100vh - 66px)' },
+                    display: NAVITEMS ? 'flex' : 'none',
                 }}
             >
-                {NAVIGATION.map((item, index) => {
-                    if (item.kind === 'divider') {
-                        return;
-                    }
-
-                    if (item.kind === 'header') {
-                        return (
-                            <Typography
-                                sx={{ mt: index === 0 ? 1 : 2, fontWeight: 600, mb: 1 }}
-                                color="text.secondary"
-                                variant="caption"
-                                key={item.title}
-                            >
-                                {item.title}
-                            </Typography>
-                        );
-                    }
-
+                {NAVITEMS?.map((item) => {
                     return (
                         <Link
-                            href={item.segment as string}
+                            href={item.segment}
                             underline="none"
                             color="text.primary"
                             key={item.title}
                             onClick={(e) => {
                                 e.preventDefault();
-                                router.push(item.segment as string);
+                                router.push(item.segment);
                             }}
                         >
                             <ListItemButton
-                                selected={matchPathname(item.segment as string)}
+                                selected={matchPathname(item.segment)}
                                 sx={{
                                     '&.Mui-selected': {
                                         color: 'primary.main',
@@ -69,23 +55,14 @@ const LeftNav = () => {
                                             color: 'primary.main',
                                         },
                                     },
+                                    '& .MuiListItemText-root .MuiTypography-root': {
+                                        fontSize: '15px',
+                                        fontWeight: 'medium',
+                                    },
                                 }}
                                 disableRipple
                             >
-                                {item.icon && (
-                                    <ListItemIcon
-                                        sx={{
-                                            width: 'max-content !important',
-                                            minWidth: 'max-content !important',
-                                            maxWidth: 'max-content !important',
-                                            mr: 2,
-                                        }}
-                                    >
-                                        {item.icon}
-                                    </ListItemIcon>
-                                )}
-
-                                <ListItemText>{item.title}</ListItemText>
+                                <ListItemText primary={item.title} />
                             </ListItemButton>
                         </Link>
                     );

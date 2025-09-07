@@ -145,7 +145,7 @@ const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
                         disableColumnMenu={true}
                         columns={utils.customizeGridColumns(updatedColumns)}
                         rows={rows}
-                        getRowId={(row) => row?.id ?? row?.order_id}
+                        getRowId={(row) => row?.id ?? row?.order_id ?? row?.no}
                         checkboxSelection={checkboxSelection}
                         onFilterModelChange={({ quickFilterValues }) =>
                             setParams({ searchKey: quickFilterValues?.[0] })

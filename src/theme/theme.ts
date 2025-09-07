@@ -45,38 +45,21 @@ const baseTypography = {
 const baseButtonStyles = {
     root: {
         height: '44px',
-        padding: '8px 16px',
+        padding: '8px 8px',
         textTransform: 'none' as const,
         borderRadius: borderRadius,
-        fontWeight: 600,
-        fontSize: '0.875rem',
         transition: 'all 0.2s ease-in-out',
-        // '&:hover': {
-        //     transform: 'translateY(-1px)',
-        // },
     },
     containedPrimary: {
         backgroundColor: colors.primary.main,
         color: '#ffffff',
-        // '&:hover': {
-        //     backgroundColor: '#0284c7',
-        //     boxShadow: '0 8px 25px rgba(3, 159, 224, 0.3)',
-        // },
     },
     containedSecondary: {
         background: 'linear-gradient(45deg, #ef4444 0%, #dc2626 100%)',
         color: '#ffffff',
-        // '&:hover': {
-        //     background: 'linear-gradient(45deg, #dc2626 0%, #b91c1c 100%)',
-        //     boxShadow: '0 8px 25px rgba(239, 68, 68, 0.3)',
-        // },
     },
     outlined: {
         borderWidth: 2,
-        '&:hover': {
-            borderWidth: 2,
-            backgroundColor: 'rgba(3, 159, 224, 0.04)',
-        },
     },
     text: {
         '&:hover': {
@@ -90,13 +73,6 @@ const baseComponents = {
         styleOverrides: baseButtonStyles,
         defaultProps: {
             disableElevation: true,
-        },
-    },
-    MuiPaper: {
-        styleOverrides: {
-            root: {
-                //borderRadius: borderRadius * 2,
-            },
         },
     },
     MuiCard: {
@@ -159,9 +135,7 @@ export const lightTheme: Theme = createTheme({
         ...baseComponents,
         MuiPaper: {
             styleOverrides: {
-                ...baseComponents.MuiPaper.styleOverrides,
                 root: {
-                    ...baseComponents.MuiPaper.styleOverrides.root,
                     boxShadow: "0",
                 },
             },
@@ -215,9 +189,7 @@ export const darkTheme: Theme = createTheme({
         },
         MuiPaper: {
             styleOverrides: {
-                ...baseComponents.MuiPaper.styleOverrides,
                 root: {
-                    ...baseComponents.MuiPaper.styleOverrides.root,
                     boxShadow: "0",
                 },
             },

@@ -1,7 +1,7 @@
 import { getDocumentationBySlug } from '@/lib/mdx';
 import { MDXRenderer } from '@/components/mdx/MDXRenderer';
 import { Box, Container, Typography } from '@mui/material';
-import NAVIGATION from '@/constants/routes';
+import { NAVTABS } from '@/constants/routes';
 import DocsBottomNavigator from '@/components/docs-bottom-navigator';
 import DocsContainer, { MainPanel, SidebarPanel } from '@/components/containers/docs-container';
 import TableOfContents from '@/components/table-of-contents';
@@ -30,10 +30,10 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
         );
     }
 
-    const currentPath = `documentation/${param.slug.join('/')}`;
-    const currentDoc = NAVIGATION.findIndex((item: any) => !item.kind && item.segment === currentPath);
-    const prevDoc = NAVIGATION[currentDoc - 1] as any;
-    const nextDoc = NAVIGATION[currentDoc + 1] as any;
+    const currentPath = `apis/${param.slug.join('/')}`;
+    const currentDoc = NAVTABS[1].items.findIndex((item: any) => item.segment === currentPath);
+    const prevDoc = NAVTABS[1].items[currentDoc - 1];
+    const nextDoc = NAVTABS[1].items[currentDoc + 1];
 
     return (
         <DocsContainer>

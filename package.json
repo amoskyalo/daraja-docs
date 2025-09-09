@@ -10,6 +10,7 @@
         "prepare": "husky"
     },
     "dependencies": {
+        "@anthropic-ai/sdk": "^0.61.0",
         "@apollo/client": "^4.0.3",
         "@emotion/cache": "^11.14.0",
         "@emotion/react": "^11.14.0",
@@ -33,6 +34,7 @@
         "prismjs": "^1.30.0",
         "react": "19.1.0",
         "react-dom": "19.1.0",
+        "react-markdown": "8.0.6",
         "react-quill-new": "^3.6.0",
         "rehype-prism-plus": "^2.0.1",
         "rehype-slug": "^6.0.0",

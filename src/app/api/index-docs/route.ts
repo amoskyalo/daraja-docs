@@ -1,5 +1,5 @@
 import { algoliasearch } from 'algoliasearch';
-import { getDocumentationBySlug } from '@/lib/mdx';
+import { getDocumentationBySlug } from '@/shared/lib/mdx';
 import fs from 'fs';
 import path from 'path';
 import { NextResponse } from 'next/server';

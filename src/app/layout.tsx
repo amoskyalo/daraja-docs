@@ -2,9 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
-import AppThemeProvider from '@/theme/ThemeProvider';
-import { SnackbarContainer } from '@/components/snackbar';
-import ApolloClientProvider from '@/context/apollo-context';
+import { SnackbarContainer } from '@/shared/components/ui/snackbar';
+import { ApolloClientProvider, AppThemeProvider } from '@/shared/context';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',

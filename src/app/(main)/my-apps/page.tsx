@@ -2,14 +2,14 @@
 
 import { Box, Typography, Tabs, Tab, Stack, Button } from '@mui/material';
 import { useApps } from './services';
-import { gridConstructor } from '@/ui-models/datagrid-constructor';
+import { gridConstructor } from '@/features/datagrid';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 import AddIcon from '@mui/icons-material/Add';
 
 const MyAppsPage = () => {
-    const { apps, loading, error, refetch } = useApps();
+    const { apps, loading } = useApps();
 
     const { render, setFormOpen } = new gridConstructor({
         grid: {

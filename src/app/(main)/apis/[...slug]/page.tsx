@@ -1,11 +1,8 @@
-import { getDocumentationBySlug } from '@/lib/mdx';
-import { MDXRenderer } from '@/components/mdx/MDXRenderer';
+import { getDocumentationBySlug } from '@/shared/lib/mdx';
+import { MDXRenderer } from '@/features/markdown';
+import { TableOfContents, DocsBottomNavigator, DocsContainer, MainPanel, SidebarPanel } from '@/features/documentation';
 import { Box, Container, Stack, Typography } from '@mui/material';
-import DocsBottomNavigator from '@/components/docs-bottom-navigator';
-import DocsContainer, { MainPanel, SidebarPanel } from '@/components/containers/docs-container';
-import TableOfContents from '@/components/table-of-contents';
 import type { Metadata } from 'next';
-import { apiList } from '@/constants/api-list';
 
 interface DocsPageProps {
     params: Promise<{ slug: string[] }>;
@@ -20,8 +17,8 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
         return (
             <Container maxWidth="lg">
                 <Stack direction="column" alignItems="center" justifyContent="center" sx={{ height: '100%' }}>
-                    <Typography variant="h4" sx={{fontWeight: 'bold'}}>
-                       404
+                    <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                        404
                     </Typography>
                     <Typography variant="body1">
                         The documentation file could not be found, or it may have been moved.
@@ -30,10 +27,6 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
             </Container>
         );
     }
-
-    const currentDoc = apiList.findIndex((item: any) => item.slug === param.slug.join('/'));
-    const prevDoc = apiList[currentDoc - 1] as any;
-    const nextDoc = apiList[currentDoc + 1] as any;
 
     return (
         <DocsContainer>
@@ -46,7 +39,7 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
                     </Box>
                 )}
                 <MDXRenderer mdxSource={doc.mdxSource} />
-                <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
+                <DocsBottomNavigator />
             </MainPanel>
 
             <SidebarPanel>

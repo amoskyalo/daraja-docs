@@ -1,7 +1,7 @@
 'use client';
 
 import { Grid, Box } from '@mui/material';
-import { LoginCredentialsContextProvider } from '@/context/auth-context';
+import { LoginCredentialsContextProvider } from '@/shared/context';
 import Image from 'next/image';
 
 interface AuthLayoutProps {

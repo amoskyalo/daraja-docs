@@ -2,7 +2,6 @@
 
 import { Box, Typography, Stack, CircularProgress, Grid, Link, Pagination } from '@mui/material';
 import Image from 'next/image';
-import { useResponsiveness } from '@/hooks/useResponsiveness';
 import { useQuery } from '@apollo/client/react';
 import { GET_BLOGS } from './graphql';
 import { Response } from './types';
@@ -13,8 +12,6 @@ const BlogsPage = () => {
             first: 50,
         },
     });
-
-    const { isSmallScreen } = useResponsiveness();
 
     return (
         <Box sx={{ py: 3, px: { xs: 1, md: 1, lg: 3 } }}>

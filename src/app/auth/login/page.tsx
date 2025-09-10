@@ -1,9 +1,9 @@
 'use client';
 
 import { Box, Typography, Button, Link, Stack, CircularProgress } from '@mui/material';
-import TextFeldInput from '@/components/inputs/TextFeldInput';
+import { TextInputField } from '@/shared/components';
 import { Formik, Form } from 'formik';
-import { utils } from '@/utils';
+import { utils } from '@/shared/utils';
 import { initialValues, validationSchema, useLogin } from './services';
 
 export default function LoginPage() {
@@ -47,7 +47,7 @@ export default function LoginPage() {
                         <Box sx={{ width: '100%' }}>
                             <Form>
                                 <Box sx={{ mb: 2 }}>
-                                    <TextFeldInput
+                                    <TextInputField
                                         fullWidth
                                         type="email"
                                         label="E-mail or username"
@@ -57,7 +57,7 @@ export default function LoginPage() {
                                 </Box>
 
                                 <Box sx={{ mb: 1 }}>
-                                    <TextFeldInput
+                                    <TextInputField
                                         fullWidth
                                         type="password"
                                         label="Password"

@@ -1,11 +1,10 @@
 'use client';
 
-import { Box, Typography, Button, Link as MuiLink, CircularProgress, Grid } from '@mui/material';
+import { Box, Typography, Button, Link as MuiLink, Grid } from '@mui/material';
 import Link from 'next/link';
-import TextFeldInput from '@/components/inputs/TextFeldInput';
+import { TextInputField, PhoneInputField } from '@/shared/components';
 import { Formik, Form } from 'formik';
-import { utils } from '@/utils';
-import PhoneNumberInput from '@/components/inputs/phoneNumberInput';
+import { utils } from '@/shared/utils';
 
 export default function SignupPage() {
     return (
@@ -50,7 +49,7 @@ export default function SignupPage() {
                         <Form>
                             <Grid container spacing={2}>
                                 <Grid size={6}>
-                                    <TextFeldInput
+                                    <TextInputField
                                         label="First name"
                                         placeholder="Enter first name"
                                         {...utils.getFormikFieldProps({ formik, field: 'first_name' })}
@@ -58,7 +57,7 @@ export default function SignupPage() {
                                 </Grid>
 
                                 <Grid size={6}>
-                                    <TextFeldInput
+                                    <TextInputField
                                         label="Last name"
                                         placeholder="Enter last name"
                                         {...utils.getFormikFieldProps({ formik, field: 'last_name' })}
@@ -67,7 +66,7 @@ export default function SignupPage() {
                             </Grid>
 
                             <Box sx={{ my: 2 }}>
-                                <PhoneNumberInput
+                                <PhoneInputField
                                     poperWidth={350}
                                     label="Phone number"
                                     {...utils.getFormikFieldProps({ formik, field: 'phone_number' })}
@@ -75,7 +74,7 @@ export default function SignupPage() {
                             </Box>
 
                             <Box sx={{ my: 2 }}>
-                                <TextFeldInput
+                                <TextInputField
                                     label="E-mail"
                                     placeholder="Enter your email address"
                                     {...utils.getFormikFieldProps({ formik, field: 'email' })}
@@ -83,7 +82,7 @@ export default function SignupPage() {
                             </Box>
 
                             <Box sx={{ mb: 4 }}>
-                                <TextFeldInput
+                                <TextInputField
                                     label="Password"
                                     placeholder="Enter your password"
                                     isPassword

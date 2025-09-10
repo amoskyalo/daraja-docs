@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client/react';
 import { LOGIN } from './graphql';
-import { utils } from '@/utils';
+import { utils } from '@/shared/utils';
 import { handleSetSession } from '@/functions/serverActions';
-import { snackbarToast } from '@/components/snackbar';
+import { snackbarToast } from '@/shared/components/ui/snackbar';
 
 const initialValues = { email: '', password: '' };
 

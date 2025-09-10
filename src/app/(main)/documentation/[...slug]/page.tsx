@@ -1,10 +1,8 @@
-import { getDocumentationBySlug } from '@/lib/mdx';
-import { MDXRenderer } from '@/components/mdx/MDXRenderer';
+import { getDocumentationBySlug } from '@/shared/lib/mdx';
 import { Box, Container, Typography } from '@mui/material';
-import { NAVTABS } from '@/constants/routes';
-import DocsBottomNavigator from '@/components/docs-bottom-navigator';
-import DocsContainer, { MainPanel, SidebarPanel } from '@/components/containers/docs-container';
-import TableOfContents from '@/components/table-of-contents';
+import { NAVTABS } from '@/config/constants/routes';
+import { DocsBottomNavigator, DocsContainer, MainPanel, SidebarPanel, TableOfContents } from '@/features/documentation';
+import { MDXRenderer } from '@/features/markdown';
 import type { Metadata } from 'next';
 
 interface DocsPageProps {

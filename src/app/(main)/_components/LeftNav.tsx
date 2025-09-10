@@ -1,7 +1,7 @@
 import { Stack, ListItemButton, ListItemText, Link, Drawer } from '@mui/material';
 import { useRouter, usePathname } from 'next/navigation';
-import { useResponsiveness } from '@/hooks/useResponsiveness';
-import { NAVTABS } from '@/constants/routes';
+import { useResponsiveness } from '@/shared/hooks';
+import { NAVTABS } from '@/config/constants/routes';
 
 const DRAWER_WIDTH = 300;
 

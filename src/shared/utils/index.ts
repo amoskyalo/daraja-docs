@@ -1,0 +1,149 @@
+import { string, object } from 'yup';
+import { FieldTypes, GetFormikFieldPropsArgs } from '@/config/types';
+import { useResponsiveness } from '../hooks/useResponsiveness';
+import { GridColDef } from '@mui/x-data-grid';
+import { isValidPhoneNumber, validatePhoneNumberLength, AsYouType } from 'libphonenumber-js';
+
+export const utils = {
+    getValidationSchema<T>(args: Array<FieldTypes>) {
+        function getFieldValidationType(field: FieldTypes) {
+            switch (field.type) {
+                case 'phoneNumber':
+                    return object().shape({
+                        phone: string().required('Country phone code is required'),
+                        code: string().required('Country code is required'),
+                        value: string()
+                            .required('Phone number is required')
+                            .test('isValid', 'Invalid phone number', function (value) {
+                                const { code } = this.parent;
+                                if (!value || !code) return false;
+                                return isValidPhoneNumber(String(value), code);
+                            })
+                            .test('isValidLength', 'Invalid phone number length', function (value) {
+                                const { code } = this.parent;
+                                if (!value || !code) return false;
+                                return validatePhoneNumberLength(String(value), code) === undefined;
+                            }),
+                    });
+                case 'email':
+                    return string()
+                        .email()
+                        .required(field.errorMessage ?? 'Email is required');
+                case 'password':
+                    return string().required(field.errorMessage ?? 'Password is required');
+                case 'otp':
+                    return string()
+                        .length(field.length, `Your OTP must be exactly ${field.length} digits long`)
+                        .required(field.errorMessage ?? 'Please enter the OTP code to continue');
+                case 'url':
+                    return string()
+                        .url(field.errorMessage ?? 'Please enter a valid URL')
+                        .required(field.errorMessage ?? 'URL is required');
+                default:
+                    return string().required(field.errorMessage ?? 'Field is required');
+            }
+        }
+
+        const schema = args.reduce<Record<string, ReturnType<typeof getFieldValidationType>>>((acc, arg) => {
+            acc[arg.name] = getFieldValidationType(arg);
+            return acc;
+        }, {});
+
+        return object().shape(schema);
+    },
+
+    getFormikFieldProps<Type>(args: GetFormikFieldPropsArgs<Type>): any {
+        const { formik, field, isOTP } = args;
+        const { errors, touched, getFieldProps, setFieldValue } = formik;
+
+        const formField = String(field);
+
+        const error = touched[field] && Boolean(errors[field]);
+        const helperText = touched[field] && (errors[field] as any);
+
+        const handleOTPChange = (value: string) => {
+            setFieldValue(formField, value);
+        };
+
+        const commonProps = {
+            error,
+            helperText,
+        };
+
+        if (field === 'phoneNumber' || field === 'phone_number') {
+            const error = Boolean(errors[field]);
+            const helperText = errors[field] as any;
+
+            const handlePhoneChange = (phoneData: any) => {
+                const { value, code, phone } = phoneData;
+                const startIndex = String(phone).length > 4 ? 2 : 1;
+                const formatedValue = new AsYouType(code).input(phone + value);
+                const finalValue = String(formatedValue).split(' ').slice(startIndex).join(' ');
+
+                setFieldValue(formField, {
+                    ...phoneData,
+                    value: finalValue,
+                });
+            };
+
+            const phoneValue = (formik.values[field] || { phone: '', code: '', value: '' }) as {
+                phone: string;
+                code: string;
+                value: string;
+            };
+
+            const displayValue = phoneValue.value || '';
+
+            return {
+                onChange: handlePhoneChange,
+                value: displayValue,
+                helperText: helperText?.value,
+                error,
+            };
+        }
+
+        if (isOTP) {
+            return {
+                onChange: handleOTPChange,
+                ...commonProps,
+            };
+        }
+
+        return {
+            ...commonProps,
+            ...getFieldProps(formField),
+        };
+    },
+
+    customizeGridColumns(columns: (GridColDef & { mobileWidth?: number })[], numbered?: boolean): GridColDef[] {
+        const { isDesktop, isMiniTablet, isMobile, isTablet } = useResponsiveness();
+
+        function getColumnDimensions(mobileWidth: number | undefined, width: number | undefined) {
+            if (isDesktop) return { flex: 1 };
+            if (width) return { width };
+            if ((isMobile || isMiniTablet || isTablet) && mobileWidth) return { width: mobileWidth };
+            return { flex: 1 };
+        }
+
+        return [
+            ...(numbered ? [{ field: 'no', headerName: 'No.', width: 50, sortable: false }] : []),
+            ...columns.map(({ mobileWidth, width, valueGetter: fn, field, ...rest }) => {
+                const valueGetter =
+                    typeof fn === 'function'
+                        ? fn
+                        : (__: any, row: any) => (row[field] && row[field] !== '' ? row[field] : '--');
+
+                return {
+                    ...rest,
+                    ...getColumnDimensions(mobileWidth, width),
+                    valueGetter,
+                    field,
+                };
+            }),
+        ];
+    },
+
+    isDefaultPagination(param: string, value: any) {
+        return (param === 'start' && value === 1) || (param === 'limit' && value === 10) || value === 'all';
+    },
+};

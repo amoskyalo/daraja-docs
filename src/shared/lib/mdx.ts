@@ -1,0 +1,47 @@
+import fs from 'fs';
+import path from 'path';
+import { serialize } from 'next-mdx-remote/serialize';
+import remarkGfm from 'remark-gfm';
+import rehypePrism from 'rehype-prism-plus';
+import rehypeSlug from 'rehype-slug';
+import { JSDOM } from 'jsdom';
+import { extractTableOfContents } from '@/features/documentation';
+
+const docsDirectory = path.join(process.cwd(), 'documentation', 'apis');
+
+export type Frontmatter = {
+    title: string;
+    description: string;
+};
+
+function stripHtml(html: string): string {
+    return new JSDOM(html).window.document.body.textContent || '';
+}
+
+export async function getDocumentationBySlug(slug: string[]) {
+    const fullPath = path.join(docsDirectory, `${slug.join('/')}.mdx`);
+    if (!fs.existsSync(fullPath)) {
+        return null;
+    }
+
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const tableOfContents = extractTableOfContents(fileContents);
+
+    const mdxSource = (await serialize(fileContents, {
+        parseFrontmatter: true,
+        mdxOptions: {
+            remarkPlugins: [remarkGfm],
+            rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true, aliases: { mdx: 'markdown' } }]],
+        },
+    })) as any;
+
+    const compiled = mdxSource.compiledSource || '';
+    const plainText = stripHtml(compiled);
+
+    return {
+        mdxSource,
+        plainText,
+        frontMatter: mdxSource.frontmatter,
+        tableOfContents,
+    };
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, JSX } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -26,137 +26,11 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
-import type { Components } from 'react-markdown'
 
 interface Conversation {
     type: 'user' | 'assistant';
     message: string;
 }
-
-// Move markdown components outside component to avoid recreation on re-renders
-const markdownComponents: Partial<Components>  = {
-    h1: ({ children }: any) => (
-        <Typography variant="h6" fontWeight="600" sx={{ mb: 1, mt: 2 }}>
-            {children}
-        </Typography>
-    ),
-    h2: ({ children }: any) => (
-        <Typography variant="subtitle1" fontWeight="600" sx={{ mb: 1, mt: 1.5 }}>
-            {children}
-        </Typography>
-    ),
-    h3: ({ children }: any) => (
-        <Typography variant="subtitle2" fontWeight="600" sx={{ mb: 0.5, mt: 1 }}>
-            {children}
-        </Typography>
-    ),
-    p: ({ children }: any) => (
-        <Typography variant="body2" sx={{ mb: 1, lineHeight: 1.6 }}>
-            {children}
-        </Typography>
-    ),
-    strong: ({ children }: any) => (
-        <Typography component="span" fontWeight="600">
-            {children}
-        </Typography>
-    ),
-    code: ({ children, className }: any) => {
-        const match = /language-(\w+)/.exec(className || '');
-        const language = match ? match[1] : '';
-
-        if (!match) {
-            return (
-                <Box
-                    component="code"
-                    sx={{
-                        backgroundColor: 'rgba(175, 184, 193, 0.2)',
-                        color: 'text.primary',
-                        px: 0.5,
-                        py: 0.25,
-                        borderRadius: 0.5,
-                        fontFamily:
-                            '"Fira Code", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'
-                    }}
-                >
-                    {children}
-                </Box>
-            );
-        }
-
-        return (
-            <Box
-                component="code"
-                className={className || `language-${language || 'javascript'}`}
-                sx={{
-                    fontFamily:
-                        '"Fira Code", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace',
-                }}
-            >
-                {children}
-            </Box>
-        );
-    },
-    pre: ({ children }: any) => {
-        return (
-            <Box
-                component="pre"
-                className="language-javascript" // Force a language class
-                sx={{
-                    borderRadius: 1,
-                    width: '90%',
-                    overflow: 'auto',
-                    fontSize: '12px !important',
-                    mb: 1,
-                    backgroundColor: '#282a36',
-                    padding: 2,
-                    '& code': {
-                        fontFamily:
-                            '"Fira Code", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace',
-                        backgroundColor: 'transparent !important',
-                    },
-                }}
-            >
-                {children}
-            </Box>
-        );
-    },
-    ul: ({ children }: any) => (
-        <Box component="ul" sx={{ pl: 2, mb: 1 }}>
-            {children}
-        </Box>
-    ),
-    ol: ({ children }: any) => (
-        <Box component="ol" sx={{ pl: 2, mb: 1 }}>
-            {children}
-        </Box>
-    ),
-    li: ({ children }: any) => (
-        <Typography component="li" variant="body2" sx={{ mb: 0.5 }}>
-            {children}
-        </Typography>
-    ),
-    a: ({ children, href }: any) => (
-        <Link href={href} target="_blank" rel="noopener noreferrer">
-            {children}
-        </Link>
-    ),
-    blockquote: ({ children }: any) => (
-        <Box
-            sx={{
-                borderLeft: 3,
-                borderColor: 'primary.main',
-                pl: 2,
-                ml: 1,
-                backgroundColor: 'action.hover',
-                py: 1,
-                borderRadius: '0 4px 4px 0',
-                mb: 1,
-            }}
-        >
-            {children}
-        </Box>
-    ),
-};
 
 const Header = () => {
     const { isMobile } = useResponsiveness();
@@ -244,7 +118,129 @@ const Header = () => {
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeSlug, [rehypePrism, { ignoreMissing: true, aliases: { mdx: 'markdown' } }]]}
-                components={markdownComponents}
+                components={{
+                    h1: ({ children }) => (
+                        <Typography variant="h6" fontWeight="600" sx={{ mb: 1, mt: 2 }}>
+                            {children}
+                        </Typography>
+                    ),
+                    h2: ({ children }) => (
+                        <Typography variant="subtitle1" fontWeight="600" sx={{ mb: 1, mt: 1.5 }}>
+                            {children}
+                        </Typography>
+                    ),
+                    h3: ({ children }) => (
+                        <Typography variant="subtitle2" fontWeight="600" sx={{ mb: 0.5, mt: 1 }}>
+                            {children}
+                        </Typography>
+                    ),
+                    p: ({ children }) => (
+                        <Typography variant="body2" sx={{ mb: 1, lineHeight: 1.6 }}>
+                            {children}
+                        </Typography>
+                    ),
+                    strong: ({ children }) => (
+                        <Typography component="span" fontWeight="600">
+                            {children}
+                        </Typography>
+                    ),
+                    code: ({ children, className }) => {
+                        const match = /language-(\w+)/.exec(className || '');
+                        const language = match ? match[1] : '';
+
+                        if (!match) {
+                            return (
+                                <Box
+                                    component="code"
+                                    sx={{
+                                        backgroundColor: 'rgba(175, 184, 193, 0.2)',
+                                        color: 'text.primary',
+                                        px: 0.5,
+                                        py: 0.25,
+                                        borderRadius: 0.5,
+                                        fontFamily:
+                                            '"Fira Code", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace'
+                                    }}
+                                >
+                                    {children}
+                                </Box>
+                            );
+                        }
+
+                        return (
+                            <Box
+                                component="code"
+                                className={className || `language-${language || 'javascript'}`}
+                                sx={{
+                                    fontFamily:
+                                        '"Fira Code", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace',
+                                }}
+                            >
+                                {children}
+                            </Box>
+                        );
+                    },
+                    pre: ({ children }) => {
+                        return (
+                            <Box
+                                component="pre"
+                                className="language-javascript" // Force a language class
+                                sx={{
+                                    borderRadius: 1,
+                                    width: '90%',
+                                    overflow: 'auto',
+                                    fontSize: '12px !important',
+                                    mb: 1,
+                                    backgroundColor: '#282a36',
+                                    padding: 2,
+                                    '& code': {
+                                        fontFamily:
+                                            '"Fira Code", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace',
+                                        backgroundColor: 'transparent !important',
+                                    },
+                                }}
+                            >
+                                {children}
+                            </Box>
+                        );
+                    },
+                    ul: ({ children }) => (
+                        <Box component="ul" sx={{ pl: 2, mb: 1 }}>
+                            {children}
+                        </Box>
+                    ),
+                    ol: ({ children }) => (
+                        <Box component="ol" sx={{ pl: 2, mb: 1 }}>
+                            {children}
+                        </Box>
+                    ),
+                    li: ({ children }) => (
+                        <Typography component="li" variant="body2" sx={{ mb: 0.5 }}>
+                            {children}
+                        </Typography>
+                    ),
+                    a: ({ children, href }) => (
+                        <Link href={href} target="_blank" rel="noopener noreferrer">
+                            {children}
+                        </Link>
+                    ),
+                    blockquote: ({ children }) => (
+                        <Box
+                            sx={{
+                                borderLeft: 3,
+                                borderColor: 'primary.main',
+                                pl: 2,
+                                ml: 1,
+                                backgroundColor: 'action.hover',
+                                py: 1,
+                                borderRadius: '0 4px 4px 0',
+                                mb: 1,
+                            }}
+                        >
+                            {children}
+                        </Box>
+                    ),
+                }}
             >
                 {message}
             </ReactMarkdown>
@@ -399,7 +395,7 @@ const Header = () => {
                 onClose={() => setAIModalOpen(false)}
                 sx={{
                     '& .MuiDrawer-paper': {
-                        width: 700,
+                        width: 600,
                         overflow: 'hidden',
                     },
                 }}

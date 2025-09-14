@@ -28,10 +28,10 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
         );
     }
 
-    const currentPath = `apis/${param.slug.join('/')}`;
-    const currentDoc = NAVTABS[1].items.findIndex((item: any) => item.segment === currentPath);
-    const prevDoc = NAVTABS[1].items[currentDoc - 1];
-    const nextDoc = NAVTABS[1].items[currentDoc + 1];
+    const currentPath = `/documentation/${param.slug.join('/')}`;
+    const currentDoc = NAVTABS[0].items.findIndex((item: any) => item.segment === currentPath);
+    const prevDoc = NAVTABS[0].items[currentDoc - 1];
+    const nextDoc = NAVTABS[0].items[currentDoc + 1];
 
     return (
         <DocsContainer>

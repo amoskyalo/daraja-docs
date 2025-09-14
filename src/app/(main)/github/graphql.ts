@@ -5,12 +5,14 @@ const GET_REPOSITORIES = gql`
         repositories(params: $params) {
             items {
                 id
-                full_name
+                name
+                html_url
                 description
                 url
                 stargazers_count
                 owner {
                     avatar_url
+                    login
                 }
             }
             total_count

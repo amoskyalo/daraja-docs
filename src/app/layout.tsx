@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import { SnackbarContainer } from '@/shared/components/ui/snackbar';
-import { ApolloClientProvider, AppThemeProvider } from '@/shared/context';
+import { ApolloClientProvider, AppThemeProvider, AppAIProvider } from '@/shared/context';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -28,10 +28,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <AppThemeProvider>
-                    <SnackbarContainer />
-                    <ApolloClientProvider>{children}</ApolloClientProvider>
-                </AppThemeProvider>
+                <AppAIProvider>
+                    <AppThemeProvider>
+                        <SnackbarContainer />
+                        <ApolloClientProvider>{children}</ApolloClientProvider>
+                    </AppThemeProvider>
+                </AppAIProvider>
             </body>
         </html>
     );

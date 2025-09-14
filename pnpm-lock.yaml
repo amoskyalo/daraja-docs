@@ -23,6 +23,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.14.1
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.1.12)(react@19.1.0))(@types/react@19.1.12)(react@19.1.0)
+      '@lottiefiles/dotlottie-react':
+        specifier: ^0.16.1
+        version: 0.16.1(react@19.1.0)
       '@mui/icons-material':
         specifier: ^7.3.1
         version: 7.3.2(@mui/material@7.3.2(@emotion/react@11.14.0(@types/react@19.1.12)(react@19.1.0))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.1.12)(react@19.1.0))(@types/react@19.1.12)(react@19.1.0))(@types/react@19.1.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@types/react@19.1.12)(react@19.1.0)
@@ -40,7 +43,7 @@ importers:
         version: 5.87.1(react@19.1.0)
       '@toolpad/core':
         specifier: ^0.16.0
-        version: 0.16.0(d8dd6ef9a10c74a398630e2f2f756bad)
+        version: 0.16.0(j3jfl3igar7lndafrxcrwu7fuu)
       algoliasearch:
         specifier: ^5.35.0
         version: 5.37.0
@@ -558,6 +561,14 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.30':
     resolution: {integrity: sha512-GQ7Nw5G2lTu/BtHTKfXhKHok2WGetd4XYcVKGx00SjAk8GMwgJM3zr6zORiPGuOE+/vkc90KtTosSSvaCjKb2Q==}
+
+  '@lottiefiles/dotlottie-react@0.16.1':
+    resolution: {integrity: sha512-S2qyrFppwgx03f0yzd/8MGijTJH+2RwhcXSVZI0GMsvZH7Xh+4JdtX8xNku+MmQiVD8671Rg29yx73QZNFkfig==}
+    peerDependencies:
+      react: ^17 || ^18 || ^19
+
+  '@lottiefiles/dotlottie-web@0.51.1':
+    resolution: {integrity: sha512-73FV3nJ7vC+0sUDeM+tXs5GXblDAi8Z8qZ9scyZ/3hf6+EeocNHwx9YxkYrklWE3b0ESOT2uNt1Cmfyc40SaGQ==}
 
   '@mdx-js/mdx@2.3.0':
     resolution: {integrity: sha512-jLuwRlz8DQfQNiUCJR50Y09CGPq3fLtmtUQfVrj79E0JWu3dvsVcxVIcfhR5h0iXu+/z++zDrYeiJqifRynJkA==}
@@ -3633,6 +3644,13 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
+  '@lottiefiles/dotlottie-react@0.16.1(react@19.1.0)':
+    dependencies:
+      '@lottiefiles/dotlottie-web': 0.51.1
+      react: 19.1.0
+
+  '@lottiefiles/dotlottie-web@0.51.1': {}
+
   '@mdx-js/mdx@2.3.0':
     dependencies:
       '@types/estree-jsx': 1.0.5
@@ -3885,7 +3903,7 @@ snapshots:
       '@tanstack/query-core': 5.87.1
       react: 19.1.0
 
-  '@toolpad/core@0.16.0(d8dd6ef9a10c74a398630e2f2f756bad)':
+  '@toolpad/core@0.16.0(j3jfl3igar7lndafrxcrwu7fuu)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@emotion/cache': 11.14.0

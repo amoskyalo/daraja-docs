@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Box, Typography, Link, Stack } from '@mui/material';
 import type { HeadingItem } from '../utils/extractTableOfContents';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
+import SegmentIcon from '@mui/icons-material/Segment';
 
 interface TableOfContentsProps {
     headings: HeadingItem[];
@@ -45,7 +46,7 @@ export const TableOfContents = ({ headings }: Readonly<TableOfContentsProps>) =>
                     }
                 });
             },
-            { rootMargin: '-80px 0px -80% 0px' }
+            { rootMargin: '-20px 0px -20% 0px' },
         );
 
         headings.forEach(({ id }) => {
@@ -80,15 +81,18 @@ export const TableOfContents = ({ headings }: Readonly<TableOfContentsProps>) =>
 
     return (
         <Box>
-            <Typography variant="body2" fontWeight="semiBold" sx={{ mb: 1 }}>
-                On this page
-            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
+                <SegmentIcon fontSize="small" />
+                <Typography variant="body2" fontWeight="bold">
+                    On this page
+                </Typography>
+            </Stack>
 
             {arrangeHeaders().map(({ text, id, isChild }) => (
                 <Box
                     key={id}
                     sx={{
-                        py: 1,
+                        py: 0.5,
                         pl: isChild ? 3 : 1.5,
                     }}
                 >

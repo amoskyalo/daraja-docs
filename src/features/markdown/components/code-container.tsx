@@ -65,27 +65,11 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
                 </Typography>
 
                 <Box sx={{ position: 'relative' }}>
-                    <Tooltip title="Copy">
+                    <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                         <IconButton size="small" sx={{ p: 0.8, borderRadius: 2 }} onClick={handleCopy}>
                             <ContentCopyIcon fontSize="small" />
                         </IconButton>
                     </Tooltip>
-
-                    {copied && (
-                        <Paper
-                            elevation={0}
-                            sx={{
-                                position: 'absolute',
-                                left: -65,
-                                top: 2,
-                                px: 1,
-                                pb: 0.3,
-                                backgroundColor: 'success.main',
-                            }}
-                        >
-                            <Typography variant="caption">Copied!</Typography>
-                        </Paper>
-                    )}
                 </Box>
             </Stack>
 

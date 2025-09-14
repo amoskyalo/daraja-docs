@@ -29,6 +29,7 @@ const CommunityProjectsPage: React.FC = () => {
             params: {
                 per_page: perPage,
                 page,
+                language: selectedLanguage,
             },
         },
     });
@@ -48,30 +49,32 @@ const CommunityProjectsPage: React.FC = () => {
     return (
         <Box
             sx={{
-                p: { xs: 1, md: 1, lg: 3 },
+                pb: 3,
                 pr: { xs: 1, md: 1, lg: 6 },
-                width: '100%',
+                px: { xs: 1, md: 1, lg: 0 },
+                pt: { xs: 3, md: 3, lg: 6 },
+                maxWidth: { xs: '100%', md: '100%', lg: '75%' },
+                mx: 'auto',
                 overflowX: 'hidden',
             }}
         >
             <Box>
-                <Typography variant="h5" fontWeight={600}>
+                <Typography variant="h2" fontWeight={600} sx={{ textAlign: 'center' }}>
                     Community Projects
                 </Typography>
-                <Typography variant="body1" sx={{ mt: 1 }}>
+                <Typography variant="body1" sx={{ mt: 1, textAlign: 'center' }}>
                     Daraja has fostered a vibrant developer community that continues to build innovative solutions using
                     M-Pesa APIs. Explore open-source projects, libraries, and tools created by fellow developers to
                     accelerate your own M-Pesa integrations. From payment gateways and mobile apps to utility libraries
                     and SDKs, discover how the community is leveraging Daraja API to solve real-world problems.
                 </Typography>
-                <Typography variant="body1" sx={{ mt: 2 }}>
-                    These projects showcase best practices, provide ready-to-use solutions, and serve as learning
-                    resources for developers at all levels. Contribute to existing projects or get inspired to build
-                    your own M-Pesa powered application.
-                </Typography>
             </Box>
 
-            <Box sx={{ mt: 2, py: 2, position: 'sticky', top: 0, backdropFilter: 'blur(10px)', zIndex: 1 }}>
+            <Stack
+                direction="row"
+                justifyContent="center"
+                sx={{ mt: 2, py: 2, position: 'sticky', top: 0, backdropFilter: 'blur(10px)', zIndex: 1 }}
+            >
                 <Tabs
                     value={0}
                     variant="scrollable"
@@ -89,7 +92,7 @@ const CommunityProjectsPage: React.FC = () => {
                         />
                     ))}
                 </Tabs>
-            </Box>
+            </Stack>
 
             <Box sx={{ position: 'relative' }}>
                 {loading ? (
@@ -108,15 +111,15 @@ const CommunityProjectsPage: React.FC = () => {
                         {data?.repositories?.items?.map((project) => (
                             <Grid
                                 key={project.id}
-                                size={{ xs: 12, sm: 6, md: 4 }}
-                                sx={{ border: 1, borderColor: 'divider', borderRadius: 2, p: 2 }}
+                                size={{ xs: 12, sm: 6, md: 3, lg: 4 }}
+                                sx={{ border: 1, borderColor: 'divider', borderRadius: 2, p: 2, cursor: 'pointer' }}
                             >
+                                <Link href={project.html_url} target="_blank" color="inherit" underline="none">
                                 <Stack spacing={1} direction="row" alignItems="center">
-                                    <Avatar src={project.owner.avatar_url} sx={{ height: 22, width: 22 }} />
-                                    <Typography variant="h6">
-                                        <Link
-                                            href={project.url}
-                                            target="_blank"
+                                    <Avatar src={project.owner.avatar_url} sx={{ height: 32, width: 32, borderRadius: 2 }} />
+                                    <Box>
+                                        <Typography
+                                            variant="body1"
                                             sx={{
                                                 display: '-webkit-box',
                                                 WebkitLineClamp: 1,
@@ -126,11 +129,16 @@ const CommunityProjectsPage: React.FC = () => {
                                                 wordBreak: 'break-word',
                                                 overflowWrap: 'break-word',
                                                 whiteSpace: 'pre-wrap',
+                                                lineHeight: 1,
+                                                fontWeight: 600,
                                             }}
                                         >
-                                            {project.full_name}
-                                        </Link>
-                                    </Typography>
+                                            {project.name}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {project.owner.login}
+                                        </Typography>
+                                    </Box>
                                 </Stack>
                                 <Typography
                                     variant="body2"
@@ -144,12 +152,12 @@ const CommunityProjectsPage: React.FC = () => {
                                 >
                                     {project.description}
                                 </Typography>
-                                <Stack sx={{ mt: 2 }} direction="row" spacing={0.5} alignItems="center">
+                                <Stack sx={{ mt: 1 }} direction="row" spacing={0.5} alignItems="center">
                                     <StarIcon color="action" fontSize="inherit" />
                                     <Typography variant="caption" color="text.secondary">
                                         {project.stargazers_count} GitHub stars
                                     </Typography>
-                                </Stack>
+                                </Stack></Link>
                             </Grid>
                         ))}
                     </Grid>

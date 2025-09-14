@@ -98,5 +98,4 @@ export const HEADERTABS = [
     { label: 'Mini Apps', href: '/mini-apps' },
     { label: 'Blogs', href: '/blogs' },
     { label: 'GitHub', href: '/github' },
-    // { label: 'FAQs', href: '/faqs' },
 ];

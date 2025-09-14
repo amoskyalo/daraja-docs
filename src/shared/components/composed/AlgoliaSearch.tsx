@@ -15,7 +15,7 @@ import {
     DialogActions,
     DialogTitle,
     Stack,
-    CircularProgress
+    CircularProgress,
 } from '@mui/material';
 import {
     Search as SearchIcon,
@@ -34,11 +34,6 @@ const client = algoliasearch(applicationID, apiKey);
 
 const RECENT_SEARCHES_KEY = 'search_modal_recent_searches';
 const MAX_RECENT_SEARCHES = 5;
-
-const MAPPED_GROUPED_RESULTS = {
-    WaaS: 'Wallet as a Service',
-    APIs: 'APIs',
-};
 
 export const SearchModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
     const [query, setQuery] = useState('');
@@ -222,25 +217,8 @@ export const SearchModal = ({ open, onClose }: { open: boolean; onClose: () => v
         setQuery(e.target.value);
     };
 
-    const groupResults = () => {
-        const groups: { [key: string]: any[] } = {};
-
-        results.forEach((result) => {
-            if (result.slug?.includes('/waas/')) {
-                if (!groups['WaaS']) groups['WaaS'] = [];
-                groups['WaaS'].push(result);
-            } else {
-                if (!groups['APIs']) groups['APIs'] = [];
-                groups['APIs'].push(result);
-            }
-        });
-
-        return groups;
-    };
-
-    const groupedResults = groupResults();
     const showRecent = !query && recentSearches.length > 0;
-
+    
     return (
         <Dialog
             open={open}
@@ -254,7 +232,6 @@ export const SearchModal = ({ open, onClose }: { open: boolean; onClose: () => v
                 paper: {
                     sx: {
                         borderRadius: 2,
-                        backgroundColor: '#0e1215',
                     },
                 },
             }}
@@ -350,99 +327,74 @@ export const SearchModal = ({ open, onClose }: { open: boolean; onClose: () => v
 
                     {(query || results.length > 0) && (
                         <>
-                            {Object.entries(groupedResults).map(([groupName, groupResults], groupIndex) => (
-                                <Box key={groupName}>
-                                    <Box sx={{ px: 2, py: 1 }}>
-                                        <Typography
-                                            variant="caption"
-                                            color="text.secondary"
-                                            sx={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}
-                                        >
-                                            {MAPPED_GROUPED_RESULTS[groupName as keyof typeof MAPPED_GROUPED_RESULTS]} •{' '}
-                                            {groupResults.length}
-                                        </Typography>
-                                    </Box>
+                            {results.map((result, index) => (
+                                <Box key={result.objectID || index}>
                                     <List sx={{ p: 0 }}>
-                                        {groupResults.map((result, index) => {
-                                            let globalIndex = 0;
-                                            for (const [prevGroupName, prevGroupResults] of Object.entries(
-                                                groupedResults,
-                                            )) {
-                                                if (prevGroupName === groupName) break;
-                                                globalIndex += prevGroupResults.length;
-                                            }
-                                            globalIndex += index;
-
-                                            return (
-                                                <ListItem
-                                                    key={result.objectID || index}
-                                                    data-index={globalIndex}
-                                                    onClick={() => handleResultClick(result)}
-                                                    sx={{
-                                                        '&:hover': {
-                                                            backgroundColor: 'action.hover',
-                                                        },
-                                                        backgroundColor:
-                                                            selectedIndex === globalIndex
-                                                                ? 'action.selected'
-                                                                : 'transparent',
-                                                        cursor: 'pointer',
-                                                        padding: '2px 12px !important',
-                                                    }}
-                                                >
-                                                    <Box sx={{ mr: 2 }}>
-                                                        <DocsIcon color="primary" />
-                                                    </Box>
-                                                    <ListItemText
-                                                        primary={
-                                                            <Typography
-                                                                variant="body1"
-                                                                sx={{
-                                                                    textTransform: 'capitalize',
-                                                                    '& mark': {
-                                                                        backgroundColor: '#3b82f6',
-                                                                        color: 'white',
-                                                                        padding: '0 2px',
-                                                                        borderRadius: '2px',
-                                                                        fontWeight: 'bold',
-                                                                    },
-                                                                }}
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: highlightText(
-                                                                        result.title,
-                                                                        result._highlightResult?.title,
-                                                                    ),
-                                                                }}
-                                                            />
-                                                        }
-                                                        secondary={
-                                                            <Typography
-                                                                variant="body2"
-                                                                color="text.secondary"
-                                                                sx={{
-                                                                    display: '-webkit-box',
-                                                                    WebkitLineClamp: 2,
-                                                                    WebkitBoxOrient: 'vertical',
-                                                                    overflow: 'hidden',
-                                                                    '& mark': {
-                                                                        backgroundColor: '#dbeafe',
-                                                                        color: '#3b82f6',
-                                                                        padding: '0 2px',
-                                                                        borderRadius: '2px',
-                                                                    },
-                                                                }}
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: highlightText(
-                                                                        result.slug?.substring(0, 150) + '...',
-                                                                        result._highlightResult?.slug,
-                                                                    ),
-                                                                }}
-                                                            />
-                                                        }
+                                        <ListItem
+                                            key={result.objectID || index}
+                                            data-index={result.objectID}
+                                            onClick={() => handleResultClick(result)}
+                                            sx={{
+                                                '&:hover': {
+                                                    backgroundColor: 'action.hover',
+                                                },
+                                                backgroundColor:
+                                                    selectedIndex === index ? 'action.selected' : 'transparent',
+                                                cursor: 'pointer',
+                                                padding: '2px 12px !important',
+                                            }}
+                                        >
+                                            <Box sx={{ mr: 2 }}>
+                                                <DocsIcon color="primary" />
+                                            </Box>
+                                            <ListItemText
+                                                primary={
+                                                    <Typography
+                                                        variant="body1"
+                                                        sx={{
+                                                            textTransform: 'capitalize',
+                                                            '& mark': {
+                                                                backgroundColor: '#3b82f6',
+                                                                color: 'white',
+                                                                padding: '0 2px',
+                                                                borderRadius: '2px',
+                                                                fontWeight: 'bold',
+                                                            },
+                                                        }}
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: highlightText(
+                                                                result.title,
+                                                                result._highlightResult?.title,
+                                                            ),
+                                                        }}
                                                     />
-                                                </ListItem>
-                                            );
-                                        })}
+                                                }
+                                                secondary={
+                                                    <Typography
+                                                        variant="body2"
+                                                        color="text.secondary"
+                                                        sx={{
+                                                            display: '-webkit-box',
+                                                            WebkitLineClamp: 2,
+                                                            WebkitBoxOrient: 'vertical',
+                                                            overflow: 'hidden',
+                                                            '& mark': {
+                                                                backgroundColor: '#dbeafe',
+                                                                color: '#3b82f6',
+                                                                padding: '0 2px',
+                                                                borderRadius: '2px',
+                                                            },
+                                                        }}
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: highlightText(
+                                                                result.slug?.substring(0, 150) + '...',
+                                                                result._highlightResult?.slug,
+                                                            ),
+                                                        }}
+                                                    />
+                                                }
+                                            />
+                                        </ListItem>
                                     </List>
                                 </Box>
                             ))}

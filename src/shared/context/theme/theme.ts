@@ -35,8 +35,6 @@ export const baseTypography = {
 
 export const baseButtonStyles = {
     root: {
-        height: '44px',
-        padding: '8px 8px',
         textTransform: 'none' as const,
         borderRadius: borderRadius,
         transition: 'all 0.2s ease-in-out',
@@ -81,7 +79,7 @@ export const baseComponents = {
         styleOverrides: {
             root: {
                 '& .MuiOutlinedInput-root': {
-                    height: '44px',
+                    height: '40px',
                     borderRadius: borderRadius,
                 },
             },
@@ -101,6 +99,14 @@ export const baseComponents = {
                 '&:hover': {
                     transform: 'scale(1.05)',
                 },
+            },
+        },
+    },
+    MuiMenu: {
+        styleOverrides: {
+            paper: {
+                elevation: 0,
+                borderRadius,
             },
         },
     },

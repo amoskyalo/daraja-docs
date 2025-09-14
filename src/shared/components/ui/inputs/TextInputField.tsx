@@ -2,24 +2,11 @@ import { Box, InputLabel, InputAdornment, IconButton, TextField, TextFieldProps 
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
-export const TextInputField = ({
-    label,
-    isPassword = false,
-    ...props
-}: TextFieldProps & { isPassword?: boolean }) => {
+export const TextInputField = ({ label, isPassword = false, ...props }: TextFieldProps & { isPassword?: boolean }) => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <Box>
-            <InputLabel
-                sx={{
-                    mb: 1,
-                    fontWeight: 'medium',
-                    color: 'text.primary',
-                    opacity: 0.9,
-                }}
-            >
-                {label}
-            </InputLabel>
+            <InputLabel>{label}</InputLabel>
             <TextField
                 fullWidth
                 {...props}
@@ -39,4 +26,4 @@ export const TextInputField = ({
             />
         </Box>
     );
-}
+};

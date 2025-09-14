@@ -1,11 +1,13 @@
 export interface GitHubRepository {
     id: string;
-    full_name: string;
+    name: string;
+    html_url: string;
     description: string;
     url: string;
     stargazers_count: number;
     owner: {
         avatar_url: string;
+        login: string;
     };
 }
 export interface PaginatedResponse {

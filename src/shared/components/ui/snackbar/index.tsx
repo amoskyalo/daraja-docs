@@ -42,7 +42,7 @@ export const snackbarToast = {
 export const Snackbar = ({ message, severity, open, onClose, position, autoHideDuration = 6000 }: SnackbarProps) => {
     return (
         <MUISnackbar
-            sx={{ zIndex: 99999 }}
+            sx={{ zIndex: 999999 }}
             open={open}
             autoHideDuration={autoHideDuration}
             onClose={onClose}

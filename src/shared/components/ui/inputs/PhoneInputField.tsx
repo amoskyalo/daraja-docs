@@ -42,16 +42,7 @@ export const PhoneInputField = ({ label, size, poperWidth, onChange, colorIndex,
 
     return (
         <Stack spacing={0.5} sx={{ width: '100%' }}>
-            <InputLabel
-                sx={{
-                    mb: 1,
-                    fontWeight: 'medium',
-                    color: 'text.primary',
-                    opacity: 0.9,
-                }}
-            >
-                {label}
-            </InputLabel>
+            <InputLabel>{label}</InputLabel>
             <TextField
                 fullWidth
                 size={inputSize}

@@ -37,7 +37,7 @@ const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!, pr
 const MAX_CONTENT_LENGTH = 1000;
 
 function getAllDocPaths(): string[][] {
-    const docsDir = path.join(process.cwd(), 'docs');
+    const docsDir = path.join(process.cwd(), 'documentation', 'apis');
     const paths: string[][] = [];
 
     function scanDirectory(dir: string, relativePath: string[] = []): void {
@@ -70,7 +70,7 @@ export async function POST(): Promise<NextResponse<IndexingResponse>> {
 
         for (const pathArray of docPaths) {
             try {
-                const doc = await getDocumentationBySlug(pathArray.slice(1));
+                const doc = await getDocumentationBySlug(pathArray);
 
                 if (doc) {
                     const plainTextContent = doc.plainText
@@ -145,26 +145,28 @@ export async function POST(): Promise<NextResponse<IndexingResponse>> {
     }
 }
 
-// export async function GET(): Promise<NextResponse<IndexingResponse>> {
-//     try {
-//         await client.search({
-//             requests: [
-//                 {
-//                     indexName: 'documentation',
-//                 },
-//             ],
-//         });
+export async function GET(): Promise<NextResponse<IndexingResponse>> {
+    try {
+        const { results } = await client.search({
+            requests: [
+                {
+                    indexName: 'documentation',
+                },
+            ],
+        });
 
-//         return NextResponse.json({
-//             success: true,
-//         });
-//     } catch (error) {
-//         return NextResponse.json(
-//             {
-//                 success: false,
-//                 error: error instanceof Error ? error.message : String(error),
-//             },
-//             { status: 500 },
-//         );
-//     }
-// }
+        console.log(results);
+
+        return NextResponse.json({
+            success: true,
+        });
+    } catch (error) {
+        return NextResponse.json(
+            {
+                success: false,
+                error: error instanceof Error ? error.message : String(error),
+            },
+            { status: 500 },
+        );
+    }
+}

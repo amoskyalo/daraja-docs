@@ -11,7 +11,7 @@ import AddIcon from '@mui/icons-material/Add';
 const MyAppsPage = () => {
     const { apps, loading } = useApps();
 
-    const { render, setFormOpen } = new gridConstructor({
+    const { render } = new gridConstructor({
         grid: {
             columns: [
                 { field: 'app', headerName: 'App', width: 200 },
@@ -83,12 +83,23 @@ const MyAppsPage = () => {
                 </Tabs>
 
                 <Button
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        borderRadius: 1.5,
+                        py: 0.5,
+                        pl: 0.5,
+                        pr: 1,
+                        height: 'max-content !important',
+                        gap: 0.5,
+                    }}
                     variant="outlined"
-                    sx={{ height: 34 }}
-                    startIcon={<AddIcon />}
-                    onClick={() => setFormOpen(true)}
                 >
-                    New app
+                    <AddIcon sx={{ fontSize: 18 }} />
+                    <Typography variant="caption" sx={{ fontWeight: 500 }}>
+                        New app
+                    </Typography>
                 </Button>
             </Stack>
             {render()}

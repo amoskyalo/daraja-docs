@@ -23,7 +23,7 @@ export const MainPanel = ({ children }: Readonly<{ children: React.ReactNode }>)
     const { isMobile } = useResponsiveness();
 
     return (
-        <Grid size={isMobile ? 12 : 9} sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: { xs: 2, md: 2, lg: 10 } }}>
+        <Grid size={isMobile ? 12 : 8} sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: 2 }}>
             <Box sx={{ mt: 2 }}>{children}</Box>
         </Grid>
     );
@@ -34,7 +34,7 @@ export const SidebarPanel = ({ children }: Readonly<{ children: React.ReactNode 
 
     return (
         <Grid
-            size={isMobile ? 0 : 3}
+            size={isMobile ? 0 : 4}
             sx={{
                 py: 2,
                 px: 2,
@@ -43,6 +43,7 @@ export const SidebarPanel = ({ children }: Readonly<{ children: React.ReactNode 
                 top: '66px',
                 display: isMobile ? 'none' : 'block',
                 height: 'calc(100vh - 66px)',
+                // border: '1px solid red',
             }}
         >
             {children}

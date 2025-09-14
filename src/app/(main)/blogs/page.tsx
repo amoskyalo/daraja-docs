@@ -1,35 +1,68 @@
 'use client';
 
-import { Box, Typography, Stack, CircularProgress, Grid, Link, Pagination } from '@mui/material';
+import { useState } from 'react';
+import { Box, Typography, Stack, CircularProgress, Grid, Link, Pagination, Tabs, Chip } from '@mui/material';
 import Image from 'next/image';
 import { useQuery } from '@apollo/client/react';
 import { GET_BLOGS } from './graphql';
 import { Response } from './types';
 
+const sections = [
+    { label: 'All', value: 'all' },
+    { label: 'Safaricom team', value: 'safaricom' },
+    { label: 'Dev.to', value: 'dev.to' },
+    { label: 'Medium', value: 'medium' },
+];
+
 const BlogsPage = () => {
+    const [selectedSection, setSelectedSection] = useState<string>('all');
+
     const { data, loading } = useQuery<Response>(GET_BLOGS, {
         variables: {
             first: 50,
         },
     });
 
+    const handleSectionChange = (section: string): void => {
+        setSelectedSection(section);
+    };
+
     return (
-        <Box sx={{ py: 3, px: { xs: 1, md: 1, lg: 3 } }}>
+        <Box sx={{ pb: 3, pt: { xs: 3, md: 3, lg: 6 }, px: { xs: 1, md: 1, lg: 0 }, maxWidth: { xs: '100%', md: '100%', lg: '75%' }, mx: 'auto' }}>
             <Box>
-                <Typography variant="h5" fontWeight={600}>
-                    Daraja API Blogs & Tutorials
+                <Typography variant="h2" fontWeight={600} sx={{ textAlign: 'center' }}>
+                    Daraja API Blogs
                 </Typography>
-                <Typography variant="body1" sx={{ mt: 1 }}>
-                    We&apos;ve collected the latest articles, tutorials, and insights about Daraja API and M-Pesa
-                    integration from across the developer community. These blogs are sourced from platforms like Dev.to,
-                    Medium, and other developer-focused publications.
-                </Typography>
-                <Typography variant="body1" sx={{ mt: 2 }}>
+                <Typography variant="body1" sx={{ mt: 1, textAlign: 'center', maxWidth: '80%', mx: 'auto' }}>
                     Explore content written by experienced developers sharing their implementation experiences, code
-                    examples, and best practices. These external resources provide valuable insights to help you build
+                    examples, and best practices. These resources provide valuable insights to help you build
                     robust payment solutions with Daraja API.
                 </Typography>
             </Box>
+
+            <Stack
+                direction="row"
+                justifyContent="center"
+                sx={{ mt: 2, py: 2, position: 'sticky', top: 0, backdropFilter: 'blur(10px)', zIndex: 1 }}
+            >
+                <Tabs
+                    value={0}
+                    variant="scrollable"
+                    sx={{ border: 'none', minHeight: 34 }}
+                    indicatorColor={'transparent' as any}
+                >
+                    {sections.map((section) => (
+                        <Chip
+                            key={section.value}
+                            label={section.label}
+                            onClick={() => handleSectionChange(section.value)}
+                            variant={selectedSection === section.value ? 'filled' : 'outlined'}
+                            color={selectedSection === section.value ? 'primary' : 'default'}
+                            sx={{ mr: 1 }}
+                        />
+                    ))}
+                </Tabs>
+            </Stack>
 
             <Box sx={{ position: 'relative', mt: 3 }}>
                 {loading ? (
@@ -44,9 +77,19 @@ const BlogsPage = () => {
                         <CircularProgress size={40} />
                     </Box>
                 ) : (
-                    <Grid container spacing={3} sx={{ mt: 1 }}>
+                    <Grid container spacing={2} sx={{ mt: 1 }}>
                         {data?.response?.edges?.map((blog) => (
-                            <Grid key={blog.node.id} size={{ xs: 12, sm: 6, md: 3 }} sx={{ cursor: 'pointer' }}>
+                            <Grid
+                                key={blog.node.id}
+                                size={{ xs: 12, sm: 6, md: 3 }}
+                                sx={{
+                                    cursor: 'pointer',
+                                    border: 1.5,
+                                    borderColor: 'divider',
+                                    borderRadius: 1.5,
+                                    overflow: 'hidden',
+                                }}
+                            >
                                 <Link
                                     underline="none"
                                     color="text.primary"
@@ -65,25 +108,42 @@ const BlogsPage = () => {
                                             width={500}
                                             height={300}
                                             style={{
-                                                borderRadius: 2,
                                                 width: '100%',
-                                                height: 150,
+                                                height: 120,
                                             }}
                                         />
-                                        <Typography variant="body1" sx={{ fontWeight: 700, fontSize: 18 }}>
-                                            {blog?.node.title}
-                                        </Typography>
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            sx={{
-                                                wordBreak: 'break-word',
-                                                overflowWrap: 'break-word',
-                                                whiteSpace: 'pre-wrap',
-                                            }}
-                                        >
-                                            {blog?.node.brief}
-                                        </Typography>
+                                        <Box sx={{ px: 1.5, pb: 1.5 }}>
+                                            <Typography
+                                                variant="body1"
+                                                sx={{
+                                                    fontWeight: 700,
+                                                    wordBreak: 'break-word',
+                                                    overflowWrap: 'break-word',
+                                                    whiteSpace: 'pre-wrap',
+                                                    WebkitLineClamp: 2,
+                                                    display: '-webkit-box',
+                                                    WebkitBoxOrient: 'vertical',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {blog?.node.title}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{
+                                                    wordBreak: 'break-word',
+                                                    overflowWrap: 'break-word',
+                                                    whiteSpace: 'pre-wrap',
+                                                    WebkitLineClamp: 3,
+                                                    display: '-webkit-box',
+                                                    WebkitBoxOrient: 'vertical',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                {blog?.node.brief}
+                                            </Typography>
+                                        </Box>
                                     </Stack>
                                 </Link>
                             </Grid>

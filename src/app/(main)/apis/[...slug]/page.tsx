@@ -1,9 +1,8 @@
 import { getDocumentationBySlug } from '@/shared/lib/mdx';
-import { MDXRenderer } from '@/features/markdown';
-import { TableOfContents, DocsBottomNavigator, DocsContainer, MainPanel, SidebarPanel } from '@/features/documentation';
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
+import { NAVTABS } from '@/config';
+import { ContentsContainer } from '@/features/documentation';
 import type { Metadata } from 'next';
-
 interface DocsPageProps {
     params: Promise<{ slug: string[] }>;
 }
@@ -28,25 +27,14 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
         );
     }
 
-    return (
-        <DocsContainer>
-            <MainPanel>
-                {doc.frontMatter?.description && (
-                    <Box sx={{ mb: 3, p: 2, backgroundColor: 'action.hover', borderRadius: 1 }}>
-                        <Typography variant="body2" color="text.secondary">
-                            {doc.frontMatter.description}
-                        </Typography>
-                    </Box>
-                )}
-                <MDXRenderer mdxSource={doc.mdxSource} />
-                <DocsBottomNavigator />
-            </MainPanel>
+    const slug = param.slug;
 
-            <SidebarPanel>
-                <TableOfContents headings={doc.tableOfContents} />
-            </SidebarPanel>
-        </DocsContainer>
-    );
+    const currentPath = `/apis/${slug.join('/')}`;
+    const currentDoc = NAVTABS[1].items.findIndex((item: any) => item.segment === currentPath);
+    const prevDoc = NAVTABS[1].items[currentDoc - 1];
+    const nextDoc = NAVTABS[1].items[currentDoc + 1];
+
+    return <ContentsContainer doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} />;
 }
 
 export async function generateMetadata({ params }: Readonly<DocsPageProps>): Promise<Metadata> {

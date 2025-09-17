@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import { Box, Tabs, Tab } from '@mui/material';
 import { PlaygroundUI } from './components/PlaygroundUI';
+import { useSearchParams } from '@/shared/hooks';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-const tabOptions = ['Documentation', 'Playground'];
+const tabOptions = [
+    { label: 'Documentation', value: 'documentation' },
+    { label: 'Playground', value: 'playground' },
+];
 
 interface PlaygroundProps {
     children: React.ReactNode;
 }
 
 export const Playground = ({ children }: PlaygroundProps) => {
-    const [activeTab, setActiveTab] = useState(0);
+    const { setParams, getParam } = useSearchParams();
+    const activeTab = getParam('tab') || 'documentation';
 
-    const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
-        setActiveTab(newValue);
+    const handleTabChange = (_: React.SyntheticEvent, newValue: string) => {
+        setParams({ tab: newValue });
     };
 
     return (
@@ -23,7 +28,7 @@ export const Playground = ({ children }: PlaygroundProps) => {
                 value={activeTab}
                 onChange={handleTabChange}
                 sx={{
-                    ...(activeTab === 0 ? { borderBottom: 1, borderColor: 'divider' } : {}),
+                    ...(activeTab === "documentation" ? { borderBottom: 1, borderColor: 'divider' } : {}),
                     '& .MuiTab-root': {
                         color: 'text.secondary',
                         minHeight: '24px !important',
@@ -34,13 +39,13 @@ export const Playground = ({ children }: PlaygroundProps) => {
                     mb: 2,
                 }}
             >
-                {tabOptions.map((option, index) => (
+                {tabOptions.map(({ label, value }, index) => (
                     <Tab
                         key={index}
-                        label={option}
+                        label={label}
                         iconPosition="start"
                         icon={
-                            option === 'Documentation' ? (
+                            value === 'documentation' ? (
                                 <MenuBookIcon fontSize="small" />
                             ) : (
                                 <PlayCircleOutlineIcon fontSize="small" />
@@ -56,8 +61,8 @@ export const Playground = ({ children }: PlaygroundProps) => {
                 ))}
             </Tabs>
 
-            {activeTab === 0 && children}
-            {activeTab === 1 && <PlaygroundUI />}
+            {activeTab === "documentation" && children}
+            {activeTab === "playground" && <PlaygroundUI />}
         </Box>
     );
 };

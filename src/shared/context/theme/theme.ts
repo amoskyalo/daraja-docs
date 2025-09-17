@@ -4,10 +4,7 @@ import { createTheme, Theme } from '@mui/material/styles';
 
 export const colors = {
     primary: {
-        main: '#00A651', // Safaricom green
-    },
-    secondary: {
-        main: '#FFFFFF', // Safaricom white
+        main: '#00A651',
     },
 };
 
@@ -116,14 +113,12 @@ export const lightTheme: Theme = createTheme({
     palette: {
         mode: 'light',
         primary: colors.primary,
-        secondary: colors.secondary,
         background: {
             default: '#ffffff',
             paper: '#ffffff',
         },
         text: {
             primary: '#1E293B',
-            secondary: '#64748B',
         },
         divider: 'rgba(0, 0, 0, 0.12)',
     },
@@ -160,14 +155,12 @@ export const darkTheme: Theme = createTheme({
     palette: {
         mode: 'dark',
         primary: colors.primary,
-        secondary: colors.secondary,
         background: {
             default: '#121212',
             paper: '#121212',
         },
         text: {
             primary: '#F1F5F9',
-            secondary: '#94A3B8',
         },
         divider: 'rgba(255, 255, 255, 0.12)',
     },

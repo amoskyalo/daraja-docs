@@ -3,10 +3,6 @@ title: Authorization
 description: Gives you a time bound access token to call allowed APIs.
 ---
 
-# Authorization
-
-Gives you a time bound access token to call allowed APIs.
-
 <Playground 
     method = "GET"
     endpoint = "oauth/v1/generate"
@@ -15,6 +11,9 @@ Gives you a time bound access token to call allowed APIs.
         { name: 'grant_type', type: 'text', label: 'Grant type', queryKey: 'grant_type', value: 'client_credentials' },
     ]}
 >
+# Authorization
+
+Gives you a time bound access token to call allowed APIs.
 
 <Link method="GET" href="https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" />
 

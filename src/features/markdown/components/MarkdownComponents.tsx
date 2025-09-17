@@ -6,7 +6,15 @@ import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { Typography, Box, Link, IconButton, Tooltip } from '@mui/material';
 import { useCopyToClipboard } from '@/shared/hooks';
 
-export const MarkdownComponents = ({ message }: { message: string }) => {
+export const MarkdownComponents = ({
+    message,
+    maxHeight,
+    borderRadius,
+}: {
+    message: string;
+    maxHeight?: string;
+    borderRadius?: string;
+}) => {
     return (
         <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -81,13 +89,12 @@ export const MarkdownComponents = ({ message }: { message: string }) => {
                             component="pre"
                             className="language-javascript"
                             sx={{
-                                borderRadius: 1,
                                 overflow: 'auto',
                                 fontSize: '12px !important',
-                                mb: 1,
+                                margin: '0px !important',
                                 backgroundColor: '#282a36',
-                                padding: 2,
-                                maxHeight: '400px',
+                                maxHeight: maxHeight ?? '400px',
+                                borderRadius: borderRadius ?? '8px !important',
                                 position: 'relative',
                                 '& code': {
                                     fontFamily:
@@ -96,7 +103,7 @@ export const MarkdownComponents = ({ message }: { message: string }) => {
                                 },
                             }}
                         >
-                            <Box sx={{ position: 'absolute', top: 10, right: 10 }}>
+                            {/* <Box sx={{ position: 'absolute', top: 10, right: 10 }}>
                                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                                     <IconButton
                                         sx={{
@@ -113,7 +120,7 @@ export const MarkdownComponents = ({ message }: { message: string }) => {
                                         <ContentCopyOutlinedIcon sx={{ fontSize: 14, color: 'white' }} />
                                     </IconButton>
                                 </Tooltip>
-                            </Box>
+                            </Box> */}
                             {children}
                         </Box>
                     );

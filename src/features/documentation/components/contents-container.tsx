@@ -4,7 +4,7 @@ import { MDXRenderer } from '../../markdown/components';
 import { DocsBottomNavigator } from './bottom-navigator';
 import { TableOfContents } from './table-of-contents';
 import { alpha, Grid, TextField, InputAdornment, Stack } from '@mui/material';
-import { useResponsiveness } from '@/shared/hooks';
+import { useResponsiveness, useSearchParams } from '@/shared/hooks';
 import { useState, useEffect } from 'react';
 import { useAIContext } from '@/shared/context';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -12,6 +12,9 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
     const { isMobile } = useResponsiveness();
     const { drawerOpen, question, setQuestion, handleSendRequest, handleKeyPress } = useAIContext();
+    const { getParam } = useSearchParams();
+
+    const activeTab = getParam('tab') || 'documentation';
 
     const [hideTextField, setHideTextField] = useState(false);
 
@@ -46,77 +49,81 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
             }}
         >
             <Grid
-                size={isMobile ? 12 : 12}
-                sx={{ pb: 4, pt: 2, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative', border: '1px solid red' }}
+                size={isMobile ? 12 : activeTab === 'playground' ? 12 : 8.5}
+                sx={{ pb: 4, pt: 2, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative' }}
             >
                 <MDXRenderer mdxSource={doc.mdxSource} />
                 <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
 
-                <Stack
-                    alignItems="center"
-                    justifyContent="center"
-                    sx={{
-                        position: 'sticky',
-                        bottom: 10,
-                        opacity: !drawerOpen && !hideTextField ? 1 : 0,
-                        transition: 'opacity 0.3s ease-in-out',
-                        pointerEvents: !drawerOpen && !hideTextField ? 'auto' : 'none',
-                    }}
-                >
-                    <TextField
-                        placeholder="Ask question"
+                {activeTab !== 'playground' && (
+                    <Stack
+                        alignItems="center"
+                        justifyContent="center"
                         sx={{
-                            width: 350,
-                            '& .MuiOutlinedInput-root': {
-                                height: 44,
-                                cursor: 'pointer',
-                                backgroundColor: 'background.paper',
-                                borderRadius: '25px !important',
-                            },
+                            position: 'sticky',
+                            bottom: 10,
+                            opacity: !drawerOpen && !hideTextField ? 1 : 0,
+                            transition: 'opacity 0.3s ease-in-out',
+                            pointerEvents: !drawerOpen && !hideTextField ? 'auto' : 'none',
                         }}
-                        value={question}
-                        onChange={(e) => setQuestion(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                        slotProps={{
-                            input: {
-                                endAdornment: (
-                                    <InputAdornment position="end" sx={{ cursor: 'pointer' }}>
-                                        <Stack
-                                            direction="row"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            onClick={() => handleSendRequest()}
-                                            sx={{
-                                                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.5),
-                                                height: 28,
-                                                width: 28,
-                                                borderRadius: '50%',
-                                            }}
-                                        >
-                                            <ArrowUpwardIcon fontSize="small" sx={{ color: 'white' }} />
-                                        </Stack>
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
-                </Stack>
+                    >
+                        <TextField
+                            placeholder="Ask question"
+                            sx={{
+                                width: 350,
+                                '& .MuiOutlinedInput-root': {
+                                    height: 44,
+                                    cursor: 'pointer',
+                                    backgroundColor: 'background.paper',
+                                    borderRadius: '25px !important',
+                                },
+                            }}
+                            value={question}
+                            onChange={(e) => setQuestion(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <InputAdornment position="end" sx={{ cursor: 'pointer' }}>
+                                            <Stack
+                                                direction="row"
+                                                alignItems="center"
+                                                justifyContent="center"
+                                                onClick={() => handleSendRequest()}
+                                                sx={{
+                                                    backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.5),
+                                                    height: 28,
+                                                    width: 28,
+                                                    borderRadius: '50%',
+                                                }}
+                                            >
+                                                <ArrowUpwardIcon fontSize="small" sx={{ color: 'white' }} />
+                                            </Stack>
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
+                        />
+                    </Stack>
+                )}
             </Grid>
 
-            <Grid
-                size={isMobile ? 0 : 0}
-                sx={{
-                    py: 2,
-                    px: 2,
-                    overflowY: 'auto',
-                    position: 'sticky',
-                    top: '66px',
-                    display: isMobile ? 'none' : 'block',
-                    height: 'calc(100vh - 66px)',
-                }}
-            >
-                <TableOfContents headings={doc.tableOfContents} />
-            </Grid>
+            {!isMobile && activeTab !== 'playground' && (
+                <Grid
+                    size={3.5}
+                    sx={{
+                        py: 2,
+                        px: 2,
+                        overflowY: 'auto',
+                        position: 'sticky',
+                        top: '66px',
+                        display: isMobile ? 'none' : 'block',
+                        height: 'calc(100vh - 66px)',
+                    }}
+                >
+                    <TableOfContents headings={doc.tableOfContents} />
+                </Grid>
+            )}
         </Grid>
     );
 };

@@ -14,6 +14,10 @@ body {
   scrollbar-width: thin;
 }
 
+::-webkit-scrollbar {
+    width: 6px;
+}
+
 .MuiListItemButton-gutters {
     padding: 0px !important;
     height: 32px;

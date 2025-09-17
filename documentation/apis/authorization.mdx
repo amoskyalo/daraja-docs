@@ -1,8 +1,11 @@
+---
+title: Authorization
+description: Gives you a time bound access token to call allowed APIs.
+---
+
 # Authorization
 
 Gives you a time bound access token to call allowed APIs.
-
-<Link method="GET" href="https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" />
 
 <Playground 
     method = "GET"
@@ -12,6 +15,8 @@ Gives you a time bound access token to call allowed APIs.
         { name: 'grant_type', type: 'text', label: 'Grant type', queryKey: 'grant_type', value: 'client_credentials' },
     ]}
 >
+
+<Link method="GET" href="https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" />
 
 This API generates the tokens for authenticating your API calls. This is the first API you will engage with within the set of APIs available because all the other APIs require authentication information from this API to work.
 

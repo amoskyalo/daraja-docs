@@ -4,6 +4,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
+import grayMatter from 'gray-matter';
 import { JSDOM } from 'jsdom';
 import { extractTableOfContents } from '@/features/documentation';
 
@@ -25,10 +26,10 @@ export async function getDocumentationBySlug(slug: string[]) {
     }
 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const tableOfContents = extractTableOfContents(fileContents);
+    const { content, data: frontMatter } = grayMatter(fileContents);
+    const tableOfContents = extractTableOfContents(content);
 
-    const mdxSource = (await serialize(fileContents, {
-        parseFrontmatter: true,
+    const mdxSource = (await serialize(content, {
         mdxOptions: {
             remarkPlugins: [remarkGfm],
             rehypePlugins: [rehypeSlug, [rehypePrism, { ignoreMissing: true, aliases: { mdx: 'markdown' } }]],
@@ -41,7 +42,7 @@ export async function getDocumentationBySlug(slug: string[]) {
     return {
         mdxSource,
         plainText,
-        frontMatter: mdxSource.frontmatter,
+        frontMatter,
         tableOfContents,
     };
 }

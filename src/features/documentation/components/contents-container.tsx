@@ -46,8 +46,8 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
             }}
         >
             <Grid
-                size={isMobile ? 12 : 8.5}
-                sx={{ pb: 4, pt: 2, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative' }}
+                size={isMobile ? 12 : 12}
+                sx={{ pb: 4, pt: 2, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative', border: '1px solid red' }}
             >
                 <MDXRenderer mdxSource={doc.mdxSource} />
                 <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
@@ -104,7 +104,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
             </Grid>
 
             <Grid
-                size={isMobile ? 0 : 3.5}
+                size={isMobile ? 0 : 0}
                 sx={{
                     py: 2,
                     px: 2,

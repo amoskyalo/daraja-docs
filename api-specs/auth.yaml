@@ -1,0 +1,32 @@
+info:
+    title: Authentication API
+    method: post
+    url: https://sandbox.safaricom.co.ke/oauth/v1/generate
+
+headers:
+    properties:
+        Authorization:
+            type: string
+            description: 'Bearer authentication header of the form Bearer is your auth token.'
+            placeholder: 'Bearer is your auth token'
+            required: true
+body:
+    properties:
+        name:
+            type: string
+            description: 'Your username'
+            placeholder: 'Your username'
+            required: true
+        password:
+            type: string
+            description: 'Your password'
+            placeholder: 'Your password'
+            required: true
+parameters:
+    properties:
+        grant_type:
+            type: string
+            description: 'the client_credentials grant type is supported.'
+            placeholder: 'client_credentials'
+            required: true
+            value: client_credentials

@@ -76,7 +76,6 @@ export const baseComponents = {
         styleOverrides: {
             root: {
                 '& .MuiOutlinedInput-root': {
-                    height: '40px',
                     borderRadius: borderRadius,
                 },
             },
@@ -128,7 +127,7 @@ export const lightTheme: Theme = createTheme({
         MuiPaper: {
             styleOverrides: {
                 root: {
-                    boxShadow: "0",
+                    boxShadow: '0',
                 },
             },
             defaultProps: {
@@ -180,7 +179,7 @@ export const darkTheme: Theme = createTheme({
         MuiPaper: {
             styleOverrides: {
                 root: {
-                    boxShadow: "0",
+                    boxShadow: '0',
                 },
             },
         },
@@ -193,6 +192,22 @@ export const darkTheme: Theme = createTheme({
                     '&:hover': {
                         ...baseComponents.MuiCard.styleOverrides.root['&:hover'],
                         boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
+                    },
+                },
+            },
+        },
+        MuiCssBaseline: {
+            styleOverrides: {
+                '*': {
+                    '&::-webkit-scrollbar-track': {
+                        background: 'red',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        background: 'rgba(255, 255, 255, 0.3)',
+                        borderRadius: '4px',
+                    },
+                    '&::-webkit-scrollbar-thumb:hover': {
+                        background: 'rgba(255, 255, 255, 0.5)',
                     },
                 },
             },

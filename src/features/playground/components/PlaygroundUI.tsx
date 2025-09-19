@@ -3,54 +3,170 @@ import ResponseUI from './ResponseUI';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useState, useEffect } from 'react';
 
-const requiredFields = [
-    {
-        label: 'Headers',
-        inputs: [
-            {
-                label: 'Authorization',
-                description: 'Bearer authentication header of the form Bearer is your auth token.',
-                placeholder: 'Enter bearer token',
-                required: true,
-                type: 'string',
-            },
-        ],
-    },
-    {
-        label: 'Body',
-        inputs: [
-            {
-                label: 'Content',
-                type: 'string',
-                description:
-                    'The content to extract and process into a document. This can be a URL to a website, a PDF, an image, or a video.',
-                placeholder: 'Enter content',
-                required: true,
-            },
-            {
-                label: 'Content type',
-                type: 'string',
-                description: 'Optional tag this document should be containerized by.',
-                placeholder: 'Enter content type',
-            },
-        ],
-    },
-    {
-        label: 'Query Parameters',
-        inputs: [
-            {
-                label: 'Merchant Code',
-                type: 'string',
-                description: 'The merchant code of the merchant.',
-                placeholder: 'Enter merchant code',
-                required: true,
-            },
-        ],
-    },
-];
+interface ApiSpecsYaml {
+    headers?: {
+        properties: Record<string, any>;
+    };
+    body?: {
+        properties: Record<string, any>;
+    };
+    parameters?: {
+        properties: Record<string, any>;
+    };
+    info: {
+        title: string;
+        method: string;
+        url: string;
+    };
+}
 
-export const PlaygroundUI = () => {
+interface FieldInput {
+    label: string;
+    type: string;
+    required: boolean;
+    description: string;
+    value: string;
+    placeholder: string;
+}
+
+interface RequiredField {
+    label: string;
+    key: string;
+    inputs: FieldInput[];
+}
+
+interface FieldValues {
+    [fieldType: string]: {
+        [fieldName: string]: string;
+    };
+}
+
+export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) => {
+    const [requests, setRequests] = useState<any>(null);
+    const [languages, setLanguages] = useState<any[]>([]);
+    const [fieldValues, setFieldValues] = useState<FieldValues>({});
+
+    const requiredFields = [
+        {
+            label: 'Headers',
+            key: 'headers',
+            inputs: [
+                ...Object.entries(apiSpecsYaml.headers?.properties || {}).map(([name, props]: [string, any]) => ({
+                    label: name,
+                    type: props.type,
+                    required: props.required,
+                    description: props.description ?? '',
+                    value: props.value ?? '',
+                    placeholder: props.placeholder ?? '',
+                })),
+            ],
+        },
+        {
+            label: 'Body',
+            key: 'body',
+            inputs: [
+                ...Object.entries(apiSpecsYaml.body?.properties || {}).map(([name, props]: [string, any]) => ({
+                    label: name,
+                    type: props.type,
+                    required: props.required,
+                    description: props.description ?? '',
+                    value: props.value ?? '',
+                    placeholder: props.placeholder ?? '',
+                })),
+            ],
+        },
+        {
+            label: 'Query Parameters',
+            key: 'queryParameters',
+            inputs: [
+                ...Object.entries(apiSpecsYaml.parameters?.properties || {}).map(([name, props]: [string, any]) => ({
+                    label: name,
+                    type: props.type,
+                    required: props.required,
+                    description: props.description ?? '',
+                    value: props.value ?? '',
+                    placeholder: props.placeholder ?? '',
+                })),
+            ],
+        },
+    ];
+
+    const handleFieldChange = (fieldType: string, fieldName: string, value: string): void => {
+        setFieldValues(prev => ({
+            ...prev,
+            [fieldType]: {
+                ...prev[fieldType],
+                [fieldName]: value
+            }
+        }));
+    };
+
+    const buildRequestData = () => {
+        const headers: Record<string, string> = {};
+        const body: Record<string, string> = {};
+        const queryParams: Record<string, string> = {};
+
+        requiredFields.forEach(field => {
+            field.inputs.forEach(input => {
+                const value = fieldValues[field.key]?.[input.label] || input.value;
+                if (value) {
+                    if (field.key === 'headers') {
+                        headers[input.label] = value;
+                    } else if (field.key === 'body') {
+                        body[input.label] = input.type === 'number' ? Number(value) : value;
+                    } else if (field.key === 'queryParameters') {
+                        queryParams[input.label] = value;
+                    }
+                }
+            });
+        });
+
+        let url = apiSpecsYaml.info.url;
+        if (Object.keys(queryParams).length > 0) {
+            const queryString = new URLSearchParams(queryParams).toString();
+            url += `?${queryString}`;
+        }
+
+        return {
+            method: apiSpecsYaml.info.method,
+            url: url,
+            headers: headers,
+            body: Object.keys(body).length > 0 ? body : undefined
+        };
+    };
+
+    const handleSend = async () => {
+        try {
+            const requestData = buildRequestData()
+            
+            const codeResponse = await fetch('/api/request-snippet-generator', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            });
+
+            const data = await codeResponse.json();
+            setRequests(data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    useEffect(() => {
+        const getLanguages = async () => {
+            const response = await fetch('/api/request-snippet-generator', {
+                method: 'GET',
+            });
+            const data = await response.json();
+            setLanguages(data.languages);
+        };
+        getLanguages();
+    }, []);
+
     return (
         <Box>
             <Stack direction="row" alignItems="center" spacing={2}>
@@ -73,7 +189,7 @@ export const PlaygroundUI = () => {
                     }}
                 >
                     <Typography sx={{ opacity: 0.9 }} variant="body1" fontWeight={500}>
-                        Playground
+                        Select an app
                     </Typography>
                     <KeyboardArrowDownIcon />
                 </Stack>
@@ -105,23 +221,26 @@ export const PlaygroundUI = () => {
                         variant="body2"
                         color="white"
                     >
-                        GET
+                        {apiSpecsYaml.info.method}
                     </Typography>
                     <Tooltip title="https://sandbox.safaricom.co.ke">
                         <Typography color="primary" fontWeight={500}>{`{BASE_URL}`}</Typography>
                     </Tooltip>
                     <Typography sx={{ opacity: 0.9 }} variant="body1">
-                        /oauth/v1/generate?grant_type=client_credential
+                        {apiSpecsYaml.info.url?.replace('https://sandbox.safaricom.co.ke', '')}
                     </Typography>
                 </Stack>
 
-                <Button variant="contained" sx={{ paddingLeft: '8px', paddingY: '4px', paddingRight: '3px' }}>
-                    Send
-                    <PlayArrowIcon fontSize="small" />
+                <Button
+                    onClick={handleSend}
+                    variant="contained"
+                    sx={{ paddingY: '4px', paddingX: '8px' }}
+                >
+                    Simulate
                 </Button>
             </Stack>
 
-            <Grid container>
+            <Grid spacing={2} container>
                 <Grid size={7}>
                     <Box sx={{ mt: 2 }}>
                         <Typography variant="body1" fontWeight={600}>
@@ -156,7 +275,7 @@ export const PlaygroundUI = () => {
                                     <Grid
                                         container
                                         sx={{ paddingY: 2, borderBottom: isLast ? 0 : 1, borderColor: 'divider' }}
-                                        spacing={1}
+                                        spacing={2}
                                         key={input.label}
                                     >
                                         <Grid size={6}>
@@ -196,13 +315,14 @@ export const PlaygroundUI = () => {
                                                 variant="standard"
                                                 size="small"
                                                 fullWidth
+                                                value={fieldValues[field.key]?.[input.label] || input.value}
+                                                onChange={(e) => handleFieldChange(field.key, input.label, e.target.value)}
                                                 slotProps={{
                                                     input: {
                                                         style: {
                                                             height: '34px',
                                                             fontSize: '14px',
                                                         },
-
                                                         disableUnderline: true,
                                                     },
                                                     htmlInput: {
@@ -221,8 +341,8 @@ export const PlaygroundUI = () => {
                     ))}
                 </Grid>
 
-                <Grid size={5} sx={{padding: 2}}>
-                    <ResponseUI />
+                <Grid size={5} sx={{ paddingY: 2 }}>
+                    {requests && <ResponseUI requests={requests} languages={languages} />}
                 </Grid>
             </Grid>
         </Box>

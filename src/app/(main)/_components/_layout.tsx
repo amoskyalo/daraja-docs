@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense } from 'react';
-import { Container, LinearProgress, Stack } from '@mui/material';
+import { Container, LinearProgress, Stack, Box } from '@mui/material';
 import { useAIContext } from '@/shared/context';
 import { PromptDialog } from '@/features/AI';
 import Header from './Header';
@@ -26,7 +26,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                     >
                         <LeftNav />
 
-                        {children}
+                       <Box sx={{ flex: 1 }}>
+                       {children}
+                       </Box>
                     </Stack>
                 </Container>
 

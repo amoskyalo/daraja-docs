@@ -1,15 +1,4 @@
-import {
-    Drawer,
-    IconButton,
-    Stack,
-    Typography,
-    Box,
-    TextField,
-    Tooltip,
-    InputAdornment,
-    alpha,
-    Toolbar,
-} from '@mui/material';
+import { Drawer, IconButton, Stack, Typography, Box, TextField, Tooltip, alpha, Toolbar } from '@mui/material';
 import { MarkdownComponents } from '@/features/markdown';
 import { useCopyToClipboard } from '@/shared/hooks';
 import AutoAwesomeOutlinedIcon from '@mui/icons-material/AutoAwesomeOutlined';
@@ -42,13 +31,6 @@ export const PromptDialog = ({
     handleKeyPress,
 }: PromptDialogProps) => {
     const { copied, Copy } = useCopyToClipboard();
-
-    const formatMessage = (message: string, type: 'user' | 'assistant') => {
-        if (type === 'user') {
-            return <Typography variant="body2">{message}</Typography>;
-        }
-        return <MarkdownComponents message={message} />;
-    };
 
     return (
         <Drawer
@@ -108,10 +90,9 @@ export const PromptDialog = ({
                                     borderRadius: 2,
                                     width: item.type === 'assistant' ? '100%' : 'auto',
                                     maxWidth: '100%',
-                                    
                                 }}
                             >
-                                {formatMessage(item.message, item.type)}
+                                <MarkdownComponents message={item.message} />
                                 <Stack direction="column" alignItems="flex-start">
                                     {item.type === 'assistant' && (
                                         <Stack direction="row" alignItems="center" spacing={0.7}>
@@ -158,47 +139,51 @@ export const PromptDialog = ({
                     {loading && <Typography variant="body2">Thinking...</Typography>}
                 </Stack>
 
-                <Box sx={{ px: 2, py: 1 }}>
-                    <TextField
-                        placeholder="Ask question"
-                        value={question}
-                        onChange={(e) => setQuestion(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                        disabled={loading}
-                        multiline
-                        sx={{
-                            width: '100%',
-                            '& .MuiOutlinedInput-root': {
-                                height: 40,
-                                fontSize: 14,
-                                paddingRight: 1,
-                                cursor: 'pointer',
-                                backgroundColor: 'background.paper',
-                                borderRadius: '25px !important',
-                            },
-                        }}
-                        slotProps={{
-                            input: {
-                                endAdornment: (
-                                    <InputAdornment position="end" sx={{ cursor: 'pointer' }}>
-                                        <Stack
-                                            direction="row"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            sx={{
-                                                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.5),
-                                                height: 26,
-                                                width: 26,
-                                                borderRadius: '50%',
-                                            }}
-                                        >
-                                            <ArrowUpwardIcon fontSize="small" sx={{ color: 'white' }} />
-                                        </Stack>
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                    />
+                <Box sx={{ px: 2, py: 1.5, maxHeight: 300, overflow: 'auto', backgroundColor: 'action.hover' }}>
+                    <Stack spacing={1} direction="row" alignItems="end" sx={{ position: 'relative' }}>
+                        <TextField
+                            placeholder="Ask question"
+                            value={question}
+                            variant="standard"
+                            onChange={(e) => setQuestion(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            disabled={loading}
+                            multiline
+                            sx={{
+                                width: '100%',
+                                flex: 1,
+                                '& .MuiOutlinedInput-root': {
+                                    fontSize: 14,
+                                    paddingRight: 1,
+                                    cursor: 'pointer',
+                                },
+                            }}
+                            slotProps={{
+                                input: {
+                                    disableUnderline: true,
+                                },
+                            }}
+                        />
+
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="center"
+                            sx={{
+                                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.5),
+                                backdropFilter: 'blur(10px)',
+                                height: 32,
+                                width: 32,
+                                borderRadius: '50%',
+                                position: 'fixed',
+                                right: 10,
+                                bottom: 10,
+                                zIndex: 1,
+                            }}
+                        >
+                            <ArrowUpwardIcon fontSize="small" sx={{ color: 'white' }} />
+                        </Stack>
+                    </Stack>
                 </Box>
             </Stack>
         </Drawer>

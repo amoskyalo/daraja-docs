@@ -2,15 +2,6 @@
 title: Authorization
 description: Gives you a time bound access token to call allowed APIs.
 ---
-
-<Playground 
-    method = "GET"
-    endpoint = "oauth/v1/generate"
-    requestParameters={[
-        { name: 'Authorization', type: 'text', label: 'Authorization', headerKey: 'Authorization' },
-        { name: 'grant_type', type: 'text', label: 'Grant type', queryKey: 'grant_type', value: 'client_credentials' },
-    ]}
->
 # Authorization
 
 Gives you a time bound access token to call allowed APIs.
@@ -46,5 +37,3 @@ You can also get the postman collection then access your Consumer Key and Consum
 }
 ```
 </CodeExample>
-
-</Playground>

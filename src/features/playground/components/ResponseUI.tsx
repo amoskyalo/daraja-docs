@@ -1,55 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Stack, Tooltip, Typography, Menu, MenuItem } from '@mui/material';
 import { MarkdownComponents } from '@/features/markdown';
+import { useAIContext } from '@/shared/context';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import CheckIcon from '@mui/icons-material/Check';
 
-const curl = `\`\`\`javascript
-let headers = new Headers();
-headers.append("Content-Type", "application/json");
-headers.append("Authorization", "Bearer vQ48zB7cR9YHRNXAcpd0OuE7OTyK");
+type Language = {
+    label: string;
+    key: string;
+    variant: string;
+};
 
-fetch("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest", {
-  method: 'POST',
-  headers,
-  body: JSON.stringify({
-    "BusinessShortCode": 174379,
-    "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUwOTE3MjE1MjQx",
-    "Timestamp": "20250917215241",
-    "TransactionType": "CustomerPayBillOnline",
-    "Amount": 1,
-    "PartyA": 254708374149,
-    "PartyB": 174379,
-    "PhoneNumber": 254708815490,
-    "CallBackURL": "https://mydomain.com/path",
-    "AccountReference": "CompanyXLTD",
-    "TransactionDesc": "Payment of X" 
-  })
-})
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log(error));
-\`\`\``;
+type ResponseUIProps = {
+    requests: Record<string, string>;
+    languages: Language[];
+};
 
-const response = `\`\`\`json
-{
-    "MerchantRequestID": "9ba0-4845-bf5b-e11eb4372da61920",
-    "CheckoutRequestID": "ws_CO_17092025215242150708815490",
-    "ResponseCode": "0",
-    "ResponseDescription": "Success. Request accepted for processing",
-    "CustomerMessage": "Success. Request accepted for processing"
-}
-\`\`\``;
+const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
+    const { setQuestion, handleAIRequest, setDrawerOpen } = useAIContext();
 
-const ResponseUI = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [selectedLanguage, setSelectedLanguage] = useState<Language>(languages[0]);
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -78,7 +58,7 @@ const ResponseUI = () => {
                                 }}
                             >
                                 <Typography variant="body2" sx={{ fontSize: 13 }}>
-                                    Javascript
+                                    {selectedLanguage.label}
                                 </Typography>
                                 <Stack direction="column" alignItems="center">
                                     <KeyboardArrowUpIcon sx={{ fontSize: 13, mt: 0 }} />
@@ -86,17 +66,30 @@ const ResponseUI = () => {
                                 </Stack>
                             </Stack>
                             <Tooltip title="Explain with AI">
-                                <AutoAwesomeIcon sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }} />
+                                <AutoAwesomeIcon
+                                    sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }}
+                                    onClick={() => {
+                                        const code = `\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``;
+                                        const input = `Explain the code below in details \n\n\n${code}`;
+                                        setQuestion(input);
+                                        handleAIRequest(input);
+                                        setDrawerOpen(true);
+                                    }}
+                                />
                             </Tooltip>
                             <Tooltip title="Copy">
                                 <ContentCopyIcon
                                     sx={{ fontSize: 14, cursor: 'pointer' }}
-                                    onClick={() => navigator.clipboard.writeText(curl)}
+                                    onClick={() => navigator.clipboard.writeText(requests[selectedLanguage.variant])}
                                 />
                             </Tooltip>
                         </Stack>
                     </Stack>
-                    <MarkdownComponents message={curl} maxHeight="100%" borderRadius="8px !important" />
+                    <MarkdownComponents
+                        message={`\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``}
+                        maxHeight="100%"
+                        borderRadius="8px !important"
+                    />
                 </Box>
 
                 <Box sx={{ borderRadius: 2, backgroundColor: 'action.hover' }}>
@@ -113,12 +106,12 @@ const ResponseUI = () => {
                             <Tooltip title="Copy">
                                 <ContentCopyIcon
                                     sx={{ fontSize: 14, cursor: 'pointer' }}
-                                    onClick={() => navigator.clipboard.writeText(curl)}
+                                    // onClick={() => navigator.clipboard.writeText(requests[selectedLanguage])}
                                 />
                             </Tooltip>
                         </Stack>
                     </Stack>
-                    <MarkdownComponents message={response} />
+                    <MarkdownComponents message={'```json\n{"status": "200", "message": "Success"}\n```'} />
                 </Box>
             </Stack>
 
@@ -132,7 +125,7 @@ const ResponseUI = () => {
                     paper: {
                         sx: {
                             minWidth: 200,
-                            maxHeight: 200,
+                            maxHeight: 300,
                             border: 1,
                             borderColor: 'divider',
                             mt: 0.5,
@@ -144,30 +137,29 @@ const ResponseUI = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                {[
-                    { label: 'Javascript', value: 'javascript' as const },
-                    { label: 'Python', value: 'python' as const },
-                    { label: 'cURL', value: 'curl' as const },
-                    { label: 'Java', value: 'java' as const },
-                    { label: 'C#', value: 'csharp' as const },
-                    { label: 'C++', value: 'cpp' as const },
-                    { label: 'Go', value: 'go' as const },
-                    { label: 'Rust', value: 'rust' as const },
-                    { label: 'PHP', value: 'php' as const },
-                    { label: 'Ruby', value: 'ruby' as const },
-                    { label: 'Swift', value: 'swift' as const },
-                    { label: 'Kotlin', value: 'kotlin' as const },
-                    { label: 'TypeScript', value: 'typescript' as const },
-                ].map((item) => (
-                    <Box sx={{ px: 1 }} key={item.value}>
+                {languages.map((item, index) => (
+                    <Box sx={{ px: 1 }} key={index}>
                         <MenuItem
-                            sx={{ px: 1, borderRadius: 2, '&.Mui-selected': { backgroundColor: 'action.hover' } }}
+                            selected={selectedLanguage.label === item.label}
+                            sx={{
+                                px: 1,
+                                borderRadius: 2,
+                                '&.Mui-selected': { color: 'primary.main', backgroundColor: 'transparent' },
+                            }}
+                            onClick={() => setSelectedLanguage(item)}
                         >
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                justifyContent="space-between"
+                                gap={1}
+                                sx={{ width: '100%' }}
+                            >
                                 <Typography variant="body2" fontWeight={500}>
                                     {item.label}
                                 </Typography>
-                            </Box>
+                                {selectedLanguage.label === item.label && <CheckIcon sx={{ fontSize: 18 }} />}
+                            </Stack>
                         </MenuItem>
                     </Box>
                 ))}

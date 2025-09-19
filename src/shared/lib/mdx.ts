@@ -6,9 +6,11 @@ import rehypePrism from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
 import grayMatter from 'gray-matter';
 import { JSDOM } from 'jsdom';
+import YAML from 'yaml';
 import { extractTableOfContents } from '@/features/documentation';
 
 const docsDirectory = path.join(process.cwd(), 'documentation', 'apis');
+const apiSpecsDirectory = path.join(process.cwd(), 'api-specs', 'auth.yaml');
 
 export type Frontmatter = {
     title: string;
@@ -26,6 +28,8 @@ export async function getDocumentationBySlug(slug: string[]) {
     }
 
     const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const apiSpecs = fs.readFileSync(apiSpecsDirectory, 'utf8');
+    const apiSpecsYaml = YAML.parse(apiSpecs);
     const { content, data: frontMatter } = grayMatter(fileContents);
     const tableOfContents = extractTableOfContents(content);
 
@@ -40,6 +44,7 @@ export async function getDocumentationBySlug(slug: string[]) {
     const plainText = stripHtml(compiled);
 
     return {
+        apiSpecsYaml,
         mdxSource,
         plainText,
         frontMatter,

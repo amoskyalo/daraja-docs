@@ -12,9 +12,10 @@ const tabOptions = [
 ];
 interface PlaygroundProps {
     children: React.ReactNode;
+    apiSpecsYaml: any;
 }
 
-export const Playground = ({ children }: PlaygroundProps) => {
+export const Playground = ({ children, apiSpecsYaml }: PlaygroundProps) => {
     const { setParams, getParam } = useSearchParams();
     const activeTab = getParam('tab') || 'documentation';
 
@@ -23,7 +24,7 @@ export const Playground = ({ children }: PlaygroundProps) => {
     };
 
     return (
-        <Box>
+        <Box sx={{ py: 2 }}>
             <Tabs
                 value={activeTab}
                 onChange={handleTabChange}
@@ -64,7 +65,7 @@ export const Playground = ({ children }: PlaygroundProps) => {
             </Tabs>
 
             {activeTab === 'documentation' && children}
-            {activeTab === 'playground' && <PlaygroundUI />}
+            {activeTab === 'playground' && <PlaygroundUI apiSpecsYaml={apiSpecsYaml} />}
         </Box>
     );
 };

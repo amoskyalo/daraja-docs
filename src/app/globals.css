@@ -10,12 +10,16 @@ body {
         sans-serif;
 }
 
-* {
-  scrollbar-width: thin;
+.dark * {
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
 }
 
-::-webkit-scrollbar {
-    width: 6px;
+.MuiPaper-root,
+.MuiMenu-paper,
+.MuiSelect-paper,
+.MuiBox-root,
+.MuiAutocomplete-paper {
+  scrollbar-width: thin !important;
 }
 
 .MuiListItemButton-gutters {

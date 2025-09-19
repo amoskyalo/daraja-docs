@@ -1,22 +1,13 @@
+---
+title: B2B Express CheckOut
+description: Enquire the balance on an M-Pesa BuyGoods (Till Number)
+---
+
 # B2B Express CheckOut
 
 This API enables merchants to initiate USSD Push to Till enabling their fellow merchants to pay from their own till numbers to the vendor's paybill.
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/v1/ussdpush/get-msisdn" />
-
-<Playground 
-    method = "POST"
-    endpoint = "v1/ussdpush/get-msisdn"
-    requestParameters={[
-        { name: 'primaryShortCode', type: 'text', label: 'Primary Short Code', bodyKey: 'primaryShortCode', value: '000001' },
-        { name: 'receiverShortCode', type: 'text', label: 'Receiver Short Code', bodyKey: 'receiverShortCode', value: '000002' },
-        { name: 'amount', type: 'text', label: 'Amount', bodyKey: 'amount', value: '100' },
-        { name: 'paymentRef', type: 'text', label: 'Payment Reference', bodyKey: 'paymentRef', value: 'paymentRef' },
-        { name: 'callbackUrl', type: 'text', label: 'Callback URL', bodyKey: 'callbackUrl', value: 'http://...../result' },
-        { name: 'partnerName', type: 'text', label: 'Partner Name', bodyKey: 'partnerName', value: 'vendor' },
-        { name: 'RequestRefId', type: 'text', label: 'Request Reference ID', bodyKey: 'RequestRefId', value: '550e8400-e29b-41d4-a716-446655440000' },
-    ]}
->
 
 ## Overview
 
@@ -205,4 +196,3 @@ The solution currently is limited to the operator whose phone number is under th
 <Note>
 **NB:** Access to the Mpesa Web Portal Platform is given upon successful registration of a shortcode
 </Note>
-</Playground>

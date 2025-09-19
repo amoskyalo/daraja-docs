@@ -35,6 +35,7 @@ import {
     NoteProps,
     ResponseExampleProps,
 } from '../types';
+import { useCopyToClipboard } from '@/shared/hooks';
 
 export const MDXComponents = {
     h1: (props: MDXElementProps) => (
@@ -192,12 +193,10 @@ export const MDXComponents = {
         <Paper
             component="pre"
             sx={{
-                borderRadius: 1,
-                borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
                 overflow: 'auto',
                 padding: '0px !important',
                 backgroundColor: 'background.paper',
+                margin: '0px !important',
                 '& code': {
                     backgroundColor: 'transparent !important',
                     padding: '16px !important',
@@ -311,6 +310,8 @@ export const MDXComponents = {
     ),
 
     Link: (props: LinkProps) => {
+        const { copied, Copy } = useCopyToClipboard();
+
         return (
             <Stack
                 direction="row"
@@ -347,8 +348,8 @@ export const MDXComponents = {
                 >
                     {props.href}
                 </Link>
-                <Tooltip title="Copy">
-                    <ContentCopyIcon sx={{ fontSize: 14, ml: 1, cursor: 'pointer' }} />
+                <Tooltip title={copied ? 'Copied!' : 'Copy'}>
+                    <ContentCopyIcon sx={{ fontSize: 14, ml: 1, cursor: 'pointer' }} onClick={() => Copy(props.href)} />
                 </Tooltip>
             </Stack>
         );
@@ -365,12 +366,12 @@ export const MDXComponents = {
                             method === 'POST'
                                 ? 'success.main'
                                 : method === 'GET'
-                                ? 'primary.main'
-                                : method === 'PUT'
-                                ? 'warning.main'
-                                : method === 'DELETE'
-                                ? 'error.main'
-                                : 'grey.500',
+                                  ? 'primary.main'
+                                  : method === 'PUT'
+                                    ? 'warning.main'
+                                    : method === 'DELETE'
+                                      ? 'error.main'
+                                      : 'grey.500',
                         color: 'white',
                         fontWeight: 'bold',
                         mr: 2,

@@ -1,19 +1,13 @@
+---
+title: Customer To Business Register URL
+description: Register validation and confirmation URLs on M-Pesa
+---
+
 # Customer To Business Register URL
 
 Register validation and confirmation URLs on M-Pesa
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/c2b/v1/registerurl"
-    requestParameters={[
-        { name: 'ShortCode', type: 'text', label: 'ShortCode', bodyKey: 'ShortCode', value: '601426' },
-        { name: 'ResponseType', type: 'text', label: 'ResponseType', bodyKey: 'ResponseType', value: 'Cancelled' },
-        { name: 'ConfirmationURL', type: 'text', label: 'ConfirmationURL', bodyKey: 'ConfirmationURL', value: 'confirmation URL' },
-        { name: 'ValidationURL', type: 'text', label: 'ValidationURL', bodyKey: 'ValidationURL', value: 'validation URL' },
-    ]}
->
 
 Register URL API works hand in hand with Customer to Business (C2B) APIs and allows receiving payment notifications to your paybill. This API enables you to register the callback URLs via which you shall receive notifications for payments to your pay bill/till number.
 
@@ -202,5 +196,3 @@ To reject a transaction, you send the same JSON above, but with the ResultCode s
 | ---------- | ---------------------------------------------------------------------------------- | ------ |
 | ResultCode | A code indicating the receipt status of the confirmation callback. Always 0(zero). | Number |
 | ResultDesc | A short confirmation receipt description. Usually "Success".                       | String |
-
-</Playground>

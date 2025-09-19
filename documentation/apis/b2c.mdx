@@ -1,26 +1,13 @@
+---
+title: B2C
+description: Business To Customer (B2C)
+---
+
 # Business To Customer (B2C)
 
 Transact between an M-Pesa short code to a phone number registered on M-Pesa
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/b2c/v3/paymentrequest" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/b2c/v3/paymentrequest"
-    requestParameters={[
-        { name: 'OriginatorConversationID', type: 'text', label: 'OriginatorConversationID', bodyKey: 'OriginatorConversationID', value: 'feb5e3f2-fbbc-4745-844c-ee37b546f627' },
-        { name: 'InitiatorName', type: 'text', label: 'InitiatorName', bodyKey: 'InitiatorName', value: 'testapi' },
-        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'EsJock7+NjqzPC3I3EO+TbVS+xVb9TymMwaKAboaZr/z/n0UysSs...' },
-        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'BusinessPayment' },
-        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '10' },
-        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '600996' },
-        { name: 'PartyB', type: 'text', label: 'PartyB', bodyKey: 'PartyB', value: '254728762287' },
-        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'here are my remarks' },
-        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'https://mydomain.com/b2c/queue' },
-        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'https://mydomain.com/b2c/result' },
-        { name: 'Occassion', type: 'text', label: 'Occassion', bodyKey: 'Occassion', value: 'Christmas' },
-    ]}
->
 
 B2C API is an API used to make payments from a Business to Customers (Pay Outs), also known as Bulk Disbursements. B2C API is used in several scenarios by businesses that require to either make Salary Payments, Cashback payments, Promotional Payments(e.g. betting winning payouts), winnings, financial institutions withdrawal of funds, loan disbursements, etc.
 
@@ -253,5 +240,3 @@ The below parameters will be returned whether the request was successful or not.
 | ReceiverPartyPublicName             | This is the name and phone number of the customer who received the payment.                                                                                                                         | String         | 254722000000 - Safaricom PLC                    |
 | B2CChargesPaidAccountAvailableFunds | This is the available balance of the Charges Paid account under the B2C shortcode used in the transaction.                                                                                          | Decimal        | 236543.9                                        |
 | B2CRecipientIsRegisteredCustomer    | This is a key that indicates whether the customer is a M-PESA registered customer or not.                                                                                                           | Character      | "Y" for Yes "N" for No                          |
-
-</Playground>

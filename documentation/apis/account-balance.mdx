@@ -1,23 +1,13 @@
+---
+title: Account Balance
+description: Enquire the balance on an M-Pesa BuyGoods (Till Number)
+---
+
 # Account Balance
 
 Enquire the balance on an M-Pesa BuyGoods (Till Number)
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/accountbalance/v1/query"
-    requestParameters={[
-        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'testapiuser' },
-        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'SAFVNlChWJfVtXEZMBuVo+a1Hwr+Dtruv3/2v8=' },
-        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'AccountBalance' },
-        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '600000' },
-        { name: 'IdentifierType', type: 'text', label: 'IdentifierType', bodyKey: 'IdentifierType', value: '4' },
-        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'ok' },
-        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'http://myservice:3080/queuetimeouturl' },
-        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'http://myservice:3080/result' },
-    ]}
->
 
 The Account Balance API is used to request the account balance of a short code. This can be used for both B2C, buy goods and pay bill accounts.
 
@@ -165,5 +155,3 @@ You will first generate an access token to allow you to make the API call. See h
 | Utility Account Uncleared Funds      | Utility account uncleared balance.                                                                                                                                                                                                                                                                                                        | Decimal                     | 228037.00                        |
 | Reference Item                       | It is used to carry some reference data that M-Pesa need not analyze but needs to record in the transaction log.                                                                                                                                                                                                                          | ParameterType[1..unbounded] |                                  |
 | ReferenceData                        | Utility account uncleared balance. It is used to carry some reference data that M-Pesa need not analyze but needs to record in the transactions log.                                                                                                                                                                                      | ReferenceData               |                                  |
-
-</Playground>

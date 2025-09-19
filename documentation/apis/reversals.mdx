@@ -1,26 +1,13 @@
+---
+title: Reversals
+description: Reverses an M-Pesa transaction.
+---
+
 # Reversals
 
 Reverses an M-Pesa transaction.
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/reversal/v1/request"
-    requestParameters={[
-        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'TestInit610' },
-        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: '[encrypted password]' },
-        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'TransactionReversal' },
-        { name: 'TransactionID', type: 'text', label: 'TransactionID', bodyKey: 'TransactionID', value: '[original trans_id]' },
-        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '[trans_amount]' },
-        { name: 'ReceiverParty', type: 'text', label: 'ReceiverParty', bodyKey: 'ReceiverParty', value: '600610' },
-        { name: 'RecieverIdentifierType', type: 'text', label: 'RecieverIdentifierType', bodyKey: 'RecieverIdentifierType', value: '11' },
-        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'https://ip:port/' },
-        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'https://ip:port/' },
-        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'Test' },
-        { name: 'Occasion', type: 'text', label: 'Occasion', bodyKey: 'Occasion', value: 'work' },
-    ]}
->
 
 Reverses a C2B M-Pesa transaction.
 
@@ -166,5 +153,3 @@ Your Org's shortcode.
 | Value                    | It indicates a parameter value.                                                                                                                                                                                 | String                       | MJ551H6X5D                                     |
 | ReferenceData            | It is used to carry some reference data that M-PESA need not analyze but need to record into the transaction log.                                                                                               | ReferenceData                | n/a                                            |
 | ReferenceItem            | it is used to carry some reference data that M-Pesa need not analyze but needs to record in the transaction log.                                                                                                | ParameterType [1..unbounded] | n/a                                            |
-
-</Playground>

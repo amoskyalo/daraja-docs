@@ -1,27 +1,13 @@
+---
+title: M-Pesa Ratiba
+description: Enquire the balance on an M-Pesa BuyGoods (Till Number)
+---
+
 # M-Pesa Ratiba
 
 This is an API that allows third party integrators to facilitate creation of M-Pesa standing order on their digital channels
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/standingorder/v1/createStandingOrderExternal" />
-
-<Playground 
-    method = "POST"
-    endpoint = "standingorder/v1/createStandingOrderExternal"
-    requestParameters={[
-        { name: 'StandingOrderName', type: 'text', label: 'Standing Order Name', bodyKey: 'StandingOrderName', value: 'Test Standing Order' },
-        { name: 'StartDate', type: 'text', label: 'Start Date', bodyKey: 'StartDate', value: '20240905' },
-        { name: 'EndDate', type: 'text', label: 'End Date', bodyKey: 'EndDate', value: '20250905' },
-        { name: 'BusinessShortCode', type: 'text', label: 'Business Short Code', bodyKey: 'BusinessShortCode', value: '174379' },
-        { name: 'TransactionType', type: 'text', label: 'Transaction Type', bodyKey: 'TransactionType', value: 'Standing Order Customer Pay Bill' },
-        { name: 'ReceiverPartyIdentifierType', type: 'text', label: 'Receiver Party Identifier Type', bodyKey: 'ReceiverPartyIdentifierType', value: '4' },
-        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '4500' },
-        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '254708374149' },
-        { name: 'CallBackURL', type: 'text', label: 'CallBack URL', bodyKey: 'CallBackURL', value: 'https://mydomain.com/pat' },
-        { name: 'AccountReference', type: 'text', label: 'Account Reference', bodyKey: 'AccountReference', value: 'Test' },
-        { name: 'TransactionDesc', type: 'text', label: 'Transaction Description', bodyKey: 'TransactionDesc', value: 'Test' },
-        { name: 'Frequency', type: 'text', label: 'Frequency', bodyKey: 'Frequency', value: '2' },
-    ]}
->
 
 The Standing Order APIs enable teams to integrate with the standing order solution by initiating a request to create a standing order on the customer profile.
 
@@ -35,8 +21,6 @@ This API is intended for businesses who wish to integrate with standing orders f
     **for Go Live as this is a commercial API. Our team will reach out for commercial discussion and contract signing
     and thereafter avail the API to your pay bill or till number.**
 </Note>
-
-</Playground>
 
 ## Getting Started
 

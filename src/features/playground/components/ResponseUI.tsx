@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Stack, Tooltip, Typography, Menu, MenuItem } from '@mui/material';
 import { MarkdownComponents } from '@/features/markdown';
 import { useAIContext } from '@/shared/context';
+import { useCopyToClipboard } from '@/shared/hooks';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -20,6 +21,7 @@ type ResponseUIProps = {
 };
 
 const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
+    const { copied, Copy } = useCopyToClipboard();
     const { setQuestion, handleAIRequest, setDrawerOpen } = useAIContext();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -77,10 +79,10 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                                     }}
                                 />
                             </Tooltip>
-                            <Tooltip title="Copy">
+                            <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                                 <ContentCopyIcon
                                     sx={{ fontSize: 14, cursor: 'pointer' }}
-                                    onClick={() => navigator.clipboard.writeText(requests[selectedLanguage.variant])}
+                                    onClick={() => Copy(requests[selectedLanguage.variant])}
                                 />
                             </Tooltip>
                         </Stack>

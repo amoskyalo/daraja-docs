@@ -37,23 +37,23 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
         if (element) observer.observe(element);
 
         return () => observer.disconnect();
-    }, []);
+    }, [activeTab]);
 
     return (
-        <Playground apiSpecsYaml={doc.apiSpecsYaml}>
+        <Grid
+            id="docs-container"
+            container
+            sx={{
+                height: '100%',
+                position: 'relative',
+                flex: 1,
+            }}
+        >
             <Grid
-                id="docs-container"
-                container
-                sx={{
-                    height: '100%',
-                    position: 'relative',
-                    flex: 1,
-                }}
+                size={isMobile ? 12 : activeTab === 'playground' ? 12 : 8.5}
+                sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative' }}
             >
-                <Grid
-                    size={isMobile ? 12 : activeTab === 'playground' ? 12 : 8.5}
-                    sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative' }}
-                >
+                <Playground apiSpecsYaml={doc.apiSpecsYaml}>
                     <MDXRenderer mdxSource={doc.mdxSource} />
                     <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
 
@@ -62,8 +62,10 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
                             alignItems="center"
                             justifyContent="center"
                             sx={{
-                                position: 'sticky',
+                                position: 'fixed',
                                 bottom: 10,
+                                left: 0,
+                                right: 0,
                                 opacity: !drawerOpen && !hideTextField ? 1 : 0,
                                 transition: 'opacity 0.3s ease-in-out',
                                 pointerEvents: !drawerOpen && !hideTextField ? 'auto' : 'none',
@@ -109,25 +111,20 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
                             />
                         </Stack>
                     )}
-                </Grid>
-
-                {!isMobile && activeTab !== 'playground' && (
-                    <Grid
-                        size={3.5}
-                        sx={{
-                            py: 2,
-                            px: 2,
-                            overflowY: 'auto',
-                            position: 'sticky',
-                            top: '66px',
-                            display: isMobile ? 'none' : 'block',
-                            height: 'calc(100vh - 66px)',
-                        }}
-                    >
-                        <TableOfContents headings={doc.tableOfContents} />
-                    </Grid>
-                )}
+                </Playground>
             </Grid>
-        </Playground>
+
+            {!isMobile && activeTab !== 'playground' && (
+                <Grid
+                    size={3.5}
+                    sx={{
+                        py: 2,
+                        display: isMobile ? 'none' : 'block',
+                    }}
+                >
+                    <TableOfContents headings={doc.tableOfContents} />
+                </Grid>
+            )}
+        </Grid>
     );
 };

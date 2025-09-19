@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Box, Typography, Link, Stack } from '@mui/material';
+import { useSearchParams } from '@/shared/hooks';
 import type { HeadingItem } from '../utils/extractTableOfContents';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import SegmentIcon from '@mui/icons-material/Segment';
@@ -13,6 +14,8 @@ interface TableOfContentsProps {
 export const TableOfContents = ({ headings }: Readonly<TableOfContentsProps>) => {
     const [activeId, setActiveId] = useState<string>(headings[0]?.id || '');
     const [isScrolled, setIsScrolled] = useState(false);
+    const { getParam } = useSearchParams();
+    const activeTab = getParam('tab') || 'documentation';
 
     useEffect(() => {
         const container = document.getElementById('layout');
@@ -30,7 +33,7 @@ export const TableOfContents = ({ headings }: Readonly<TableOfContentsProps>) =>
         return () => {
             container?.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [activeTab]);
 
     const handleScrollTop = () => {
         const container = document.getElementById('layout');
@@ -80,7 +83,7 @@ export const TableOfContents = ({ headings }: Readonly<TableOfContentsProps>) =>
     }
 
     return (
-        <Box>
+        <Box sx={{ position: 'fixed', top: '66px', height: 'calc(100vh - 66px)', overflowY: 'auto', py: 2, px: 2, width: '20.5%', }}>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
                 <SegmentIcon fontSize="small" />
                 <Typography variant="body2" fontWeight="bold">

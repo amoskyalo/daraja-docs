@@ -1,27 +1,13 @@
+---
+title: Tax Remittance
+description: Enquire the balance on an M-Pesa BuyGoods (Till Number)
+---
+
 # Tax Remittance
 
 This API enables businesses to remit tax to Kenya Revenue Authority (KRA).
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/b2b/v1/remittax" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/b2b/v1/remittax"
-    requestParameters={[
-        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'TaxPayer' },
-        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'FKX1/KPzT8hFOnozI+unz7mXDgTRbr1rZ+C1Vb1xpbz7j1lLAFa0E/..../' },
-        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'PayTaxToKRA' },
-        { name: 'SenderIdentifierType', type: 'text', label: 'SenderIdentifierType', bodyKey: 'SenderIdentifierType', value: '4' },
-        { name: 'RecieverIdentifierType', type: 'text', label: 'RecieverIdentifierType', bodyKey: 'RecieverIdentifierType', value: '4' },
-        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '239' },
-        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '888880' },
-        { name: 'PartyB', type: 'text', label: 'PartyB', bodyKey: 'PartyB', value: '572572' },
-        { name: 'AccountReference', type: 'text', label: 'AccountReference', bodyKey: 'AccountReference', value: '353353' },
-        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'OK' },
-        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'https://mydomain.com/b2b/remittax/queue/' },
-        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'https://mydomain.com/b2b/remittax/result/' },
-    ]}
->
 
 This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To use this API, prior integration is required with KRA for tax declaration, payment registration number (PRN) generation, and exchange of other tax-related information.
 
@@ -208,5 +194,3 @@ This API enables businesses to remit tax to Kenya Revenue Authority (KRA). To us
 | ResultParameters         | This is a JSON object that holds more details for the transaction.                                        | JSON Object | `ResultParameters:{"ResultParameter": [{"Key":"BOCompletedTime","Value":20200120164825}]}`       |
 | ReferenceData            | This JSON object holds more details for the transaction reference data.                                   | JSON Object | `"ReferenceData": {"ReferenceItem": []}`                                                         |
 | ReferenceItem            | A JSON array that holds JSON Objects with additional transaction details.                                 | JSON Object | `ReferenceItem": [{"Key": "BillReferenceNumber", "Value": "19008" }, {"Key": "", "Value": "" }]` |
-
-</Playground>

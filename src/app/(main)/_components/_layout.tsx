@@ -19,16 +19,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             >
                 <Header />
                 <Container maxWidth="lg" sx={{ px: '0px !important', flex: 1 }}>
-                    <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        sx={{ width: '100%', height: '100%', position: 'relative' }}
-                    >
+                    <Stack direction="row">
                         <LeftNav />
 
-                       <Box sx={{ flex: 1 }}>
-                       {children}
-                       </Box>
+                        <Box sx={{ flex: 1, overflow: 'hidden' }}>{children}</Box>
                     </Stack>
                 </Container>
 

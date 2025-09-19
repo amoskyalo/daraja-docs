@@ -24,7 +24,7 @@ export const Playground = ({ children, apiSpecsYaml }: PlaygroundProps) => {
     };
 
     return (
-        <Box sx={{ py: 2 }}>
+        <Box sx={{ py: 2, position: 'relative', }}>
             <Tabs
                 value={activeTab}
                 onChange={handleTabChange}

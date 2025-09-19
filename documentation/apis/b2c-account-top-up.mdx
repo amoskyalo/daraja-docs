@@ -1,34 +1,17 @@
+---
+title: B2C Account Top Up
+description: Enquire the balance on an M-Pesa BuyGoods (Till Number)
+---
+
 # B2C Account Top Up
 
 This API enables you to load funds to a B2C shortcode directly for disbursement.
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest" />
 
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/b2b/v1/paymentrequest"
-    requestParameters={[
-        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'testapi' },
-        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'IAJVUHDGJ6yDU3aop/WI9oSPhkW3DV1h7EAt3iRyymTZh1jpzCNnI/xFKZNoOOF8PUFgjmEOih...' },
-        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'BusinessPayToBulk' },
-        { name: 'SenderIdentifierType', type: 'text', label: 'SenderIdentifierType', bodyKey: 'SenderIdentifierType', value: '4' },
-        { name: 'RecieverIdentifierType', type: 'text', label: 'RecieverIdentifierType', bodyKey: 'RecieverIdentifierType', value: '4' },
-        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '239' },
-        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '600979' },
-        { name: 'PartyB', type: 'text', label: 'PartyB', bodyKey: 'PartyB', value: '600000' },
-        { name: 'AccountReference', type: 'text', label: 'AccountReference', bodyKey: 'AccountReference', value: '353353' },
-        { name: 'Requester', type: 'text', label: 'Requester', bodyKey: 'Requester', value: '254708374149' },
-        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'OK' },
-        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'https://mydomain/path/timeout' },
-        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'https://mydomain/path/result' },
-    ]}
->
-
 This API enables you to load funds to a B2C shortcode directly for disbursement.
 
 The transaction moves money from your MMF/Working account to the recipient's utility account.
-
-</Playground>
 
 ## Request Body
 
@@ -154,7 +137,7 @@ The transaction moves money from your MMF/Working account to the recipient's uti
 ## Successful Result Parameter Definition
 
 | Name                               | Description                                                                                                                                                              | Type        | Sample Values                                                                                  |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------- | 
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ---------------------------------------------------------------------------------------------- |
 | `Result`                           | The root parameter encloses the entire result message.                                                                                                                   | JSON Object | `"Result": {}`                                                                                 |
 | `ResultType`                       | A status code indicating whether the transaction was already sent to your listener. The usual value is `0`.                                                              | Number      | `0`                                                                                            |
 | `ResultCode`                       | A transaction result status code. `0`(zero) indicates successful processing.                                                                                             | Number      | `0`                                                                                            |

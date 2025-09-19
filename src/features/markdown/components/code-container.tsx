@@ -1,11 +1,16 @@
 'use client';
 
-import { Paper, Stack, Typography, IconButton, Tooltip, Box } from '@mui/material';
+import React from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import React, { useEffect, useState } from 'react';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { Paper, Stack, Typography, Tooltip } from '@mui/material';
+import { useAIContext } from '@/shared/context';
+import { useCopyToClipboard } from '@/shared/hooks';
 
 export const CodeContainer = ({ children, title }: { children: React.ReactNode; title?: string }) => {
-    const [copied, setCopied] = useState(false);
+    const { setQuestion, handleAIRequest, setDrawerOpen } = useAIContext();
+    const { copied, Copy } = useCopyToClipboard();
+
     const extractText = (node: React.ReactNode): string => {
         if (typeof node === 'string' || typeof node === 'number') {
             return String(node);
@@ -19,8 +24,8 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
         return '';
     };
 
-    const handleCopy = () => {
-        let codeToCopy = '';
+    function getCode() {
+        let code = '';
 
         if (React.isValidElement(children)) {
             const preElement = children as any;
@@ -28,49 +33,46 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
 
             if (React.isValidElement(codeElement)) {
                 const codeChildren = (codeElement.props as any)?.children;
-                codeToCopy = extractText(codeChildren);
+                code = extractText(codeChildren);
             }
         }
 
-        if (!codeToCopy.trim()) {
-            console.warn('No code text found to copy');
-            return;
-        }
+        return code;
+    }
 
-        navigator.clipboard
-            .writeText(codeToCopy)
-            .then(() => console.log('Code copied'))
-            .catch((err) => console.error('Failed to copy:', err))
-            .finally(() => setCopied(true));
-    };
-
-    useEffect(() => {
-        if (copied) {
-            setTimeout(() => setCopied(false), 2000);
-        }
-    }, [copied]);
     return (
         <Paper
             elevation={0}
             sx={{
                 mt: 1,
                 position: 'relative',
-                borderRadius: 1,
+                borderRadius: 2,
                 backgroundColor: 'action.hover',
+                overflow: 'hidden',
             }}
         >
-            <Stack sx={{ pt: 1, pl: 2, pr: 1 }} direction="row" alignItems="center" justifyContent="space-between">
+            <Stack sx={{ py: 1.5, px: 2 }} direction="row" alignItems="center" justifyContent="space-between">
                 <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
                     {title ?? 'Response'}
                 </Typography>
 
-                <Box sx={{ position: 'relative' }}>
-                    <Tooltip title={copied ? 'Copied!' : 'Copy'}>
-                        <IconButton size="small" sx={{ p: 0.8, borderRadius: 2 }} onClick={handleCopy}>
-                            <ContentCopyIcon fontSize="small" />
-                        </IconButton>
+                <Stack direction="row" alignItems="center" gap={2}>
+                    <Tooltip title="Explain with AI">
+                        <AutoAwesomeIcon
+                            sx={{ fontSize: 18, cursor: 'pointer' }}
+                            onClick={() => {
+                                const input = `Explain the code below in details \n\n\n${getCode()}`;
+                                setQuestion(input);
+                                handleAIRequest(input);
+                                setDrawerOpen(true);
+                            }}
+                        />
                     </Tooltip>
-                </Box>
+
+                    <Tooltip title={copied ? 'Copied!' : 'Copy'} onClick={() => Copy(getCode())}>
+                        <ContentCopyIcon sx={{ fontSize: 16, cursor: 'pointer' }} />
+                    </Tooltip>
+                </Stack>
             </Stack>
 
             {children}

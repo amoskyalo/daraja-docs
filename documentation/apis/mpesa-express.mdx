@@ -1,26 +1,13 @@
+---
+title: M-Pesa Express Simulate
+description: Initiates online payment on behalf of a customer.
+---
+
 # M-Pesa Express Simulate
 
 Initiates online payment on behalf of a customer.
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/stkpush/v1/processrequest"
-    requestParameters={[
-        { name: 'BusinessShortCode', type: 'text', label: 'BusinessShortCode', bodyKey: 'BusinessShortCode', value: '174379' },
-        { name: 'Password', type: 'text', label: 'Password', bodyKey: 'Password', value: 'MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNzY2YTAyODBkMTRhNzY3ODE0NDYzZDE4ZGQzZGI4ODBjDZIjdMD5YjEwZjc4E4ZTZiNzJhZGE' },
-        { name: 'Timestamp', type: 'text', label: 'Timestamp', bodyKey: 'Timestamp', value: '20160216165627' },
-        { name: 'TransactionType', type: 'text', label: 'TransactionType', bodyKey: 'TransactionType', value: 'CustomerPayBillOnline' },
-        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '1' },
-        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '254708374149' },
-        { name: 'PartyB', type: 'text', label: 'PartyB', bodyKey: 'PartyB', value: '174379' },
-        { name: 'PhoneNumber', type: 'text', label: 'PhoneNumber', bodyKey: 'PhoneNumber', value: '254708374149' },
-        { name: 'CallBackURL', type: 'text', label: 'CallBackURL', bodyKey: 'CallBackURL', value: 'https://mydomain.com/path' },
-        { name: 'AccountReference', type: 'text', label: 'AccountReference', bodyKey: 'AccountReference', value: 'Test' },
-        { name: 'TransactionDesc', type: 'text', label: 'TransactionDesc', bodyKey: 'TransactionDesc', value: 'Test' },
-    ]}
->
 
 Lipa na M-PESA online API also known as M-PESA express (STK Push/NI push) is a Merchant/Business initiated C2B (Customer to Business) Payment.
 
@@ -178,5 +165,3 @@ Whenever you receive an error in your callback URL, the unsuccessful transaction
 }
 ```
 </CodeExample>
-
-</Playground>

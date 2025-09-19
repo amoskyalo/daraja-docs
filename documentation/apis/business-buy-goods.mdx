@@ -1,29 +1,13 @@
+---
+title: Business Buy Goods
+description: Business Buy Goods
+---
+
 # Business Buy Goods
 
 This API enables you to pay for goods and services directly from your business account to a till number, merchant store number or Merchant HO.
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/b2b/v1/paymentrequest"
-    requestParameters={[
-        { name: 'Initiator', type: 'text', label: 'Initiator', bodyKey: 'Initiator', value: 'API_Username' },
-        { name: 'SecurityCredential', type: 'text', label: 'SecurityCredential', bodyKey: 'SecurityCredential', value: 'FKX1/KPzT8hFOnozI+unz7mXDgTRbr1rZ+C1Vb1xpbz7j1lLAFa0E/..../uO4gzUkABQuCxAeq+0HhdnA==' },
-        { name: 'CommandID', type: 'text', label: 'CommandID', bodyKey: 'CommandID', value: 'BusinessBuyGoods' },
-        { name: 'SenderIdentifierType', type: 'text', label: 'SenderIdentifierType', bodyKey: 'SenderIdentifierType', value: '4' },
-        { name: 'RecieverIdentifierType', type: 'text', label: 'RecieverIdentifierType', bodyKey: 'RecieverIdentifierType', value: '4' },
-        { name: 'Amount', type: 'text', label: 'Amount', bodyKey: 'Amount', value: '239' },
-        { name: 'PartyA', type: 'text', label: 'PartyA', bodyKey: 'PartyA', value: '123456' },
-        { name: 'PartyB', type: 'text', label: 'PartyB', bodyKey: 'PartyB', value: '000000' },
-        { name: 'AccountReference', type: 'text', label: 'AccountReference', bodyKey: 'AccountReference', value: '353353' },
-        { name: 'Requester', type: 'text', label: 'Requester', bodyKey: 'Requester', value: '254700000000' },
-        { name: 'Remarks', type: 'text', label: 'Remarks', bodyKey: 'Remarks', value: 'OK' },
-        { name: 'QueueTimeOutURL', type: 'text', label: 'QueueTimeOutURL', bodyKey: 'QueueTimeOutURL', value: 'https://mydomain.com/b2b/businessbuygoods/queue/' },
-        { name: 'ResultURL', type: 'text', label: 'ResultURL', bodyKey: 'ResultURL', value: 'https://mydomain.com/b2b/businessbuygoods/result/' },
-        { name: 'Occassion', type: 'text', label: 'Occassion', bodyKey: 'Occassion', value: '' },
-    ]}
->
 
 This API enables you to pay for goods and services directly from your business account to a till number, merchant store number or Merchant HO. You can also use this API to pay a merchant on behalf of a consumer/requester.
 
@@ -225,5 +209,3 @@ The transaction moves money from your MMF/Working account to the recipient's mer
 | TransactionID            | Unique M-PESA transaction ID for the payment request. A generic value is passed for certain failure scenarios.                                                               | String      | OAK0000000                                                                                        |
 | ReferenceData            | This JSON object holds more details for the transaction reference data.                                                                                                      | JSON Object | `${ReferenceData:{"ReferenceItem": []}}`                                                          |
 | ReferenceItem            | A JSON array within the that holds JSON Objects with additional transaction details                                                                                          | JSON Object | `${ReferenceItem:[{"Key": "BillReferenceNumber", "Value": "19008" }, {"Key": "", "Value": "" }]}` |
-
-</Playground>

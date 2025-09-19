@@ -1,21 +1,13 @@
+---
+title: Dynamic QR
+description: Generates a dynamic M-PESA QR Code.
+---
+
 # Dynamic QR
 
 Generates a dynamic M-PESA QR Code.
 
 <Link method="POST" href="https://sandbox.safaricom.co.ke/mpesa/qrcode/v1/generate" />
-
-<Playground 
-    method = "POST"
-    endpoint = "mpesa/qrcode/v1/generate"
-    requestParameters={[
-        { name: 'MerchantName', type: 'text', label: 'MerchantName', bodyKey: 'MerchantName', value: 'TEST_SUPERMARKET' },
-        { name: 'RefNo', type: 'text', label: 'RefNo', bodyKey: 'RefNo', value: 'Invoice Test' },
-        { name: 'Amount', type: 'number', label: 'Amount', bodyKey: 'Amount', value: '1' },
-        { name: 'TrxCode', type: 'text', label: 'TrxCode', bodyKey: 'TrxCode', value: 'BG' },
-        { name: 'CPI', type: 'text', label: 'CPI', bodyKey: 'CPI', value: '373132' },
-        { name: 'Size', type: 'text', label: 'Size', bodyKey: 'Size', value: '300' },
-    ]}
->
 
 Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers who have My Safaricom App or M-PESA app, to scan a QR (Quick Response) code, to capture till number and amount then authorize to pay for goods and services at select LIPA NA M-PESA (LNM) merchant outlets.
 
@@ -65,5 +57,3 @@ Use this API to generate a Dynamic QR which enables Safaricom M-PESA customers w
 | ResponseCode        | Used to return the Transaction Type.                         | String | An alpha-numeric string of fewer than 20 characters |
 | ResponseDescription | This is a response describing the status of the transaction. | String | QR Code Successfully Generated                      |
 | QRCode              | QR Code Image/Data/String.                                   | String | An alpha-numeric string containing the QR Code      |
-
-</Playground>

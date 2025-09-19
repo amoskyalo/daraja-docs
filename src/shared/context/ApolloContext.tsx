@@ -5,7 +5,7 @@ import { ApolloProvider } from '@apollo/client/react';
 import { SetContextLink } from '@apollo/client/link/context';
 import { handleGetSession } from '@/functions/serverActions';
 
-const uri = process.env.NEXT_PUBLIC_BASE_URL;
+const uri = "http://localhost:4000/";
 let apolloClient: ApolloClient | null = null;
 
 const asyncAuthLink = new SetContextLink(async (prevContext, operation) => {

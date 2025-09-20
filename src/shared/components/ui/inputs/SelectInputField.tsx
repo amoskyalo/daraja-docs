@@ -23,7 +23,7 @@ export const SelectInputField = (props: SelectFieldProps) => {
 
     return (
         <Stack>
-            <InputLabel>{label}</InputLabel>
+            <InputLabel sx={{ mb: 0.5, fontSize: 14 }}>{label}</InputLabel>
             <Select
                 error={error}
                 fullWidth

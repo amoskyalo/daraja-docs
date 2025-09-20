@@ -49,6 +49,7 @@ export default function LoginPage() {
                                 <Box sx={{ mb: 2 }}>
                                     <TextInputField
                                         fullWidth
+                                        size="small"
                                         type="email"
                                         label="E-mail or username"
                                         placeholder="Enter your email address or username"
@@ -59,6 +60,7 @@ export default function LoginPage() {
                                 <Box sx={{ mb: 1 }}>
                                     <TextInputField
                                         fullWidth
+                                        size="small"
                                         type="password"
                                         label="Password"
                                         placeholder="Enter your password"
@@ -102,7 +104,7 @@ export default function LoginPage() {
                                     Login
                                 </Button>
 
-                                <Box sx={{ textAlign: 'center', mt: 2 }}>
+                                <Box sx={{ textAlign: 'center', mt: 1 }}>
                                     <Typography variant="body2" color="text.secondary">
                                         Don&apos;t have an account?{' '}
                                         <Link
@@ -114,6 +116,7 @@ export default function LoginPage() {
                                                     textDecoration: 'underline',
                                                 },
                                             }}
+                                            href="/auth/signup"
                                         >
                                             Go to Sign up
                                         </Link>

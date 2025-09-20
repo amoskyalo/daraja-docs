@@ -1,8 +1,7 @@
 import { getDocumentationBySlug } from '@/shared/lib/mdx';
 import { Box, Container, Typography } from '@mui/material';
 import { NAVTABS } from '@/config/constants/routes';
-import { DocsBottomNavigator, DocsContainer, MainPanel, SidebarPanel, TableOfContents } from '@/features/documentation';
-import { MDXRenderer } from '@/features/markdown';
+import { ContentsContainer } from '@/features/documentation';
 import type { Metadata } from 'next';
 
 interface DocsPageProps {
@@ -33,25 +32,7 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
     const prevDoc = NAVTABS[0].items[currentDoc - 1];
     const nextDoc = NAVTABS[0].items[currentDoc + 1];
 
-    return (
-        <DocsContainer>
-            <MainPanel>
-                {doc.frontMatter?.description && (
-                    <Box sx={{ mb: 3, p: 2, backgroundColor: 'action.hover', borderRadius: 1 }}>
-                        <Typography variant="body2" color="text.secondary">
-                            {doc.frontMatter.description}
-                        </Typography>
-                    </Box>
-                )}
-                <MDXRenderer mdxSource={doc.mdxSource} />
-                <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
-            </MainPanel>
-
-            <SidebarPanel>
-                <TableOfContents headings={doc.tableOfContents} />
-            </SidebarPanel>
-        </DocsContainer>
-    );
+   return <ContentsContainer doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} hideTabs />;
 }
 
 export async function generateMetadata({ params }: Readonly<DocsPageProps>): Promise<Metadata> {

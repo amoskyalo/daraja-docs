@@ -10,7 +10,7 @@ import { useAIContext } from '@/shared/context';
 import { Playground } from '../../playground';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
-export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
+export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
     const { isMobile } = useResponsiveness();
     const { drawerOpen, question, setQuestion, handleSendRequest, handleKeyPress } = useAIContext();
     const { getParam } = useSearchParams();
@@ -53,7 +53,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc }: any) => {
                 size={isMobile ? 12 : activeTab === 'playground' ? 12 : 8.5}
                 sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative' }}
             >
-                <Playground apiSpecsYaml={doc.apiSpecsYaml}>
+                <Playground apiSpecsYaml={doc.apiSpecsYaml} hideTabs={hideTabs}>
                     <MDXRenderer mdxSource={doc.mdxSource} />
                     <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
 

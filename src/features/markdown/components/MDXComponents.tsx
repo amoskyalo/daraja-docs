@@ -208,6 +208,122 @@ export const MDXComponents = {
         />
     ),
 
+    Terminal: ({ title, children }: { title: string; children: React.ReactNode }) => {
+        const { copied, handleCopyCode } = useCopyToClipboard();
+
+        const highlightTerminalContent = (content: any) => {
+            return (
+                content
+                    .replace(/^(#.*$)/gm, '<span style="color: #6272a4;">$1</span>')
+                    .replace(/\b(npm|ngrok|lt|install|http|--port|-g)\b/g, '<span style="color: #50fa7b;">$1</span>')
+                    .replace(/\b(\d+)\b/g, '<span style="color: #bd93f9;">$1</span>')
+                    .replace(/(--\w+|-\w+)/g, '<span style="color: #f1fa8c;">$1</span>')
+            );
+        };
+
+        return (
+            <Box
+                sx={{
+                    backgroundColor: '#1a1a1a',
+                    border: '1px solid #333',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    mb: 3,
+                    fontFamily: 'monospace',
+                }}
+            >
+                <Box
+                    sx={{
+                        backgroundColor: '#2a2a2a',
+                        borderBottom: '1px solid #333',
+                        px: 2,
+                        py: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', gap: 0.5, mr: 2 }}>
+                            <Box
+                                sx={{
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: '50%',
+                                    backgroundColor: '#ff5f56',
+                                }}
+                            />
+                            <Box
+                                sx={{
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: '50%',
+                                    backgroundColor: '#ffbd2e',
+                                }}
+                            />
+                            <Box
+                                sx={{
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: '50%',
+                                    backgroundColor: '#27ca3f',
+                                }}
+                            />
+                        </Box>
+
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Typography
+                                sx={{
+                                    fontSize: '14px',
+                                    color: '#ccc',
+                                    fontWeight: 400,
+                                }}
+                            >
+                                {title || 'Terminal'}
+                            </Typography>
+                        </Box>
+                    </Box>
+
+                    <Tooltip title={copied ? 'Copied' : 'Copy'}>
+                        <ContentCopyIcon sx={{ fontSize: '16px' }} onClick={() => handleCopyCode(children)} />
+                    </Tooltip>
+                </Box>
+
+                <Box
+                    sx={{
+                        backgroundColor: '#1a1a1a',
+                        color: '#e6e6e6',
+                        p: 2,
+                        fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+                        fontSize: '14px',
+                        lineHeight: '1.4',
+                        overflow: 'auto',
+                        whiteSpace: 'pre-wrap',
+                    }}
+                >
+                    {typeof children === 'string' ? (
+                        <Typography
+                            component="pre"
+                            sx={{
+                                fontFamily: 'inherit',
+                                fontSize: 'inherit',
+                                lineHeight: 'inherit',
+                                color: 'inherit',
+                                margin: 0,
+                                whiteSpace: 'pre-wrap',
+                            }}
+                            dangerouslySetInnerHTML={{
+                                __html: highlightTerminalContent(children),
+                            }}
+                        />
+                    ) : (
+                        children
+                    )}
+                </Box>
+            </Box>
+        );
+    },
+
     table: (props: MDXElementProps) => (
         <TableContainer
             component={Box}

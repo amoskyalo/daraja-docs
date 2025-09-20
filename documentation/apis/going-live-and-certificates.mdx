@@ -21,7 +21,10 @@ Going live has never been easy: Let's go through our checklist.
 Then you're ready to go live. Follow the simple steps on the Go Live page and you'll be in production.
 
 <Note type="warning">
-    <NoteInfo>If you have a PayBill/Till Number or B2C account with no admin, then reach out to the M-PESA Business onboarding team for creation of Admin role on the email: **m-pesabusiness[a]safaricom.co.ke**</NoteInfo>
+    <NoteInfo>
+        If you have a PayBill/Till Number or B2C account with no admin, then reach out to the M-PESA Business onboarding
+        team for creation of Admin role on the email: **m-pesabusiness[a]safaricom.co.ke**
+    </NoteInfo>
 </Note>
 
 ---
@@ -47,16 +50,24 @@ The following are the M-Pesa API Certificates that you need for encryption of se
 
 ### Download Certificates
 
-<ApiEndpoint method="GET" endpoint="Download Sandbox Certificate" description="For development and testing purposes" />
+#### Download Sandbox Certificate
+
+For development and testing purposes
 
 [Click to download M-Pesa public key certificate (Sandbox)](https://developer.safaricom.co.ke/docs-assets/SandBoxCertificate.cer)
 
-<ApiEndpoint method="GET" endpoint="Download Production Certificate" description="For live production environment" />
+#### Download Production Certificate
+
+For live production environment
 
 [Click to download M-Pesa public key certificate (Production)](https://developer.safaricom.co.ke/docs-assets/ProductionCertificate.cer)
 
 <Note type="info">
-    <NoteInfo>These are **not** certificates to be installed for accessing the M-PESA Organization portal. These are specifically for API security credential encryption. Portal certificates are generated and installed differently.</NoteInfo>
+    <NoteInfo>
+        These are **not** certificates to be installed for accessing the M-PESA Organization portal. These are
+        specifically for API security credential encryption. Portal certificates are generated and installed
+        differently.
+    </NoteInfo>
 </Note>
 
 ---
@@ -103,6 +114,7 @@ cert_data = cert_file.read()
     # Base64 encode
     security_credential = base64.b64encode(encrypted).decode('utf-8')
     return security_credential
+
 ```
 </CodeExample>
 
@@ -135,7 +147,11 @@ The IPs you should expect to receive callback from are as below and partners are
 - `196.201.212.74`
 - `196.201.212.69`
 
-<Note type="info"><NoteInfo>Whitelisting these IPs ensures that you only receive and process API notifications that are from the Safaricom API Gateway</NoteInfo></Note>
+<Note type="info">
+    <NoteInfo>
+        Whitelisting these IPs ensures that you only receive and process API notifications that are from the Safaricom API Gateway
+    </NoteInfo>
+</Note>
 
 ---
 
@@ -152,5 +168,8 @@ Before going live, ensure you have:
 - Set up monitoring and logging for production traffic
 - Prepared error handling and fallback mechanisms
 
-<Note type="tip"><NoteInfo>Keep your sandbox integration running alongside production for testing new features and troubleshooting issues without affecting live transactions.</NoteInfo></Note>
-
+<Note type="tip">
+    <NoteInfo>
+        Keep your sandbox integration running alongside production for testing new features and troubleshooting issues without affecting live transactions.
+    </NoteInfo>
+</Note>

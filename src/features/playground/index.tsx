@@ -13,9 +13,10 @@ const tabOptions = [
 interface PlaygroundProps {
     children: React.ReactNode;
     apiSpecsYaml: any;
+    hideTabs?: boolean;
 }
 
-export const Playground = ({ children, apiSpecsYaml }: PlaygroundProps) => {
+export const Playground = ({ children, apiSpecsYaml, hideTabs }: PlaygroundProps) => {
     const { setParams, getParam } = useSearchParams();
     const activeTab = getParam('tab') || 'documentation';
 
@@ -24,45 +25,47 @@ export const Playground = ({ children, apiSpecsYaml }: PlaygroundProps) => {
     };
 
     return (
-        <Box sx={{ py: 2, position: 'relative', }}>
-            <Tabs
-                value={activeTab}
-                onChange={handleTabChange}
-                sx={{
-                    borderBottom: 1,
-                    borderColor: 'divider',
-                    '& .MuiTab-root': {
-                        color: 'text.secondary',
-                        minHeight: '20px !important',
-                        maxHeight: '20px !important',
-                        height: '20px !important',
-                        '&.Mui-selected': {
-                            color: 'text.primary',
+        <Box sx={{ py: 2, position: 'relative' }}>
+            {!hideTabs && (
+                <Tabs
+                    value={activeTab}
+                    onChange={handleTabChange}
+                    sx={{
+                        borderBottom: 1,
+                        borderColor: 'divider',
+                        '& .MuiTab-root': {
+                            color: 'text.secondary',
+                            minHeight: '20px !important',
+                            maxHeight: '20px !important',
+                            height: '20px !important',
+                            '&.Mui-selected': {
+                                color: 'text.primary',
+                            },
                         },
-                    },
-                    mb: 2,
-                    height: '40px !important',
-                    minHeight: '40px !important',
-                    maxHeight: '40px !important',
-                }}
-            >
-                {tabOptions.map(({ label, value, icon: Icon }, index) => (
-                    <Tab
-                        key={index}
-                        label={label}
-                        value={value}
-                        iconPosition="start"
-                        icon={<Icon fontSize="small" />}
-                        sx={{
-                            textTransform: 'none',
-                            maxWidth: 'max-content !important',
-                            minWidth: 'max-content !important',
-                            paddingX: 1,
-                            fontWeight: 400
-                        }}
-                    />
-                ))}
-            </Tabs>
+                        mb: 2,
+                        height: '40px !important',
+                        minHeight: '40px !important',
+                        maxHeight: '40px !important',
+                    }}
+                >
+                    {tabOptions.map(({ label, value, icon: Icon }, index) => (
+                        <Tab
+                            key={index}
+                            label={label}
+                            value={value}
+                            iconPosition="start"
+                            icon={<Icon fontSize="small" />}
+                            sx={{
+                                textTransform: 'none',
+                                maxWidth: 'max-content !important',
+                                minWidth: 'max-content !important',
+                                paddingX: 1,
+                                fontWeight: 400,
+                            }}
+                        />
+                    ))}
+                </Tabs>
+            )}
 
             {activeTab === 'documentation' && children}
             {activeTab === 'playground' && <PlaygroundUI apiSpecsYaml={apiSpecsYaml} />}

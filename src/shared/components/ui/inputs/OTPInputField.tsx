@@ -84,7 +84,7 @@ export const OTPInputField = ({ length, label, size, error, helperText, onChange
 
     return (
         <Stack spacing={1}>
-            <InputLabel>{label}</InputLabel>
+            <InputLabel sx={{ mb: 0.5, fontSize: 14 }}>{label}</InputLabel>
 
             <Stack direction="row" spacing={2}>
                 {Array.from({ length: totalLength }).map((_, index) => (

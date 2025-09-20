@@ -13,28 +13,29 @@ To test on localhost, an HTTP tunneling client will be required to the HTTP list
 <Highlight>Ngrok</Highlight> and <Highlight>LocalTunnel</Highlight> are examples of HTTP tunneling clients that you
 could use to get a public IP and make your local host accessible over the internet.
 
-<Terminal title="Ngrok Setup:">
+<Terminal title="Ngrok Setup">
 {`# Install ngrok
 npm install -g ngrok
 
-# Expose local port 3000
-
+# Expose local port
 ngrok http 3000`}
 
 </Terminal>
 
-<Terminal title="LocalTunnel Setup:">
+<Terminal title="LocalTunnel Setup">
 {`# Install localtunnel
 npm install -g localtunnel
 
-# Expose local port 3000
-
+# Expose local port
 lt --port 3000`}
 
 </Terminal>
 
 <Note type="warning">
-    <NoteInfo>Always use HTTPS URLs from these tunneling services for production-like testing, as M-Pesa APIs require secure connections.</NoteInfo>
+    <NoteInfo>
+        Always use HTTPS URLs from these tunneling services for production-like testing, as M-Pesa APIs require secure
+        connections.
+    </NoteInfo>
 </Note>
 
 ---
@@ -76,7 +77,10 @@ Sample HTTP listeners are provided in multiple programming languages:
 - Java
 
 <Note type="error">
-    <NoteInfo>The API Gateway does not cache responses from M-Pesa. If the server running the HTTP listener is unavailable or inaccessible, the API Gateway will log a 503 error and discard the M-Pesa results.</NoteInfo>
+    <NoteInfo>
+        The API Gateway does not cache responses from M-Pesa. If the server running the HTTP listener is unavailable or
+        inaccessible, the API Gateway will log a 503 error and discard the M-Pesa results.
+    </NoteInfo>
 </Note>
 
 ---
@@ -110,7 +114,10 @@ Safaricom offers SSL Certificates that provide robust server authentication, dat
 For production deployments, consider getting SSL certificates to ensure secure communication with M-Pesa APIs. [Learn more about Safaricom SSL Certificates](https://safaricom.co.ke/business/enterprise/connectivity/ssl-certificates)
 
 <Note type="tip">
-    <NoteInfo>For development and testing, tunneling services like Ngrok provide HTTPS endpoints automatically, but you'll need proper SSL certificates for production environments.</NoteInfo>
+    <NoteInfo>
+        For development and testing, tunneling services like Ngrok provide HTTPS endpoints automatically, but you'll
+        need proper SSL certificates for production environments.
+    </NoteInfo>
 </Note>
 
 ---
@@ -125,5 +132,8 @@ Once your development environment is set up:
 4. **Move to Going Live section** when ready for production deployment
 
 <Note type="info">
-    <NoteInfo>Sample JSON responses for callback URLs and queue timeout URLs are provided in the 'Json Response' tab for each API endpoint in our documentation.</NoteInfo>
+    <NoteInfo>
+        Sample JSON responses for callback URLs and queue timeout URLs are provided in the 'Json Response' tab for each
+        API endpoint in our documentation.
+    </NoteInfo>
 </Note>

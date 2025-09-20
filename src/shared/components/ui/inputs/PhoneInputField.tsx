@@ -42,7 +42,7 @@ export const PhoneInputField = ({ label, size, poperWidth, onChange, colorIndex,
 
     return (
         <Stack spacing={0.5} sx={{ width: '100%' }}>
-            <InputLabel>{label}</InputLabel>
+            <InputLabel sx={{ mb: 0.5, fontSize: 14 }}>{label}</InputLabel>
             <TextField
                 fullWidth
                 size={inputSize}
@@ -77,6 +77,10 @@ export const PhoneInputField = ({ label, size, poperWidth, onChange, colorIndex,
                                             width={95}
                                             height={85}
                                             priority
+                                            style={{
+                                                height: '20px',
+                                                width: '30px',
+                                            }}
                                         />
                                         <KeyboardArrowDownIcon fontSize="small" />
                                     </Stack>

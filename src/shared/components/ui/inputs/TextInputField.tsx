@@ -6,17 +6,17 @@ export const TextInputField = ({ label, isPassword = false, ...props }: TextFiel
     const [showPassword, setShowPassword] = useState(false);
     return (
         <Box>
-            <InputLabel>{label}</InputLabel>
+            <InputLabel sx={{ mb: 0.5, fontSize: 14 }}>{label}</InputLabel>
             <TextField
                 fullWidth
                 {...props}
                 type={isPassword && !showPassword ? 'password' : 'text'}
-                size="medium"
+                size="small"
                 slotProps={{
                     input: {
                         endAdornment: isPassword ? (
                             <InputAdornment position="end" sx={{ cursor: 'pointer' }}>
-                                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                                <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? <EyeOff /> : <Eye />}
                                 </IconButton>
                             </InputAdornment>

@@ -9,7 +9,7 @@ import { JSDOM } from 'jsdom';
 import YAML from 'yaml';
 import { extractTableOfContents } from '@/features/documentation';
 
-const docsDirectory = path.join(process.cwd(), 'documentation', 'apis');
+const docsDirectory = path.join(process.cwd(), 'documentation', 'v2');
 const apiSpecsDirectory = path.join(process.cwd(), 'api-specs', 'auth.yaml');
 
 export type Frontmatter = {

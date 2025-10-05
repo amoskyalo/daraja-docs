@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Stack, Tooltip, Typography, Menu, MenuItem } from '@mui/material';
 import { MarkdownComponents } from '@/features/markdown';
 import { useAIContext } from '@/shared/context';
 import { useCopyToClipboard } from '@/shared/hooks';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -36,85 +37,131 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
         setAnchorEl(null);
     };
 
+    useEffect(() => {
+        setSelectedLanguage(languages[0]);
+    }, [languages]);
+
     return (
         <>
-            <Stack spacing={4}>
-                <Box sx={{ borderRadius: 2, backgroundColor: 'action.hover' }}>
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 1, px: 1.5 }}>
-                        <Typography variant="body2" fontWeight={500}>
-                            Request
+            <Stack spacing={4} sx={{ height: '100%' }}>
+                {!requests && (
+                    <Box sx={{ width: '100%', mt: '64px !important' }}>
+                        <DotLottieReact
+                            src="https://lottie.host/27274b1c-1e28-4800-8d5c-913883762401/GLDocWXrK1.lottie"
+                            loop
+                            autoplay
+                        />
+                        <Typography variant="body2" sx={{ textAlign: 'center' }}>
+                            Click simulate to see some magic!
                         </Typography>
+                    </Box>
+                )}
 
-                        <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ flex: 1 }} gap={1}>
+                {requests && (
+                    <>
+                        <Box sx={{ borderRadius: 2, backgroundColor: 'action.hover' }}>
                             <Stack
                                 direction="row"
                                 alignItems="center"
-                                gap={0.5}
-                                onClick={handleClick}
-                                sx={{
-                                    cursor: 'pointer',
-                                    borderRadius: 1,
-                                    paddingX: 0.5,
-                                    paddingY: 0.25,
-                                    '&:hover': { backgroundColor: 'action.selected', color: 'primary.main' },
-                                }}
+                                justifyContent="space-between"
+                                sx={{ py: 1, px: 1.5 }}
                             >
-                                <Typography variant="body2" sx={{ fontSize: 13 }}>
-                                    {selectedLanguage.label}
+                                <Typography variant="body2" fontWeight={500}>
+                                    Request
                                 </Typography>
-                                <Stack direction="column" alignItems="center">
-                                    <KeyboardArrowUpIcon sx={{ fontSize: 13, mt: 0 }} />
-                                    <KeyboardArrowDownIcon sx={{ fontSize: 13, mt: -0.8 }} />
+
+                                <Stack
+                                    direction="row"
+                                    alignItems="center"
+                                    justifyContent="flex-end"
+                                    sx={{ flex: 1 }}
+                                    gap={1}
+                                >
+                                    <Stack
+                                        direction="row"
+                                        alignItems="center"
+                                        gap={0.5}
+                                        onClick={handleClick}
+                                        sx={{
+                                            cursor: 'pointer',
+                                            borderRadius: 1,
+                                            paddingX: 0.5,
+                                            paddingY: 0.25,
+                                            '&:hover': { backgroundColor: 'action.selected', color: 'primary.main' },
+                                        }}
+                                    >
+                                        <Typography variant="body2" sx={{ fontSize: 13 }}>
+                                            {selectedLanguage?.label}
+                                        </Typography>
+                                        <Stack direction="column" alignItems="center">
+                                            <KeyboardArrowUpIcon sx={{ fontSize: 13, mt: 0 }} />
+                                            <KeyboardArrowDownIcon sx={{ fontSize: 13, mt: -0.8 }} />
+                                        </Stack>
+                                    </Stack>
+                                    <Tooltip title="Explain with AI">
+                                        <AutoAwesomeIcon
+                                            sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }}
+                                            onClick={() => {
+                                                const code = `\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``;
+                                                const input = `Explain the code below in details \n\n\n${code}`;
+                                                setQuestion(input);
+                                                handleAIRequest(input);
+                                                setDrawerOpen(true);
+                                            }}
+                                        />
+                                    </Tooltip>
+                                    <Tooltip title={copied ? 'Copied!' : 'Copy'}>
+                                        <ContentCopyIcon
+                                            sx={{ fontSize: 14, cursor: 'pointer' }}
+                                            onClick={() => Copy(requests[selectedLanguage.variant])}
+                                        />
+                                    </Tooltip>
                                 </Stack>
                             </Stack>
-                            <Tooltip title="Explain with AI">
-                                <AutoAwesomeIcon
-                                    sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }}
-                                    onClick={() => {
-                                        const code = `\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``;
-                                        const input = `Explain the code below in details \n\n\n${code}`;
-                                        setQuestion(input);
-                                        handleAIRequest(input);
-                                        setDrawerOpen(true);
-                                    }}
-                                />
-                            </Tooltip>
-                            <Tooltip title={copied ? 'Copied!' : 'Copy'}>
-                                <ContentCopyIcon
-                                    sx={{ fontSize: 14, cursor: 'pointer' }}
-                                    onClick={() => Copy(requests[selectedLanguage.variant])}
-                                />
-                            </Tooltip>
-                        </Stack>
-                    </Stack>
-                    <MarkdownComponents
-                        message={`\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``}
-                        maxHeight="100%"
-                        borderRadius="8px !important"
-                    />
-                </Box>
 
-                <Box sx={{ borderRadius: 2, backgroundColor: 'action.hover' }}>
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 1, px: 1.5 }}>
-                        <Typography variant="body2" fontWeight={500}>
-                            Response
-                        </Typography>
-
-                        <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ flex: 1 }} gap={1}>
-                            <Tooltip title="Explain with AI">
-                                <AutoAwesomeIcon sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }} />
-                            </Tooltip>
-
-                            <Tooltip title="Copy">
-                                <ContentCopyIcon
-                                    sx={{ fontSize: 14, cursor: 'pointer' }}
-                                    // onClick={() => navigator.clipboard.writeText(requests[selectedLanguage])}
+                            {selectedLanguage && (
+                                <MarkdownComponents
+                                    message={`\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``}
+                                    maxHeight="100%"
+                                    borderRadius="8px !important"
                                 />
-                            </Tooltip>
-                        </Stack>
-                    </Stack>
-                    <MarkdownComponents message={'```json\n{"status": "200", "message": "Success"}\n```'} />
-                </Box>
+                            )}
+                        </Box>
+
+                        <Box sx={{ borderRadius: 2, backgroundColor: 'action.hover' }}>
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                justifyContent="space-between"
+                                sx={{ py: 1, px: 1.5 }}
+                            >
+                                <Typography variant="body2" fontWeight={500}>
+                                    Response
+                                </Typography>
+
+                                <Stack
+                                    direction="row"
+                                    alignItems="center"
+                                    justifyContent="flex-end"
+                                    sx={{ flex: 1 }}
+                                    gap={1}
+                                >
+                                    <Tooltip title="Explain with AI">
+                                        <AutoAwesomeIcon sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }} />
+                                    </Tooltip>
+
+                                    <Tooltip title="Copy">
+                                        <ContentCopyIcon
+                                            sx={{ fontSize: 14, cursor: 'pointer' }}
+                                            // onClick={() => navigator.clipboard.writeText(requests[selectedLanguage])}
+                                        />
+                                    </Tooltip>
+                                </Stack>
+                            </Stack>
+                            <MarkdownComponents message={'```json\n{"status": "200", "message": "Success"}\n```'} />
+                        </Box>
+                    </>
+                )}
             </Stack>
 
             <Menu
@@ -139,10 +186,10 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                {languages.map((item, index) => (
+                {languages?.map((item, index) => (
                     <Box sx={{ px: 1 }} key={index}>
                         <MenuItem
-                            selected={selectedLanguage.label === item.label}
+                            selected={selectedLanguage?.label === item?.label}
                             sx={{
                                 px: 1,
                                 borderRadius: 2,
@@ -158,9 +205,9 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                                 sx={{ width: '100%' }}
                             >
                                 <Typography variant="body2" fontWeight={500}>
-                                    {item.label}
+                                    {item?.label}
                                 </Typography>
-                                {selectedLanguage.label === item.label && <CheckIcon sx={{ fontSize: 18 }} />}
+                                {selectedLanguage?.label === item?.label && <CheckIcon sx={{ fontSize: 18 }} />}
                             </Stack>
                         </MenuItem>
                     </Box>

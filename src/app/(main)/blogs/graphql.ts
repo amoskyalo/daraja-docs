@@ -1,13 +1,14 @@
 import { gql } from '@apollo/client';
 
 const GET_BLOGS = gql`
-    query Feed($first: Int) {
-        response: feed(first: $first) {
+    query Feed($filters: Filters) {
+        response: feed(filters: $filters) {
             edges {
                 node {
                     id
                     title
                     brief
+                    url
                     coverImage {
                         url
                     }

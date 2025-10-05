@@ -8,18 +8,20 @@ import { GET_BLOGS } from './graphql';
 import { Response } from './types';
 
 const sections = [
-    { label: 'All', value: 'all' },
-    { label: 'Safaricom team', value: 'safaricom' },
-    { label: 'Dev.to', value: 'dev.to' },
-    { label: 'Medium', value: 'medium' },
+    { label: 'All', value: 'ALL' },
+    { label: 'Safaricom team', value: 'SAFARICOM' },
+    { label: 'Dev.to', value: 'DEVTO' },
+    { label: 'Hashnode', value: 'HASHNODE' },
 ];
 
 const BlogsPage = () => {
-    const [selectedSection, setSelectedSection] = useState<string>('all');
+    const [selectedSection, setSelectedSection] = useState<string>('ALL');
 
     const { data, loading } = useQuery<Response>(GET_BLOGS, {
         variables: {
-            first: 50,
+            filters: {
+                source: selectedSection,
+            },
         },
     });
 
@@ -93,7 +95,7 @@ const BlogsPage = () => {
                                 <Link
                                     underline="none"
                                     color="text.primary"
-                                    href={blog.node.id}
+                                    href={blog.node.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >

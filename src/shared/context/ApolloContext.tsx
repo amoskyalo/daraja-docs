@@ -5,7 +5,7 @@ import { ApolloProvider } from '@apollo/client/react';
 import { SetContextLink } from '@apollo/client/link/context';
 import { handleGetSession } from '@/functions/serverActions';
 
-const uri = "https://1769047e59fe.ngrok-free.app/";
+const uri = process.env.NEXT_PUBLIC_BASE_URL;
 let apolloClient: ApolloClient | null = null;
 
 const asyncAuthLink = new SetContextLink(async (prevContext, operation) => {

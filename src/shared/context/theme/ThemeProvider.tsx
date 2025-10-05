@@ -25,6 +25,7 @@ export const ThemeContext = createContext<ThemeContextType>({
 export const AppThemeProvider = ({ children }: Readonly<ThemeProviderProps>) => {
     const [isDark, setIsDark] = useState(false);
     const [currentTheme, setCurrentTheme] = useState<ThemeType>('system');
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
@@ -34,6 +35,7 @@ export const AppThemeProvider = ({ children }: Readonly<ThemeProviderProps>) => 
 
         setIsDark(shouldBeDark);
         document.documentElement.classList.toggle('dark', shouldBeDark);
+        setMounted(true);
     }, []);
 
     const toggleTheme = (theme: ThemeType) => {
@@ -77,6 +79,10 @@ export const AppThemeProvider = ({ children }: Readonly<ThemeProviderProps>) => 
     const value = useMemo(() => ({ isDark, toggleTheme, currentTheme }), [isDark, toggleTheme, currentTheme]);
 
     const theme = isDark ? darkTheme : lightTheme;
+
+    if (!mounted) {
+        return null;
+    }
 
     return (
         <ThemeContext.Provider value={value}>

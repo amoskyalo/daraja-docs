@@ -94,12 +94,12 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
     ];
 
     const handleFieldChange = (fieldType: string, fieldName: string, value: string): void => {
-        setFieldValues(prev => ({
+        setFieldValues((prev) => ({
             ...prev,
             [fieldType]: {
                 ...prev[fieldType],
-                [fieldName]: value
-            }
+                [fieldName]: value,
+            },
         }));
     };
 
@@ -108,8 +108,8 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
         const body: Record<string, string> = {};
         const queryParams: Record<string, string> = {};
 
-        requiredFields.forEach(field => {
-            field.inputs.forEach(input => {
+        requiredFields.forEach((field) => {
+            field.inputs.forEach((input) => {
                 const value = fieldValues[field.key]?.[input.label] || input.value;
                 if (value) {
                     if (field.key === 'headers') {
@@ -133,14 +133,14 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
             method: apiSpecsYaml.info.method,
             url: url,
             headers: headers,
-            body: Object.keys(body).length > 0 ? body : undefined
+            body: Object.keys(body).length > 0 ? body : undefined,
         };
     };
 
     const handleSend = async () => {
         try {
-            const requestData = buildRequestData()
-            
+            const requestData = buildRequestData();
+
             const codeResponse = await fetch('/api/request-snippet-generator', {
                 method: 'POST',
                 headers: {
@@ -169,7 +169,7 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
 
     return (
         <Box>
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack direction="row" alignItems="center" spacing={1.5}>
                 <Stack
                     direction="row"
                     alignItems="center"
@@ -231,11 +231,7 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
                     </Typography>
                 </Stack>
 
-                <Button
-                    onClick={handleSend}
-                    variant="contained"
-                    sx={{ paddingY: '4px', paddingX: '8px' }}
-                >
+                <Button onClick={handleSend} variant="contained" sx={{ paddingY: '4px', paddingX: '8px' }}>
                     Simulate
                 </Button>
             </Stack>
@@ -316,7 +312,9 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
                                                 size="small"
                                                 fullWidth
                                                 value={fieldValues[field.key]?.[input.label] || input.value}
-                                                onChange={(e) => handleFieldChange(field.key, input.label, e.target.value)}
+                                                onChange={(e) =>
+                                                    handleFieldChange(field.key, input.label, e.target.value)
+                                                }
                                                 slotProps={{
                                                     input: {
                                                         style: {
@@ -341,8 +339,8 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
                     ))}
                 </Grid>
 
-                <Grid size={5} sx={{ paddingY: 2 }}>
-                    {requests && <ResponseUI requests={requests} languages={languages} />}
+                <Grid size={5} sx={{ paddingTop: 3 }}>
+                    <ResponseUI requests={requests} languages={languages} />
                 </Grid>
             </Grid>
         </Box>

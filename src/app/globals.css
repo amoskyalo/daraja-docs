@@ -11,15 +11,20 @@ body {
 }
 
 .dark * {
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent !important;
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent !important;
 }
 
+.nav-links-container,
 .MuiPaper-root,
 .MuiMenu-paper,
 .MuiSelect-paper,
 .MuiBox-root,
 .MuiAutocomplete-paper {
-  scrollbar-width: thin !important;
+    scrollbar-width: thin !important;
+}
+
+.dark .nav-links-container {
+  scrollbar-color: rgba(255, 255, 255, 0.8) transparent !important;
 }
 
 .MuiListItemButton-gutters {
@@ -42,23 +47,23 @@ body {
 }
 
 .MuiContainer-root {
-  max-width: clamp(320px, 95vw, 1400px) !important;
+    max-width: clamp(320px, 95vw, 1400px) !important;
 }
 
 @media (min-width: 600px) {
-  .MuiContainer-root {
-    max-width: clamp(600px, 95vw, 1000px) !important;
-  }
+    .MuiContainer-root {
+        max-width: clamp(600px, 95vw, 1000px) !important;
+    }
 }
 
 @media (min-width: 1200px) {
-  .MuiContainer-root {
-    max-width: clamp(900px, 90vw, 1400px) !important;
-  }
+    .MuiContainer-root {
+        max-width: clamp(900px, 90vw, 1400px) !important;
+    }
 }
 
 @media (min-width: 2560px) {
-  .MuiContainer-root {
-    max-width: clamp(1200px, 60vw, 1600px) !important;
-  }
+    .MuiContainer-root {
+        max-width: clamp(1200px, 60vw, 1600px) !important;
+    }
 }

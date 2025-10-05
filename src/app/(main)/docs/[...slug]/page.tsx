@@ -1,8 +1,8 @@
 import { getDocumentationBySlug } from '@/shared/lib/mdx';
 import { Box, Container, Typography } from '@mui/material';
-import { NAVTABS } from '@/config/constants/routes';
 import { ContentsContainer } from '@/features/documentation';
 import type { Metadata } from 'next';
+import { SIDENAVITEMS } from '@/config';
 
 interface DocsPageProps {
     params: Promise<{ slug: string[] }>;
@@ -27,10 +27,11 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
         );
     }
 
-    const currentPath = `/documentation/${param.slug.join('/')}`;
-    const currentDoc = NAVTABS[0].items.findIndex((item: any) => item.segment === currentPath);
-    const prevDoc = NAVTABS[0].items[currentDoc - 1];
-    const nextDoc = NAVTABS[0].items[currentDoc + 1];
+    const ITEMS = SIDENAVITEMS.filter((el) => el.segment);
+    const currentPath = `/docs/${param.slug.join('/')}`;
+    const currentDoc = ITEMS.findIndex((item: any) => item.segment === currentPath);
+    const prevDoc = ITEMS[currentDoc - 1];
+    const nextDoc = ITEMS[currentDoc + 1];
 
    return <ContentsContainer doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} hideTabs />;
 }

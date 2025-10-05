@@ -56,15 +56,27 @@ const Header = () => {
                     borderBottom: 1,
                     borderColor: 'divider',
                     backgroundColor: 'transparent',
-                    backdropFilter: 'blur(16px)',
+                    backdropFilter: 'blur(8px)',
                     zIndex: (theme) => theme.zIndex.drawer + 1,
                 }}
             >
                 <Container maxWidth="lg" sx={{ px: '0px !important' }}>
                     <Toolbar sx={{ px: '0px !important' }}>
-                        <Stack direction="row" alignItems="center" spacing={4} sx={{ width: '100%' }}>
-                            <Stack direction="row" alignItems="center" sx={{ height: '100%', paddingTop: 0.5 }}>
-                                <Image src="/images/logo.png" alt="logo" width={140} height={40} priority />
+                        <Stack direction="row" alignItems="center" spacing={8} sx={{ width: '100%' }}>
+                            <Stack direction="row" alignItems="center" spacing={1}>
+                                <Image src="/images/boat.png" alt="logo" width={40} height={30} priority />
+                                <Box>
+                                    <Typography variant="h6" color="primary.main" sx={{ fontWeight: '700' }}>
+                                        Daraja
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        color="primary.main"
+                                        sx={{ fontWeight: 'medium', fontSize: 10, opacity: 0.5, ml: 1, mt: -0.5 }}
+                                    >
+                                        by Safaricom
+                                    </Typography>
+                                </Box>
                             </Stack>
 
                             <Stack direction="row" alignItems="center" spacing={3} sx={{ flex: 1 }}>
@@ -82,9 +94,7 @@ const Header = () => {
                                         <Typography
                                             variant="body2"
                                             sx={{
-                                                fontWeight: matchPathname(route.href.toLowerCase())
-                                                    ? 'regular'
-                                                    : 'medium',
+                                                fontWeight: matchPathname(route.href.toLowerCase()) ? '600' : 'medium',
                                                 color: matchPathname(route.href.toLowerCase())
                                                     ? 'primary.main'
                                                     : 'text.primary',

@@ -46,6 +46,7 @@
         "remark": "^15.0.1",
         "remark-gfm": "^3.0.1",
         "rxjs": "^7.8.2",
+        "supermemory": "^3.4.0",
         "unist-util-visit": "^5.0.0",
         "yaml": "^2.8.1",
         "yup": "^1.7.0"

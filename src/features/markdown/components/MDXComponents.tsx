@@ -117,6 +117,7 @@ export const MDXComponents = {
     a: (props: MDXElementProps) => (
         <Link
             {...props}
+            target="_parent"
             sx={{
                 color: 'primary.main',
                 textDecoration: 'none',

@@ -3,7 +3,8 @@ import remarkGfm from 'remark-gfm';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
-import { Typography, Box, Link, IconButton, Tooltip } from '@mui/material';
+import Link from 'next/link';
+import { Typography, Box, Link as MuiLink, IconButton, Tooltip } from '@mui/material';
 import { useCopyToClipboard } from '@/shared/hooks';
 
 export const MarkdownComponents = ({
@@ -141,9 +142,9 @@ export const MarkdownComponents = ({
                     </Typography>
                 ),
                 a: ({ children, href }) => (
-                    <Link href={href} target="_blank" rel="noopener noreferrer">
+                    <MuiLink component={Link} href={href as any} style={{ textDecoration: 'none' }}>
                         {children}
-                    </Link>
+                    </MuiLink>
                 ),
                 blockquote: ({ children }) => (
                     <Box

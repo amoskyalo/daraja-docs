@@ -2,6 +2,7 @@ export type Blog = {
     id: string;
     title: string;
     brief: string;
+    url: string;
     coverImage: {
         url: string;
     };

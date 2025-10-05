@@ -47,6 +47,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                 height: '100%',
                 position: 'relative',
                 flex: 1,
+                pl: { xs: 0, md: 0, lg: 4 },
             }}
         >
             <Grid

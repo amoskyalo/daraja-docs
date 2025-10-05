@@ -84,10 +84,10 @@ export const PromptDialog = ({
                         >
                             <Box
                                 sx={{
-                                    paddingX: item.type === 'user' ? 1 : 0,
-                                    paddingY: item.type === 'user' ? 0.5 : 0,
+                                    paddingX: item.type === 'user' ? 1.5 : 0,
+                                    paddingTop: item.type === 'user' ? 1 : 0,
                                     backgroundColor: item.type === 'user' ? 'action.selected' : 'transparent',
-                                    borderRadius: 2,
+                                    borderRadius: 4,
                                     width: item.type === 'assistant' ? '100%' : 'auto',
                                     maxWidth: '100%',
                                 }}
@@ -142,7 +142,7 @@ export const PromptDialog = ({
                 <Box sx={{ px: 2, py: 1.5, maxHeight: 300, overflow: 'auto', backgroundColor: 'action.hover' }}>
                     <Stack spacing={1} direction="row" alignItems="end" sx={{ position: 'relative' }}>
                         <TextField
-                            placeholder="Ask question"
+                            placeholder="Ask a question"
                             value={question}
                             variant="standard"
                             onChange={(e) => setQuestion(e.target.value)}

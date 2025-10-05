@@ -86,6 +86,7 @@ export default function VersionSwitcher() {
                 {[
                     { label: 'Daraja 3.0', value: '3.0' },
                     { label: 'Daraja 2.0', value: '2.0' },
+                    { label: 'Daraja 1.0', value: '1.0' },
                 ].map((version) => (
                     <Box sx={{ px: 1 }} key={version.value}>
                         <MenuItem

@@ -116,6 +116,9 @@ importers:
       rxjs:
         specifier: ^7.8.2
         version: 7.8.2
+      supermemory:
+        specifier: ^3.4.0
+        version: 3.4.0
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -3174,6 +3177,9 @@ packages:
 
   stylis@4.2.0:
     resolution: {integrity: sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw==}
+
+  supermemory@3.4.0:
+    resolution: {integrity: sha512-acomTikn701JDhGnK7jGlsE/hTa+nYha1/Q4+4C8oB80BOIiQuyNufM3wXQ45z1YIqhL5m+JkgdTDGZH5zCIVw==}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -7233,6 +7239,8 @@ snapshots:
       react: 19.1.0
 
   stylis@4.2.0: {}
+
+  supermemory@3.4.0: {}
 
   supports-color@7.2.0:
     dependencies:

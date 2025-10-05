@@ -18,6 +18,8 @@ const LeftNav = () => {
 
     const isSmallScreen = isMobile || isMiniTablet || isTablet;
 
+    const hideSidNav = !pathname.includes('docs');
+
     function renderNavList() {
         return (
             <Stack
@@ -30,7 +32,7 @@ const LeftNav = () => {
                     position: { md: 'relative', lg: 'sticky' },
                     top: '66px',
                     height: { md: 'auto', lg: 'calc(100vh - 66px)' },
-                    display: SIDENAVITEMS ? 'flex' : 'none',
+                    display: hideSidNav ? 'none' : 'flex',
                 }}
                 spacing={2}
             >

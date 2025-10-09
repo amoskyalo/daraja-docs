@@ -18,6 +18,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
     const activeTab = getParam('tab') || 'documentation';
 
     const [hideTextField, setHideTextField] = useState(false);
+    const [tableOfContentsWidth, setTableOfContentsWidth] = useState(200);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -38,6 +39,13 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
 
         return () => observer.disconnect();
     }, [activeTab]);
+
+    useEffect(() => {
+        const element = document.getElementById('table-of-contents');
+        if (element) {
+            setTableOfContentsWidth(element.getBoundingClientRect().width);
+        }
+    }, []);
 
     return (
         <Grid
@@ -117,13 +125,14 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
 
             {!isMobile && activeTab !== 'playground' && (
                 <Grid
+                    id="table-of-contents"
                     size={3.5}
                     sx={{
                         py: 2,
                         display: isMobile ? 'none' : 'block',
                     }}
                 >
-                    <TableOfContents headings={doc.tableOfContents} />
+                    <TableOfContents headings={doc.tableOfContents} width={tableOfContentsWidth} />
                 </Grid>
             )}
         </Grid>

@@ -9,9 +9,10 @@ import SegmentIcon from '@mui/icons-material/Segment';
 
 interface TableOfContentsProps {
     headings: HeadingItem[];
+    width: number;
 }
 
-export const TableOfContents = ({ headings }: Readonly<TableOfContentsProps>) => {
+export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsProps>) => {
     const [activeId, setActiveId] = useState<string>(headings[0]?.id || '');
     const [isScrolled, setIsScrolled] = useState(false);
     const { getParam } = useSearchParams();
@@ -83,7 +84,17 @@ export const TableOfContents = ({ headings }: Readonly<TableOfContentsProps>) =>
     }
 
     return (
-        <Box sx={{ position: 'fixed', top: '66px', height: 'calc(100vh - 66px)', overflowY: 'auto', py: 2, px: 2, width: '20.5%', }}>
+        <Box
+            sx={{
+                position: 'fixed',
+                top: '66px',
+                height: 'calc(100vh - 66px)',
+                overflowY: 'auto',
+                py: 2,
+                px: 2,
+                width,
+            }}
+        >
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
                 <SegmentIcon fontSize="small" />
                 <Typography variant="body2" fontWeight="bold">

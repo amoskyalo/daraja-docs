@@ -1,13 +1,4 @@
-### Developers portal.
-
-## Tech stack
-
--   Next.js - for server side rendering.
--   TypeScript - for type safety.
--   Tailwind CSS - for styling landing page.
--   MUI - for styling admin panel.
--   Prettier - for code formatting.
--   ESLint - for code quality.
+### Daraja API Docs.
 
 ## How to run
 

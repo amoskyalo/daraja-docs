@@ -1,0 +1,269 @@
+### What is a "Short code"?
+
+A short code is the unique number that is allocated to a pay bill or buy goods organization through they will be able to receive customer payment. It could be a Pay bill, Buy Goods or Till Number
+
+---
+
+### What Short code do you use?
+
+When testing in the sandbox environment all APIs Short code 1 = all APIs except B2B i.e. ‘Party B’ where you use Short Code 2.
+
+Lipa na M-Pesa online Short code = 174379 (FOR LIPA NA MPESA ONLINE ONLY).
+
+The test credentials are provided in Sandbox.
+
+---
+
+### How do I generate a token on sandbox?
+
+- Kindly go to the API menu,
+- Under the list of APIs click on the OAuth API,
+- On the right, click on the GENERATE TOKEN,
+- Scroll down to the Query parameters and click on the HTTP BASIC,
+- On the pop up, enter your Consumer key and Consumer Secret (This are found under my app, view app details tab, Keys),
+- Save to set authentications,
+- Click on send this request button,
+- Your requests will be generated and access token available below on tab “Response”.
+
+---
+
+### Can I re-register URLs in the sandbox?
+
+If on sandbox, you can re-register the URLs. This is a test environment, so can you just re-register and enter the new ones.
+
+---
+
+### Is there a refund to the test funds for STK push?
+
+Yes, For the refund of test funds, the system is set auto reverse at 6am next day or you can share your number for a reversal request to APIfeedback@safaricom.co.ke or APIsupport@safaricom.co.ke.
+
+---
+
+### How long does it take for my app to be approved?
+
+The approval will be done within 24 working hours. (Monday to Friday, 8am to 5pm).
+
+---
+
+### How long do I wait for you to activate my external validation?
+
+24 working hours.
+
+---
+
+### How do I add a product to my app on production?
+
+To add a product, navigate to [MyApps](/dashboard/my-apps) and select your entity. Select "Add API Products" on your respective app and proceed as required.
+
+---
+
+### Where can I get the consumer key and secret?
+
+To get the consumer key and secret, log in to Daraja, click on your app and you'll find the details under keys.
+
+---
+
+### Do I need a pass key to Go Live?
+
+You only need a pass key if your app has a Lipa na M-Pesa product or M-Pesa express product.
+
+---
+
+### How can I get the B2B API?
+
+Business Buy Goods, Business Pay Bill and B2C Account Top Up are B2B usecases currently available on the APIs section.
+
+---
+
+### How do I get a C2C API?
+
+Unfortunately, we do not have any available C2C API as of now.
+
+---
+
+### Can I have both B2C and C2B on my app?
+
+It's only possible to have one of these products on an app. Either B2C or C2B.
+
+---
+
+### Am a merchant, how can I get validation for my short code?
+
+To get external validation, send us an email request.
+
+---
+
+### Why was my app revoked?
+
+An app will be revoked if it is a duplicate to another app. When you create an app with the short code of another approved app, it becomes a duplicate app. You can create a new app, but for us to approve it, it must have a different short code.
+
+---
+
+### Do APIs work outside Kenya?
+
+M-PESA is available in all the Vodacom countries. However, they all run as different stand-alone mobile money service providers within their borders, regulated with the different Central Banks for each country. Therefore, integrating with Safaricom’s M-PESA in Kenya, means that only the users in Kenya will be able to consume the service. You, therefore, will be required to:
+
+- Have a collection account in all the countries.
+- Integrate with the APIs for all the countries.
+
+---
+
+### Is there a way we can move cash from a C2B account to a B2C account?
+
+Yes, you can move cash using the M-PESA org portal, just ensure the following first:
+
+- The user carrying out this process has the business manager role.
+- There exists another user who has the business manager role to approve this transaction.
+
+This is a maker checker type of transaction.
+
+---
+
+### Can you integrate using child pay bill number?
+
+Yes, you can.
+
+---
+
+### I have tried deleting my app on Daraja, but I am getting an error. What should I do?
+
+For an app to be deleted from our side, send an email request from the registered email on M-Pesa Org Portal or send us a stamped request letter on email, with a directors signature, the company letter head and today's date indicated.
+
+---
+
+### Why am I not receiving notifications on my URL?
+
+The URL you are using could be invalid and that is why you are not able to receive notifications. Create a valid URL and consider the information below;
+
+**URL REQUIRMENTS**
+
+Use publicly available (Internet-accessible) IP addresses or domain names.
+
+All Production URLs must be HTTPS, on Sandbox you're allowed to simulate using HTTP.
+
+Avoid using keywords such as M-PESA, M-Pesa, mpesa, Safaricom, exe, exec, cmd, sql, query or any of their variants in either upper or lower cases in your URLs.
+
+Do not use public URL testers e.g. ngrok, mockbin or requestbin especially on production, they are also usually blocked by the API. Use your own application URLs and do not make them public or share with any of your peers.
+
+**Validation URL**; This is the URL that receives the validation request from API upon payment submission. The validation URL is only called if the external validation on the registered short code is enabled.
+
+(By default, External Validation is disabled)
+
+**URL https://ip or domain: port/path**
+
+**Confirmation URL**; This is the URL that receives the confirmation request from API upon payment completion.
+
+**URL https://ip or domain: port/path**
+
+---
+
+### Why should my URL be Https and not Http in production?
+
+Http is unsecured while https is secured and for us to get a response, the URL should be freely accessed by us over the internet.
+
+---
+
+### How do I edit the username and KYC on M-PESA portal?
+
+Note the following that needs to be done on M-PESA portal:
+
+If you are not a Business Administrator or Business manager role you will need to create a business manager role and log in to activate it and thus edit the KYC.
+
+If the status for the user is still “pending active” it means you have not logged in with your user credentials. You will need to log in with the user credentials you created to activate the user account.
+
+Click on search then organization,
+
+On organization enter your organization Short Code and click search,
+
+Under operators select your preferred operator and click on the details tab on the right of the name,
+
+On the KYC tab you will see the details tab on the far right,
+
+Click and edit the preferred contact phone number under personal details in format 254XXXXXXXXX,
+
+Go down under contact details and change preferred notification channel from email to SMS,
+
+Click on submit and it will save, now try generating OTP again.
+
+---
+
+### How do I re-register URL's?
+
+Yes, you can in the sandbox (testing environment) but you cannot change the registered URLs on production. Though, we can delete them for you, so that you can register new ones.
+
+For them to be deleted, kindly send us a stamped request letter on email, with a director’s signature, the company letter head and today's date indicated.
+
+Send the email to APIfeedback@safaricom.co.ke or APIsupport@safaricom.co.ke
+
+---
+
+### How do I get SSL certificate?
+
+From any trusted CA.
+Safaricom offers SSL Certificates that provide robust server authentication, data encryption and server security to ensure website security and protection against cyber threats. [Learn more](https://www.safaricom.co.ke/)
+
+---
+
+### For an administrator to be created on the M-PESA Organization Portal, the below details are required:
+
+An official request letter on company letter head signed and stamped by authorized signatories
+
+The letter should have the following details;
+
+- Organization Short code:
+- Organization name:
+- Administrator's User Name:
+- First name:
+- Middle name (not mandatory):
+- Last name:
+- ID type (National ID, Passport, etc..) scanned front and back
+- ID number:
+- Nationality:
+- Date of Birth:
+- Email address:
+- Administrator phone number:
+
+Send the letter to M-PESABusiness@Safaricom.co.ke
+
+---
+
+### How can I re-set my M-Pesa admin password?
+
+To reset your password, send an e-mail to M-PESABusiness@Safaricom.co.ke .
+
+---
+
+### How do I add operator roles?
+
+To add operator roles, write an email to M-PESABusiness@Safaricom.co.ke for an operator role to be added under your short code.
+
+---
+
+### Where do I find the M-pesa public key certificate?
+
+To find the M-pesa Public Key certificate,
+
+- Log in to Daraja, click on Docs, scroll down on the left side and you'll find it there.
+- Click on it and it will automatically download for you can install it.
+
+[Click to download M-Pesa public key certificate (Sandbox)](https://www.safaricom.co.ke/)
+
+[Click to download M-Pesa public key certificate (Production)](https://www.safaricom.co.ke/)
+
+---
+
+### Why is my STK showing the organization number and not the organization name?
+
+This is because, when a customer is paying through Fuliza, only the organization number will show, but if the customer is paying directly from M-pesa, the organization name appears.
+
+---
+
+### How do I add a product to my app on Sandbox?
+
+To add a product to sandbox app, navigate to [MyApps](/dashboard/my-apps). By default, Sandbox is the active entity. Select "Add API Products" on your respective app and proceed as required.
+
+---
+
+### How do I delete apps on Sandbox?
+
+To delete a Sandbox app, navigate to [MyApps](/dashboard/my-apps). By default, Sandbox is the active entity. Select "Delete App" on your respective app and proceed as required.

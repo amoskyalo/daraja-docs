@@ -6,14 +6,16 @@ import { TableOfContents } from './table-of-contents';
 import { alpha, Grid, TextField, InputAdornment, Stack } from '@mui/material';
 import { useResponsiveness, useSearchParams } from '@/shared/hooks';
 import { useState, useEffect } from 'react';
-import { useAIContext } from '@/shared/context';
+import { useAIContext, useVersionManager } from '@/shared/context';
 import { Playground } from '../../playground';
+import { extractTableOfContents } from '../utils/extractTableOfContents';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
     const { isMobile } = useResponsiveness();
     const { drawerOpen, question, setQuestion, handleSendRequest, handleKeyPress } = useAIContext();
     const { getParam } = useSearchParams();
+    const { version } = useVersionManager();
 
     const activeTab = getParam('tab') || 'documentation';
 
@@ -47,6 +49,9 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
         }
     }, []);
 
+    const data = doc.docs[version] ?? doc.docs.v2;
+    const { serializedDocs: mdxSource, rawContent } = data;
+
     return (
         <Grid
             id="docs-container"
@@ -63,7 +68,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                 sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative' }}
             >
                 <Playground apiSpecsYaml={doc.apiSpecsYaml} hideTabs={hideTabs}>
-                    <MDXRenderer mdxSource={doc.mdxSource} />
+                    <MDXRenderer mdxSource={mdxSource} />
                     <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
 
                     {activeTab !== 'playground' && (
@@ -132,7 +137,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                         display: isMobile ? 'none' : 'block',
                     }}
                 >
-                    <TableOfContents headings={doc.tableOfContents} width={tableOfContentsWidth} />
+                    <TableOfContents headings={extractTableOfContents(rawContent)} width={tableOfContentsWidth} />
                 </Grid>
             )}
         </Grid>

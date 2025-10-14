@@ -213,13 +213,11 @@ export const MDXComponents = {
         const { copied, handleCopyCode } = useCopyToClipboard();
 
         const highlightTerminalContent = (content: any) => {
-            return (
-                content
-                    .replace(/^(#.*$)/gm, '<span style="color: #6272a4;">$1</span>')
-                    .replace(/\b(npm|ngrok|lt|install|http|--port|-g)\b/g, '<span style="color: #50fa7b;">$1</span>')
-                    .replace(/\b(\d+)\b/g, '<span style="color: #bd93f9;">$1</span>')
-                    .replace(/(--\w+|-\w+)/g, '<span style="color: #f1fa8c;">$1</span>')
-            );
+            return content
+                .replace(/^(#.*$)/gm, '<span style="color: #6272a4;">$1</span>')
+                .replace(/\b(npm|ngrok|lt|install|http|--port|-g)\b/g, '<span style="color: #50fa7b;">$1</span>')
+                .replace(/\b(\d+)\b/g, '<span style="color: #bd93f9;">$1</span>')
+                .replace(/(--\w+|-\w+)/g, '<span style="color: #f1fa8c;">$1</span>');
         };
 
         return (
@@ -433,10 +431,11 @@ export const MDXComponents = {
             <Stack
                 direction="row"
                 alignItems="center"
+                spacing={2}
                 sx={{
                     border: 1,
                     borderColor: 'divider',
-                    borderRadius: 1,
+                    borderRadius: 1.5,
                     px: 1,
                     py: 0.5,
                     mb: 2,
@@ -446,25 +445,27 @@ export const MDXComponents = {
                     flexWrap: 'nowrap',
                 }}
             >
-                <Typography variant="body2" color="primary.main" sx={{ mr: 1, fontWeight: 'bold', fontSize: 14 }}>
-                    {props.method} :
-                </Typography>
-                <Link
-                    sx={{
-                        fontSize: 14,
-                        flex: 1,
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                    }}
-                    underline="none"
-                    href={props.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    color="text.primary"
-                >
-                    {props.href}
-                </Link>
+                <Stack direction="row" alignItems="center">
+                    <Typography variant="body2" color="primary.main" sx={{ mr: 1, fontWeight: 'bold', fontSize: 14 }}>
+                        {props.method} :
+                    </Typography>
+                    <Link
+                        sx={{
+                            fontSize: 14,
+                            flex: 1,
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                        }}
+                        underline="none"
+                        href={props.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        color="text.primary"
+                    >
+                        {props.href}
+                    </Link>
+                </Stack>
                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                     <ContentCopyIcon sx={{ fontSize: 14, ml: 1, cursor: 'pointer' }} onClick={() => Copy(props.href)} />
                 </Tooltip>

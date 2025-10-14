@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Stack, alpha, Typography, MenuItem, Menu, Box } from '@mui/material';
+import { useVersionManager } from '@/shared/context';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
@@ -7,7 +8,7 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 export default function VersionSwitcher() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [selectedVersion, setSelectedVersion] = useState('2.0');
+    const { version: currentVersion, setVersion, mappedVersion } = useVersionManager();
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -52,7 +53,7 @@ export default function VersionSwitcher() {
                             variant="body2"
                             sx={{ fontWeight: 'regular', fontSize: '12px', color: 'text.secondary' }}
                         >
-                            Daraja {selectedVersion}
+                            Daraja {mappedVersion}
                         </Typography>
                     </Box>
 
@@ -84,15 +85,14 @@ export default function VersionSwitcher() {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 {[
-                    { label: 'Daraja 3.0', value: '3.0' },
-                    { label: 'Daraja 2.0', value: '2.0' },
-                    { label: 'Daraja 1.0', value: '1.0' },
+                    { label: 'Daraja 3.0', value: 'v3' },
+                    { label: 'Daraja 2.0', value: 'v2' },
                 ].map((version) => (
                     <Box sx={{ px: 1 }} key={version.value}>
                         <MenuItem
                             onClick={() => {
                                 handleClose();
-                                setSelectedVersion(version.value);
+                                setVersion(version.value);
                             }}
                             sx={{ px: 1, borderRadius: 2 }}
                         >
@@ -115,10 +115,10 @@ export default function VersionSwitcher() {
                                             {version.label}
                                         </Typography>
                                         <Typography variant="body2" sx={{ fontSize: '11px', color: 'text.secondary' }}>
-                                            v{version.value}
+                                            {version.value}.0
                                         </Typography>
                                     </Box>
-                                    {version.value === selectedVersion && (
+                                    {version.value === currentVersion && (
                                         <CheckOutlinedIcon fontSize="small" color="primary" />
                                     )}
                                 </Stack>

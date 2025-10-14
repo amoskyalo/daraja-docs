@@ -24,10 +24,6 @@ export const baseTypography = {
         fontWeight: 600,
         fontSize: '2rem',
     },
-    button: {
-        fontWeight: 600,
-        textTransform: 'none' as const,
-    },
 };
 
 export const baseButtonStyles = {
@@ -35,22 +31,6 @@ export const baseButtonStyles = {
         textTransform: 'none' as const,
         borderRadius: borderRadius,
         transition: 'all 0.2s ease-in-out',
-    },
-    containedPrimary: {
-        backgroundColor: colors.primary.main,
-        color: '#ffffff',
-    },
-    containedSecondary: {
-        background: 'linear-gradient(45deg, #ef4444 0%, #dc2626 100%)',
-        color: '#ffffff',
-    },
-    outlined: {
-        borderWidth: 2,
-    },
-    text: {
-        '&:hover': {
-            backgroundColor: 'rgba(3, 159, 224, 0.04)',
-        },
     },
 };
 
@@ -155,11 +135,8 @@ export const darkTheme: Theme = createTheme({
         mode: 'dark',
         primary: colors.primary,
         background: {
-            default: '#121212',
-            paper: '#121212',
-        },
-        text: {
-            primary: '#F1F5F9',
+            default: '#000000',
+            paper: '#000000',
         },
         divider: 'rgba(255, 255, 255, 0.12)',
     },
@@ -195,22 +172,6 @@ export const darkTheme: Theme = createTheme({
                     },
                 },
             },
-        },
-        MuiCssBaseline: {
-            styleOverrides: {
-                '*': {
-                    '&::-webkit-scrollbar-track': {
-                        background: 'red',
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                        background: 'rgba(255, 255, 255, 0.3)',
-                        borderRadius: '4px',
-                    },
-                    '&::-webkit-scrollbar-thumb:hover': {
-                        background: 'rgba(255, 255, 255, 0.5)',
-                    },
-                },
-            },
-        },
+        }
     },
 });

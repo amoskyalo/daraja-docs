@@ -4,6 +4,8 @@ import './globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import { SnackbarContainer } from '@/shared/components/ui/snackbar';
 import { ApolloClientProvider, AppThemeProvider, AppAIProvider } from '@/shared/context';
+import { LinearProgress } from '@mui/material';
+import { Suspense } from 'react';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -30,8 +32,10 @@ export default function RootLayout({
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <AppAIProvider>
                     <AppThemeProvider>
-                        <SnackbarContainer />
-                        <ApolloClientProvider>{children}</ApolloClientProvider>
+                        <Suspense fallback={<LinearProgress />}>
+                            <SnackbarContainer />
+                            <ApolloClientProvider>{children}</ApolloClientProvider>
+                        </Suspense>
                     </AppThemeProvider>
                 </AppAIProvider>
             </body>

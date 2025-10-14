@@ -1,14 +1,12 @@
 import { Box, Tabs, Tab } from '@mui/material';
 import { PlaygroundUI } from './components/PlaygroundUI';
 import { useSearchParams } from '@/shared/hooks';
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CodeIcon from '@mui/icons-material/Code';
 
 const tabOptions = [
     { label: 'Documentation', value: 'documentation', icon: MenuBookIcon },
-    { label: 'API Errors', value: 'errors', icon: ErrorOutlineIcon },
-    { label: 'Playground', value: 'playground', icon: PlayCircleOutlineIcon },
+    { label: 'Daraja console', value: 'playground', icon: CodeIcon },
 ];
 interface PlaygroundProps {
     children: React.ReactNode;
@@ -62,6 +60,9 @@ export const Playground = ({ children, apiSpecsYaml, hideTabs }: PlaygroundProps
                                 paddingX: 1,
                                 fontWeight: 400,
                             }}
+                            disableRipple
+                            disableFocusRipple
+                            disableTouchRipple
                         />
                     ))}
                 </Tabs>

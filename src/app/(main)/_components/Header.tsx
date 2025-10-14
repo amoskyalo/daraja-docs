@@ -63,20 +63,11 @@ const Header = () => {
                 <Container maxWidth="lg" sx={{ px: '0px !important' }}>
                     <Toolbar sx={{ px: '0px !important' }}>
                         <Stack direction="row" alignItems="center" spacing={8} sx={{ width: '100%' }}>
-                            <Stack direction="row" alignItems="center" spacing={1}>
-                                <Image src="/images/boat.png" alt="logo" width={40} height={30} priority />
-                                <Box>
-                                    <Typography variant="h6" color="primary.main" sx={{ fontWeight: '700' }}>
-                                        Daraja
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="primary.main"
-                                        sx={{ fontWeight: 'medium', fontSize: 10, opacity: 0.5, ml: 1, mt: -0.5 }}
-                                    >
-                                        by Safaricom
-                                    </Typography>
-                                </Box>
+                            <Stack direction="column" alignItems="center" sx={{ cursor: 'pointer' }}>
+                                <Image src="/images/saf-logo.svg" alt="logo" width={140} height={30} priority />
+                                {/* <Typography variant="body2" color="error.main" sx={{ ml: 6, fontSize: 12, fontStyle: 'italic' }}>
+                                    Daraja API
+                                </Typography> */}
                             </Stack>
 
                             <Stack direction="row" alignItems="center" spacing={3} sx={{ flex: 1 }}>

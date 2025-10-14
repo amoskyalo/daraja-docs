@@ -231,12 +231,12 @@ export const SearchModal = ({ open, onClose }: { open: boolean; onClose: () => v
             slotProps={{
                 paper: {
                     sx: {
-                        borderRadius: 2,
+                        borderRadius: 2
                     },
                 },
             }}
         >
-            <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', px: 0, py: 1.5 }}>
+            <DialogTitle sx={{ borderBottom: 1, borderColor: 'divider', px: 0, py: 0 }}>
                 <TextField
                     autoFocus
                     fullWidth

@@ -1,9 +1,8 @@
-import { Stack, ListItemButton, ListItemText, Link, Drawer, Typography, alpha, Box } from '@mui/material';
+import { Stack, ListItemButton, ListItemText, Link, Drawer, Typography } from '@mui/material';
 import { useRouter, usePathname } from 'next/navigation';
 import { useResponsiveness } from '@/shared/hooks';
 import { SIDENAVITEMS } from '@/config/constants/routes';
 import VersionSwitcher from './VersionSwitcher';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 const DRAWER_WIDTH = 275;
 
@@ -18,8 +17,6 @@ const LeftNav = () => {
 
     const isSmallScreen = isMobile || isMiniTablet || isTablet;
 
-    const hideSidNav = !pathname.includes('docs');
-
     function renderNavList() {
         return (
             <Stack
@@ -32,7 +29,6 @@ const LeftNav = () => {
                     position: { md: 'relative', lg: 'sticky' },
                     top: '66px',
                     height: { md: 'auto', lg: 'calc(100vh - 66px)' },
-                    display: hideSidNav ? 'none' : 'flex',
                 }}
                 spacing={2}
             >
@@ -59,7 +55,6 @@ const LeftNav = () => {
                                     <Typography variant="body2" sx={{ fontWeight: 'medium' }} key={item.title}>
                                         {item.title}
                                     </Typography>
-                                    {/* <KeyboardArrowRightIcon sx={{fontSize: 20}}/> */}
                                 </Stack>
                             );
                         }

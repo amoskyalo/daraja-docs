@@ -2,10 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
-import { SnackbarContainer } from '@/shared/components/ui/snackbar';
-import { ApolloClientProvider, AppThemeProvider, AppAIProvider } from '@/shared/context';
-import { LinearProgress } from '@mui/material';
-import { Suspense } from 'react';
+import Layout from './_components/_layout';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -30,14 +27,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <AppAIProvider>
-                    <AppThemeProvider>
-                        <Suspense fallback={<LinearProgress />}>
-                            <SnackbarContainer />
-                            <ApolloClientProvider>{children}</ApolloClientProvider>
-                        </Suspense>
-                    </AppThemeProvider>
-                </AppAIProvider>
+                <Layout>{children}</Layout>
             </body>
         </html>
     );

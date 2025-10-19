@@ -3,28 +3,27 @@ html {
 }
 
 body {
-    font-family:
-        var(--font-geist-sans),
-        system-ui,
-        -apple-system,
-        sans-serif;
+    font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+.nav-links-container {
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent !important;
+}
+
+.dark .nav-links-container {
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent !important;
 }
 
 .dark * {
-    scrollbar-color: rgba(255, 255, 255, 0.5) transparent !important;
+    scrollbar-color: rgba(255, 255, 255, 0.8) transparent !important;
 }
 
 .nav-links-container,
 .MuiPaper-root,
 .MuiMenu-paper,
 .MuiSelect-paper,
-.MuiBox-root,
 .MuiAutocomplete-paper {
     scrollbar-width: thin !important;
-}
-
-.dark .nav-links-container {
-  scrollbar-color: rgba(255, 255, 255, 0.8) transparent !important;
 }
 
 .MuiListItemButton-gutters {

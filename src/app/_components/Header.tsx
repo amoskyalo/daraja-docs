@@ -63,12 +63,17 @@ const Header = () => {
                 <Container maxWidth="lg" sx={{ px: '0px !important' }}>
                     <Toolbar sx={{ px: '0px !important' }}>
                         <Stack direction="row" alignItems="center" spacing={8} sx={{ width: '100%' }}>
-                            <Stack direction="column" alignItems="center" sx={{ cursor: 'pointer' }}>
-                                <Image src="/images/saf-logo.svg" alt="logo" width={140} height={30} priority />
-                                {/* <Typography variant="body2" color="error.main" sx={{ ml: 6, fontSize: 12, fontStyle: 'italic' }}>
-                                    Daraja API
-                                </Typography> */}
-                            </Stack>
+                            <Link
+                                href="/"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    router.push('/');
+                                }}
+                            >
+                                <Stack direction="column" alignItems="center" sx={{ cursor: 'pointer' }}>
+                                    <Image src="/images/saf-logo.svg" alt="logo" width={140} height={30} priority />
+                                </Stack>
+                            </Link>
 
                             <Stack direction="row" alignItems="center" spacing={3} sx={{ flex: 1 }}>
                                 {HEADERTABS.map((route) => (

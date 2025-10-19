@@ -1,0 +1,209 @@
+'use client';
+
+import React, { useState } from 'react';
+import {
+    Box,
+    Grid,
+    Stack,
+    Typography,
+    Link,
+    Avatar,
+    Pagination,
+    CircularProgress,
+    Chip,
+    Tabs,
+    Container,
+} from '@mui/material';
+import { useQuery } from '@apollo/client/react';
+import { GET_REPOSITORIES } from './graphql';
+import StarIcon from '@mui/icons-material/Star';
+import { Response } from './types';
+
+const languages = [
+    { label: 'All', value: 'all' },
+    { label: 'JavaScript', value: 'javascript' },
+    { label: 'TypeScript', value: 'typescript' },
+    { label: 'Python', value: 'python' },
+    { label: 'PHP', value: 'php' },
+    { label: 'Kotlin', value: 'kotlin' },
+    { label: 'Java', value: 'java' },
+    { label: 'Dart', value: 'dart' },
+    { label: 'Go', value: 'go' },
+];
+
+const CommunityProjectsPage: React.FC = () => {
+    const [page, setPage] = useState<number>(1);
+    const [selectedLanguage, setSelectedLanguage] = useState<string>('all');
+    const perPage: number = 30;
+
+    const { data, loading } = useQuery<Response>(GET_REPOSITORIES, {
+        variables: {
+            params: {
+                per_page: perPage,
+                page,
+                language: selectedLanguage,
+            },
+        },
+    });
+
+    const handlePageChange = (event: React.ChangeEvent<unknown>, newPage: number): void => {
+        setPage(newPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleLanguageChange = (language: string): void => {
+        setSelectedLanguage(language);
+        setPage(1);
+    };
+
+    const totalPages: number = data?.repositories?.total_count ? Math.ceil(data.repositories.total_count / perPage) : 0;
+
+    return (
+        <Container maxWidth="lg" sx={{ px: '0px !important', flex: 1 }}>
+            <Box
+                sx={{
+                    pb: 3,
+                    pr: { xs: 1, md: 1, lg: 6 },
+                    px: { xs: 1, md: 1, lg: 0 },
+                    pt: { xs: 3, md: 3, lg: 6 },
+                }}
+            >
+                <Box>
+                    <Typography variant="h2" fontWeight={600} sx={{ textAlign: 'center' }}>
+                        Community Projects
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1, textAlign: 'center', maxWidth: '75%', mx: 'auto' }}>
+                        Daraja has fostered a vibrant developer community that continues to build innovative solutions
+                        using M-Pesa APIs. Explore open-source projects, libraries, and tools created by fellow
+                        developers to accelerate your own M-Pesa integrations. From payment gateways and mobile apps to
+                        utility libraries and SDKs, discover how the community is leveraging Daraja API to solve
+                        real-world problems.
+                    </Typography>
+                </Box>
+
+                <Stack
+                    direction="row"
+                    justifyContent="center"
+                    sx={{ mt: 2, py: 2, position: 'sticky', top: '64px', backdropFilter: 'blur(20px)', zIndex: 1 }}
+                >
+                    <Tabs
+                        value={0}
+                        variant="scrollable"
+                        sx={{ border: 'none', minHeight: 34 }}
+                        indicatorColor={'transparent' as any}
+                    >
+                        {languages.map((language) => (
+                            <Chip
+                                key={language.value}
+                                label={language.label}
+                                onClick={() => handleLanguageChange(language.value)}
+                                variant={selectedLanguage === language.value ? 'filled' : 'outlined'}
+                                color={selectedLanguage === language.value ? 'primary' : 'default'}
+                                sx={{ mr: 1 }}
+                            />
+                        ))}
+                    </Tabs>
+                </Stack>
+
+                <Box sx={{ position: 'relative', maxWidth: { xs: '100%', md: '100%', lg: '75%' }, mx: 'auto' }}>
+                    {loading ? (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: 300,
+                            }}
+                        >
+                            <CircularProgress size={40} />
+                        </Box>
+                    ) : (
+                        <Grid container spacing={3}>
+                            {data?.repositories?.items?.map((project) => (
+                                <Grid
+                                    key={project.id}
+                                    size={{ xs: 12, sm: 6, md: 3, lg: 4 }}
+                                    sx={{ border: 1, borderColor: 'divider', borderRadius: 2, p: 2, cursor: 'pointer' }}
+                                >
+                                    <Link href={project.html_url} target="_blank" color="inherit" underline="none">
+                                        <Stack spacing={1} direction="row" alignItems="center">
+                                            <Avatar
+                                                src={project.owner.avatar_url}
+                                                sx={{ height: 32, width: 32, borderRadius: 2 }}
+                                            />
+                                            <Box>
+                                                <Typography
+                                                    variant="body1"
+                                                    sx={{
+                                                        display: '-webkit-box',
+                                                        WebkitLineClamp: 1,
+                                                        WebkitBoxOrient: 'vertical',
+                                                        overflow: 'hidden',
+                                                        fontSize: 16,
+                                                        wordBreak: 'break-word',
+                                                        overflowWrap: 'break-word',
+                                                        whiteSpace: 'pre-wrap',
+                                                        lineHeight: 1,
+                                                        fontWeight: 600,
+                                                    }}
+                                                >
+                                                    {project.name}
+                                                </Typography>
+                                                <Typography variant="body2" color="text.secondary">
+                                                    {project.owner.login}
+                                                </Typography>
+                                            </Box>
+                                        </Stack>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{
+                                                mt: 1,
+                                                display: '-webkit-box',
+                                                WebkitLineClamp: 2,
+                                                WebkitBoxOrient: 'vertical',
+                                                overflow: 'hidden',
+                                            }}
+                                        >
+                                            {project.description}
+                                        </Typography>
+                                        <Stack sx={{ mt: 1 }} direction="row" spacing={0.5} alignItems="center">
+                                            <StarIcon color="action" fontSize="inherit" />
+                                            <Typography variant="caption" color="text.secondary">
+                                                {project.stargazers_count} GitHub stars
+                                            </Typography>
+                                        </Stack>
+                                    </Link>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    )}
+                </Box>
+
+                {totalPages > 0 && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                        <Pagination
+                            count={totalPages}
+                            page={page}
+                            onChange={handlePageChange}
+                            color="primary"
+                            size="large"
+                            showFirstButton
+                            showLastButton
+                            disabled={loading}
+                        />
+                    </Box>
+                )}
+
+                {totalPages > 0 && (
+                    <Box sx={{ textAlign: 'center', mt: 2 }}>
+                        <Typography variant="caption" color="text.secondary">
+                            Page {page} of {totalPages}
+                        </Typography>
+                    </Box>
+                )}
+            </Box>
+        </Container>
+    );
+};
+
+export default CommunityProjectsPage;

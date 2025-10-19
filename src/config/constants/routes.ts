@@ -1,7 +1,7 @@
 export const HEADERTABS = [
-    { label: 'Docs', href: '/docs/introduction' },
-    { label: 'My Apps', href: '/my-apps' },
+    { label: 'Dashboard', href: '/dashboard' },
     { label: 'Mini Apps', href: '/mini-apps' },
+    { label: 'Docs', href: '/docs/introduction' },
     { label: 'Blogs', href: '/blogs' },
     { label: 'GitHub', href: '/github' },
 ];

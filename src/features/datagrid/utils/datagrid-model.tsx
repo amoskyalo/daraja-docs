@@ -154,7 +154,7 @@ export const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
                         getRowClassName={({ indexRelativeToCurrentPage }) =>
                             indexRelativeToCurrentPage % 2 === 0 ? 'even-row' : 'odd-row'
                         }
-                        slots={{ footer, ...(!hideToolbar && { toolbar: DataGridToolbar }) }}
+                        slots={{ footer, toolbar: DataGridToolbar }}
                         slotProps={{
                             toolbar: {
                                 onFilter,
@@ -188,6 +188,7 @@ export const GridModel = <TData, TParams>(props: GridProps<TData, TParams>) => {
                             },
                             borderColor: 'transparent',
                         }}
+                        showToolbar={true}
                     />
                 </Box>
 

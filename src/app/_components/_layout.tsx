@@ -12,10 +12,15 @@ import {
 import { SnackbarContainer } from '@/shared/components/ui/snackbar';
 import { PromptDialog } from '@/features/AI';
 import { Suspense } from 'react';
+import { usePathname } from 'next/navigation';
 import Header from './Header';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     const { drawerOpen, setDrawerOpen, conversation, question, setQuestion, loading, handleKeyPress } = useAIContext();
+    const pathname = usePathname();
+
+    const isAuthPage = pathname.startsWith('/auth');
+
     return (
         <AppThemeProvider>
             <Suspense fallback={<LinearProgress />}>
@@ -28,13 +33,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                                     id="layout"
                                     direction="column"
                                     sx={{
-                                        height: 'calc(100vh)',
+                                        height: '100dvh',
                                         overflowY: 'auto',
                                         overflowX: 'hidden',
                                         position: 'relative',
                                     }}
                                 >
-                                    <Header />
+                                    {!isAuthPage && <Header />}
                                     <Box sx={{ flex: 1 }}>{children}</Box>
 
                                     {drawerOpen && (

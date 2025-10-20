@@ -135,8 +135,8 @@ export const darkTheme: Theme = createTheme({
         mode: 'dark',
         primary: colors.primary,
         background: {
-            default: '#1b1f28',
-            paper: '#1b1f28',
+            default: '#000000',
+            paper: '#000000',
         },
         divider: 'rgba(255, 255, 255, 0.12)',
     },

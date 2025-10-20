@@ -169,17 +169,11 @@ const DashboardPage = () => {
                                         borderRadius: '8px 8px 0 0',
                                         fontWeight: 500,
                                         border: 'none',
-                                        // backgroundColor: (theme) =>
-                                        //     active
-                                        //         ? theme.palette.mode === 'dark'
-                                        //             ? 'action.selected'
-                                        //             : 'background.default'
-                                        //         : 'transparent',
                                         backgroundColor: (theme) => (active ? 'background.default' : 'transparent'),
                                         color: active ? theme.palette.text.primary : 'white',
                                         pl: 1,
                                         pr: 0.5,
-                                        // boxShadow: (theme) => (theme.palette.mode === 'dark' && active ? 4 : 0),
+                                        pt: 1,
                                         '& .MuiChip-icon': {
                                             color: active ? theme.palette.text.secondary : alpha('#fff', 0.8),
                                         },

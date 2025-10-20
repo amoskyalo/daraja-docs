@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
             <Grid container sx={{ height: '100dvh', maxHeight: '100dvh', overflow: 'hidden', position: 'relative' }}>
                 <Grid size={5}>{children}</Grid>
 
-                <Grid size={7}>
+                <Grid size={7} sx={{ height: '100%', overflow: 'hidden' }}>
                     <Image
                         src="/images/dev.webp"
                         alt="auth"
@@ -26,7 +26,7 @@ export default function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
 
                 <Box sx={{ position: 'absolute', top: 10, left: 10, zIndex: 1 }}>
                     <Image
-                        src="/images/logo.png"
+                        src="/images/saf-logo.svg"
                         alt="auth"
                         width={500}
                         height={500}

@@ -1,6 +1,7 @@
 import { Stack, ListItemButton, ListItemText, Link, Drawer, Typography } from '@mui/material';
 import { useRouter, usePathname } from 'next/navigation';
 import { useResponsiveness } from '@/shared/hooks';
+import { useVersionManager } from '@/shared/context';
 import { SIDENAVITEMS } from '@/config/constants/routes';
 import VersionSwitcher from './VersionSwitcher';
 
@@ -10,12 +11,21 @@ const LeftNav = () => {
     const router = useRouter();
     const pathname = usePathname();
     const { isMobile, isMiniTablet, isTablet } = useResponsiveness();
+    const { version } = useVersionManager();
 
     function matchPathname(path: any) {
         return path === pathname;
     }
 
     const isSmallScreen = isMobile || isMiniTablet || isTablet;
+
+    const filteredSidenavItems = SIDENAVITEMS.filter((item) => {
+        if (!item.segment){
+            return true;
+        }
+
+        return item.versions.includes(version);
+    });
 
     function renderNavList() {
         return (
@@ -40,9 +50,10 @@ const LeftNav = () => {
                         flex: 1,
                         overflow: 'auto',
                         pl: { xs: 2, md: 2, lg: 0 },
+                          pb: 2,
                     }}
                 >
-                    {SIDENAVITEMS?.map((item) => {
+                    {filteredSidenavItems?.map((item) => {
                         if (!item.segment) {
                             return (
                                 <Stack

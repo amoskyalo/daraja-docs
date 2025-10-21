@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Container, Stack, Link, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Container, Stack, Link, Box, useTheme, Tooltip, IconButton } from '@mui/material';
 import { useResponsiveness } from '@/shared/hooks/useResponsiveness';
 import { SearchModal } from '@/shared/components';
 import { HEADERTABS } from '@/config/constants/routes';
 import { usePathname, useRouter } from 'next/navigation';
+import { Github } from 'lucide-react';
 import Image from 'next/image';
 import AccountMenu from './AccountMenu';
 import ThemeSwitcher from './ThemeSwitcher';
 
 const Header = () => {
     const { isMobile } = useResponsiveness();
+    const theme = useTheme();
     const [searchModalOpen, setSearchModalOpen] = useState(false);
 
     const pathname = usePathname();
@@ -62,7 +64,7 @@ const Header = () => {
             >
                 <Container maxWidth="lg" sx={{ px: '0px !important' }}>
                     <Toolbar sx={{ px: '0px !important' }}>
-                        <Stack direction="row" alignItems="center" spacing={8} sx={{ width: '100%' }}>
+                        <Stack direction="row" alignItems="center" spacing={6} sx={{ width: '100%' }}>
                             <Link
                                 href="/"
                                 onClick={(e) => {
@@ -76,32 +78,42 @@ const Header = () => {
                             </Link>
 
                             <Stack direction="row" alignItems="center" spacing={3} sx={{ flex: 1 }}>
-                                {HEADERTABS.map((route) => (
-                                    <Link
-                                        href={route.href}
-                                        sx={{ textDecoration: 'none' }}
-                                        color="inherit"
-                                        key={route.label}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            router.push(route.href);
-                                        }}
-                                    >
-                                        <Typography
-                                            variant="body2"
-                                            sx={{
-                                                fontWeight: matchPathname(route.href.toLowerCase()) ? '600' : 'medium',
-                                                color: matchPathname(route.href.toLowerCase())
-                                                    ? 'primary.main'
-                                                    : 'text.primary',
-                                                opacity: matchPathname(route.href.toLowerCase()) ? 1 : 0.7,
-                                                '&:hover': { opacity: 1 },
+                                {HEADERTABS.map((route) => {
+                                    const isActive = matchPathname(route.href.toLowerCase());
+                                    const activeColor = theme.palette.primary.main;
+                                    const inactiveColor = theme.palette.text.primary;
+
+                                    return (
+                                        <Link
+                                            href={route.href}
+                                            sx={{ textDecoration: 'none' }}
+                                            color="inherit"
+                                            key={route.label}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                router.push(route.href);
                                             }}
                                         >
-                                            {route.label}
-                                        </Typography>
-                                    </Link>
-                                ))}
+                                            <Stack
+                                                direction="row"
+                                                alignItems="center"
+                                                spacing={1}
+                                                sx={{ opacity: isActive ? 1 : 0.7, '&:hover': { opacity: 1 } }}
+                                            >
+                                                {/* {<route.icon size={16} color={isActive ? activeColor : inactiveColor} />} */}
+                                                <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                        fontWeight: isActive ? '600' : '300',
+                                                        color: isActive ? 'primary.main' : 'text.primary',
+                                                    }}
+                                                >
+                                                    {route.label}
+                                                </Typography>
+                                            </Stack>
+                                        </Link>
+                                    );
+                                })}
                             </Stack>
 
                             <Stack direction="row" alignItems="center">
@@ -112,7 +124,7 @@ const Header = () => {
                                         alignItems="center"
                                         sx={{
                                             marginRight: 1,
-                                            width: 220,
+                                            width: 150,
                                             borderRadius: 2,
                                             border: 1,
                                             borderColor: 'divider',
@@ -125,7 +137,7 @@ const Header = () => {
                                             variant="body2"
                                             sx={{ flex: 1, color: 'text.secondary', fontSize: 13 }}
                                         >
-                                            Search documentation
+                                            Search...
                                         </Typography>
                                         <Stack direction="row" spacing={0.5}>
                                             <Typography
@@ -139,7 +151,7 @@ const Header = () => {
                                                     color: 'text.primary',
                                                 }}
                                             >
-                                                CtrlK
+                                                Ctrl+K
                                             </Typography>
                                         </Stack>
                                     </Stack>
@@ -147,7 +159,17 @@ const Header = () => {
 
                                 <ThemeSwitcher />
 
-                                <Box sx={{ mr: 1.5, ml: 0.5, height: 20, borderLeft: 2, borderColor: 'divider' }} />
+                                <Tooltip title="Github">
+                                    <IconButton
+                                        size="small"
+                                        // onClick={handleClick}
+                                        sx={{ mr: 1, border: 1, borderColor: 'divider', borderRadius: 2 }}
+                                    >
+                                        <Github size={19} />
+                                    </IconButton>
+                                </Tooltip>
+
+                                <Box sx={{ mr: 2, ml: 0.5, height: 20, borderLeft: 2, borderColor: 'divider' }} />
 
                                 <AccountMenu />
                             </Stack>

@@ -40,14 +40,14 @@ export default function AccountMenu() {
                         border: 1,
                         borderColor: 'divider',
                         borderRadius: 2,
-                        height: 32,
-                        width: 32,
+                        height: 30,
+                        width: 30,
                     }}
                 >
                     <Avatar
                         sx={{
-                            height: 32,
-                            width: 32,
+                            height: 30,
+                            width: 30,
                             borderRadius: 2,
                         }}
                         src="https://avatars.githubusercontent.com/u/91586973?s=400&u=1d8f7eb2b3502861f5e9f7abb123951301602fa5&v=4"

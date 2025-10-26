@@ -12,7 +12,7 @@ import { extractTableOfContents } from '../utils/extractTableOfContents';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
-    const { isMobile } = useResponsiveness();
+    const { isSmallScreen } = useResponsiveness();
     const { drawerOpen, question, setQuestion, handleSendRequest, handleKeyPress } = useAIContext();
     const { getParam } = useSearchParams();
     const { version } = useVersionManager();
@@ -33,7 +33,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                     }
                 });
             },
-            { rootMargin: '120px 0px 0px 0px' },
+            { rootMargin: '120px 0px 0px 0px' }
         );
 
         const element = document.getElementById('bottom-navigator');
@@ -61,13 +61,14 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                 position: 'relative',
                 flex: 1,
                 pl: { xs: 0, md: 0, lg: 4 },
+                pt: 1
             }}
         >
             <Grid
-                size={isMobile ? 12 : activeTab === 'playground' ? 12 : 8.5}
-                sx={{ pb: 4, pl: { xs: 1, md: 1, lg: 0 }, pr: 2, position: 'relative' }}
+                size={isSmallScreen ? 12 : activeTab === 'playground' ? 12 : 8.5}
+                sx={{ pb: 4, pl: { xs: 3, md: 1, lg: 0 }, pr: { xs: 3, md: 2 }, position: 'relative' }}
             >
-                <Playground apiSpecsYaml={doc.apiSpecsYaml} hideTabs={hideTabs}>
+                <Playground apiSpecsYaml={doc.apiSpecsYaml} hideTabs={hideTabs || isSmallScreen}>
                     <MDXRenderer mdxSource={mdxSource} />
                     <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
 
@@ -128,13 +129,12 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                 </Playground>
             </Grid>
 
-            {!isMobile && activeTab !== 'playground' && (
+            {!isSmallScreen && activeTab !== 'playground' && (
                 <Grid
                     id="table-of-contents"
                     size={3.5}
                     sx={{
                         py: 2,
-                        display: isMobile ? 'none' : 'block',
                     }}
                 >
                     <TableOfContents headings={extractTableOfContents(rawContent)} width={tableOfContentsWidth} />

@@ -64,7 +64,7 @@ const CommunityProjectsPage: React.FC = () => {
                 sx={{
                     pb: 3,
                     pr: { xs: 1, md: 1, lg: 6 },
-                    px: { xs: 1, md: 1, lg: 0 },
+                    px: { xs: 2, md: 1, lg: 0 },
                     pt: { xs: 3, md: 3, lg: 6 },
                 }}
             >
@@ -72,7 +72,10 @@ const CommunityProjectsPage: React.FC = () => {
                     <Typography variant="h2" fontWeight={600} sx={{ textAlign: 'center' }}>
                         Community Projects
                     </Typography>
-                    <Typography variant="body1" sx={{ mt: 1, textAlign: 'center', maxWidth: '75%', mx: 'auto' }}>
+                    <Typography
+                        variant="body1"
+                        sx={{ mt: 1, textAlign: 'center', maxWidth: { xs: '100%', md: '75%' }, mx: 'auto' }}
+                    >
                         Daraja has fostered a vibrant developer community that continues to build innovative solutions
                         using M-Pesa APIs. Explore open-source projects, libraries, and tools created by fellow
                         developers to accelerate your own M-Pesa integrations. From payment gateways and mobile apps to
@@ -81,11 +84,7 @@ const CommunityProjectsPage: React.FC = () => {
                     </Typography>
                 </Box>
 
-                <Stack
-                    direction="row"
-                    justifyContent="center"
-                    sx={{ mt: 2, py: 2, position: 'sticky', top: '64px', backdropFilter: 'blur(20px)', zIndex: 1 }}
-                >
+                <Stack direction="row" justifyContent="center" sx={{ mt: 2, py: 2 }}>
                     <Tabs
                         value={0}
                         variant="scrollable"

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Container, Stack, Typography, Button } from '@mui/material';
 import { useTheme } from '@/shared/context';
+import { useResponsiveness } from '@/shared/hooks';
 
 export const HeroSection = () => {
     const { isDark } = useTheme();
+    const { isMobile } = useResponsiveness();
 
     return (
-        <Container maxWidth="lg" sx={{ px: '0px !important' }}>
+        <Container maxWidth="lg" sx={{ px: {md: '0px !important'} }}>
             <Stack
                 direction="column"
                 spacing={6}
@@ -35,9 +37,9 @@ export const HeroSection = () => {
                     },
                 }}
             >
-                <Typography variant="h1">
+                <Typography variant={isMobile ? 'h2' : 'h1'} sx={{ textAlign: 'center' }}>
                     Safaricom Developers Portal -{' '}
-                    <Typography component="span" variant="h1" color="primary">
+                    <Typography component="span" variant={isMobile ? 'h2' : 'h1'} color="primary">
                         Daraja
                     </Typography>
                 </Typography>

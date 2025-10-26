@@ -18,7 +18,7 @@ export default function LoginPage() {
                 validationSchema={validationSchema}
             >
                 {(formik) => (
-                    <Box sx={{ width: 375, borderRadius: 4, p: 4 }}>
+                    <Box sx={{ width: { xs: '100%', sm: 375 }, borderRadius: 4, p: { md: 4, xs: 3 } }}>
                         <Box>
                             <Typography
                                 variant="h5"
@@ -34,8 +34,7 @@ export default function LoginPage() {
                                 variant="body1"
                                 sx={{
                                     mb: 3,
-                                    fontWeight: 'medium',
-                                    color: 'text.primary',
+                                    color: 'text.secondary',
                                     textAlign: 'center',
                                     opacity: 0.8,
                                 }}

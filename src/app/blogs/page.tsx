@@ -5,6 +5,7 @@ import { Box, Typography, Stack, CircularProgress, Grid, Link, Pagination, Tabs,
 import { useQuery } from '@apollo/client/react';
 import { GET_BLOGS } from './graphql';
 import { Response } from './types';
+import { useResponsiveness } from '@/shared/hooks';
 import Image from 'next/image';
 
 const sections = [
@@ -16,6 +17,7 @@ const sections = [
 
 const BlogsPage = () => {
     const [selectedSection, setSelectedSection] = useState<string>('ALL');
+    const { isMobile } = useResponsiveness();
 
     const { data, loading } = useQuery<Response>(GET_BLOGS, {
         variables: {
@@ -35,25 +37,24 @@ const BlogsPage = () => {
                 sx={{
                     pb: 3,
                     pt: { xs: 3, md: 3, lg: 6 },
-                    px: { xs: 1, md: 1, lg: 0 },
+                    px: { xs: 2, sm: 3, md: 1, lg: 0 },
                 }}
             >
                 <Box>
                     <Typography variant="h2" fontWeight={600} sx={{ textAlign: 'center' }}>
                         Daraja API Blogs
                     </Typography>
-                    <Typography variant="body1" sx={{ mt: 1, textAlign: 'center', maxWidth: '75%', mx: 'auto' }}>
+                    <Typography
+                        variant="body1"
+                        sx={{ mt: 1, textAlign: 'center', maxWidth: { xs: '100%', md: '75%' }, mx: 'auto' }}
+                    >
                         Explore content written by experienced developers sharing their implementation experiences, code
                         examples, and best practices. These resources provide valuable insights to help you build robust
                         payment solutions with Daraja API.
                     </Typography>
                 </Box>
 
-                <Stack
-                    direction="row"
-                    justifyContent="center"
-                    sx={{ mt: 2, py: 2, position: 'sticky', top: '64px', backdropFilter: 'blur(18px)', zIndex: 1 }}
-                >
+                <Stack direction="row" justifyContent="center" sx={{ mt: 2 }}>
                     <Tabs
                         value={0}
                         variant="scrollable"
@@ -118,7 +119,7 @@ const BlogsPage = () => {
                                                 height={300}
                                                 style={{
                                                     width: '100%',
-                                                    height: 120,
+                                                    height: isMobile ? 150 : 120,
                                                 }}
                                             />
                                             <Box sx={{ px: 1.5, pb: 1.5 }}>

@@ -221,35 +221,12 @@ export const FaqsSection = () => {
                     </Typography>
                 </Typography>
 
-                <Stack direction="row" spacing={10}>
-                    <Stack>
-                        {faqCategories.map((category, index) => (
-                            <Button
-                                key={index}
-                                variant="text"
-                                sx={{
-                                    color: selectedCategory === category ? 'primary.main' : 'inherit',
-                                    textTransform: 'none',
-                                    justifyContent: 'left',
-                                    fontWeight: selectedCategory === category ? '600' : '400',
-                                    opacity: selectedCategory === category ? 1 : 0.7,
-                                    '&:hover': {
-                                        opacity: 1,
-                                    },
-                                }}
-                                onClick={() => setSelectedCategory(category)}
-                            >
-                                {category}
-                            </Button>
-                        ))}
-                    </Stack>
-
-                    <Box maxWidth="md">
+               <Box maxWidth="md">
                         {/* <Typography variant="h6" sx={{ mb: 2 }}>
                             {icon} {selectedCategory}
                         </Typography> */}
 
-                        {faqsByCategory.map((faq, index) => (
+                        {faqs.map((faq, index) => (
                             <Accordion key={index} elevation={0}>
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
@@ -262,7 +239,6 @@ export const FaqsSection = () => {
                             </Accordion>
                         ))}
                     </Box>
-                </Stack>
             </Stack>
         </Container>
     );

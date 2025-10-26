@@ -1,5 +1,6 @@
 import React from 'react';
 import { Stack, Container, Typography, Grid, Box, Button } from '@mui/material';
+import { useResponsiveness } from '@/shared/hooks';
 import EastIcon from '@mui/icons-material/East';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -27,6 +28,8 @@ const help = [
 ];
 
 export const HaveQuestionsSection = () => {
+    const { isMobile } = useResponsiveness();
+
     return (
         <Stack
             direction="column"
@@ -39,17 +42,26 @@ export const HaveQuestionsSection = () => {
                 paddingY: '100px',
             }}
         >
-            <Container maxWidth="lg" sx={{ px: '0px !important' }}>
-                <Typography variant="h2" sx={{ textAlign: 'center' }}>
+            <Container maxWidth="lg" sx={{ px: { md: '0px !important' } }}>
+                <Typography variant={isMobile ? 'h3' : 'h2'} sx={{ textAlign: 'center' }}>
                     Have a question?{' '}
-                    <Typography variant="h6" color="text.secondary" component="span" sx={{ fontWeight: 500 }}>
+                    <Typography
+                        variant="h6"
+                        color="text.secondary"
+                        component="span"
+                        sx={{ fontWeight: 500, display: { xs: 'none', md: 'inline' } }}
+                    >
                         We&apos;re here to help you work with Daraja
                     </Typography>
                 </Typography>
 
-                <Grid container spacing={4} sx={{ width: { xs: '100%', md: '70%' }, mx: 'auto', mt: 10 }}>
+                <Grid
+                    container
+                    spacing={4}
+                    sx={{ width: { xs: '100%', md: '70%' }, mx: 'auto', mt: { xs: 5, md: 10 } }}
+                >
                     {help.map((card, index) => (
-                        <Grid key={index} size={{ xs: 12, md: 4, lg: 4 }}>
+                        <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }} sx={{px: {xs: 2, md: 0}} }>
                             <Stack spacing={2} direction="column" alignItems="flex-start">
                                 <Stack
                                     direction="row"

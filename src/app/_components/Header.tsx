@@ -40,7 +40,7 @@ const NavigationLink = memo(
                 <Typography
                     variant={variant}
                     sx={{
-                        fontWeight: isActive ? '600' : variant === 'body2' ? '300' : 'normal',
+                        fontWeight: isActive ? '600' : '500',
                         color: isActive ? 'primary.main' : 'text.primary',
                     }}
                 >

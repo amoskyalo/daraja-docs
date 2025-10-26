@@ -431,7 +431,7 @@ export const MDXComponents = {
             <Stack
                 direction="row"
                 alignItems="center"
-                spacing={2}
+                spacing={{ md: 2 }}
                 sx={{
                     border: 1,
                     borderColor: 'divider',
@@ -445,11 +445,15 @@ export const MDXComponents = {
                     flexWrap: 'nowrap',
                 }}
             >
-                <Stack direction="row" alignItems="center">
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    sx={{ width: '100%', overflow: 'hidden', flexWrap: 'nowrap' }}
+                >
                     <Typography variant="body2" color="primary.main" sx={{ mr: 1, fontWeight: 'bold', fontSize: 14 }}>
                         {props.method} :
                     </Typography>
-                    <Link
+                    <Typography
                         sx={{
                             fontSize: 14,
                             flex: 1,
@@ -457,14 +461,9 @@ export const MDXComponents = {
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
                         }}
-                        underline="none"
-                        href={props.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        color="text.primary"
                     >
                         {props.href}
-                    </Link>
+                    </Typography>
                 </Stack>
                 <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                     <ContentCopyIcon sx={{ fontSize: 14, ml: 1, cursor: 'pointer' }} onClick={() => Copy(props.href)} />
@@ -484,12 +483,12 @@ export const MDXComponents = {
                             method === 'POST'
                                 ? 'success.main'
                                 : method === 'GET'
-                                  ? 'primary.main'
-                                  : method === 'PUT'
-                                    ? 'warning.main'
-                                    : method === 'DELETE'
-                                      ? 'error.main'
-                                      : 'grey.500',
+                                ? 'primary.main'
+                                : method === 'PUT'
+                                ? 'warning.main'
+                                : method === 'DELETE'
+                                ? 'error.main'
+                                : 'grey.500',
                         color: 'white',
                         fontWeight: 'bold',
                         mr: 2,

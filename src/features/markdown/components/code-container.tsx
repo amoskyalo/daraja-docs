@@ -51,7 +51,7 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
                 overflow: 'hidden',
             }}
         >
-            <Stack sx={{ py: 1.5, px: 2 }} direction="row" alignItems="center" justifyContent="space-between">
+            <Stack sx={{ py: 1, px: 2 }} direction="row" alignItems="center" justifyContent="space-between">
                 <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
                     {title ?? 'Response'}
                 </Typography>
@@ -59,7 +59,7 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
                 <Stack direction="row" alignItems="center" gap={2}>
                     <Tooltip title="Explain with AI">
                         <AutoAwesomeIcon
-                            sx={{ fontSize: 18, cursor: 'pointer' }}
+                            sx={{ fontSize: 18, cursor: 'pointer', display: { md: 'block', sm: 'none', xs: 'none' } }}
                             onClick={() => {
                                 const input = `Explain the code below in details \n\n\n${getCode()}`;
                                 setQuestion(input);

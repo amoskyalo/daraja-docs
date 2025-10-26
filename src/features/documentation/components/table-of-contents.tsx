@@ -50,7 +50,7 @@ export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsPro
                     }
                 });
             },
-            { rootMargin: '-20px 0px -20% 0px' },
+            { rootMargin: '-20px 0px -20% 0px' }
         );
 
         headings.forEach(({ id }) => {
@@ -90,7 +90,7 @@ export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsPro
                 top: '66px',
                 height: 'calc(100vh - 66px)',
                 overflowY: 'auto',
-                py: 2,
+                py: 3,
                 px: 2,
                 width,
             }}

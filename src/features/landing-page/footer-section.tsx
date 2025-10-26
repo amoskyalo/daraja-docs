@@ -8,8 +8,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 export const FooterSection = () => {
     return (
         <Stack sx={{ paddingY: 4, borderTop: 1, borderColor: 'divider' }}>
-            <Container maxWidth="lg" sx={{ px: '0px !important' }}>
-                <Grid container spacing={8}>
+            <Container maxWidth="lg" sx={{ px: { md: '0px !important' } }}>
+                <Grid container spacing={{ xs: 2, sm: 4, md: 8 }}>
                     <Grid size={{ xs: 12, md: 5 }}>
                         <Typography variant="h5" color="primary" sx={{ fontWeight: 700 }}>
                             Daraja
@@ -21,7 +21,7 @@ export const FooterSection = () => {
                         </Typography>
                     </Grid>
 
-                    <Grid size={{ xs: 12, md: 2 }}>
+                    <Grid size={{ xs: 6, md: 2 }}>
                         <Typography variant="body1" sx={{ fontWeight: 600 }}>
                             Resources
                         </Typography>
@@ -45,7 +45,7 @@ export const FooterSection = () => {
                         </Stack>
                     </Grid>
 
-                    <Grid size={{ xs: 12, md: 2 }}>
+                    <Grid size={{ xs: 6, md: 2 }}>
                         <Typography variant="body1" sx={{ fontWeight: 600 }}>
                             Legal
                         </Typography>

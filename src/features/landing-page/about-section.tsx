@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Stack, Typography, Grid } from '@mui/material';
+import { useResponsiveness } from '@/shared/hooks';
 
 const cards = [
     {
@@ -20,17 +21,24 @@ const cards = [
 ];
 
 export const AboutSection = () => {
+    const { isMobile } = useResponsiveness();
+
     return (
-        <Container maxWidth="lg" sx={{ px: '0px !important', py: '100px' }}>
-            <Stack direction="column" spacing={4} alignItems="center" justifyContent="center">
-                <Typography variant="h2" sx={{ textAlign: 'center' }}>
+        <Container maxWidth="lg" sx={{ px: { md: '0px !important' }, py: '80px' }}>
+            <Stack direction="column" spacing={isMobile ? 2 : 4} alignItems="center" justifyContent="center">
+                <Typography variant={isMobile ? 'h3' : 'h2'} sx={{ textAlign: 'center' }}>
                     What is Daraja?{' '}
-                    <Typography variant="h6" color="text.secondary" component="span" sx={{ fontWeight: 500 }}>
+                    <Typography
+                        variant="h6"
+                        color="text.secondary"
+                        component="span"
+                        sx={{ fontWeight: 500, display: { xs: 'none', md: 'inline' } }}
+                    >
                         Everything you need to know about Daraja
                     </Typography>
                 </Typography>
                 <Typography
-                    variant="body1"
+                    variant={isMobile ? 'body2' : 'body1'}
                     sx={{ width: { xs: '100%', md: '65%' }, textAlign: 'center', lineHeight: 1.7, fontWeight: 500 }}
                 >
                     Daraja is a web platform that offers access to Safaricom and M-PESA APIs that creates a bridge for
@@ -39,11 +47,11 @@ export const AboutSection = () => {
                 </Typography>
             </Stack>
 
-            <Grid container spacing={3} sx={{ mt: 6, width: { xs: '100%', md: '80%' }, mx: 'auto' }}>
+            <Grid container spacing={isMobile ? 2 : 3} sx={{ mt: isMobile ? 4 : 6, width: { xs: '100%', md: '80%' }, mx: 'auto' }}>
                 {cards.map((card, index) => (
                     <Grid
                         key={index}
-                        size={{ xs: 12, md: 4, lg: 4 }}
+                        size={{ xs: 12, sm: 6, md: 4 }}
                         sx={{ border: 1, borderColor: 'divider', borderRadius: 3, p: 3 }}
                     >
                         <Stack spacing={1}>
@@ -60,4 +68,4 @@ export const AboutSection = () => {
             </Grid>
         </Container>
     );
-}
+};

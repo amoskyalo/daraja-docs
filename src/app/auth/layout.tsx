@@ -12,9 +12,9 @@ export default function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
     return (
         <LoginCredentialsContextProvider>
             <Grid container sx={{ height: '100dvh', maxHeight: '100dvh', overflow: 'hidden', position: 'relative' }}>
-                <Grid size={5}>{children}</Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 5 }}>{children}</Grid>
 
-                <Grid size={7} sx={{ height: '100%', overflow: 'hidden' }}>
+                <Grid size={7} sx={{ height: '100%', overflow: 'hidden', display: { xs: 'none', md: 'block' } }}>
                     <Image
                         src="/images/dev.webp"
                         alt="auth"

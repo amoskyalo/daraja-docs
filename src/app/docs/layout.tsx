@@ -10,7 +10,7 @@ const DocsLayout = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <Container maxWidth="lg" sx={{ px: '0px !important', flex: 1 }}>
-            <Stack direction="row">
+            <Stack direction={{ xs: 'column', md: 'row' }}>
                 <LeftNav />
                 <Box sx={{ flex: 1, overflow: 'hidden' }}>{children}</Box>
             </Stack>

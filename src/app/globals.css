@@ -48,16 +48,6 @@ body {
     opacity: 1 !important;
 }
 
-.MuiContainer-root {
-    max-width: clamp(320px, 95vw, 1400px) !important;
-}
-
-@media (min-width: 600px) {
-    .MuiContainer-root {
-        max-width: clamp(600px, 95vw, 1000px) !important;
-    }
-}
-
 @media (min-width: 1200px) {
     .MuiContainer-root {
         max-width: clamp(900px, 90vw, 1400px) !important;
@@ -67,5 +57,11 @@ body {
 @media (min-width: 2560px) {
     .MuiContainer-root {
         max-width: clamp(1200px, 60vw, 1600px) !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    * {
+        scrollbar-width: thin !important;
     }
 }

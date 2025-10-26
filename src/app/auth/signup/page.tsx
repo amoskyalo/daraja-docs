@@ -25,7 +25,7 @@ export default function SignupPage() {
                 onSubmit={(values) => console.log(values)}
             >
                 {(formik) => (
-                    <Box sx={{ width: 400, borderRadius: 4, p: 4 }}>
+                    <Box sx={{ width: { xs: '100%', sm: 400 }, borderRadius: 4, p: { md: 4, xs: 3 } }}>
                         <Box>
                             <Typography
                                 variant="h6"
@@ -41,9 +41,7 @@ export default function SignupPage() {
                                 variant="body2"
                                 sx={{
                                     mb: 2,
-                                    px: 2,
-                                    fontWeight: 'medium',
-                                    color: 'text.primary',
+                                    color: 'text.secondary',
                                     textAlign: 'center',
                                 }}
                             >
@@ -122,8 +120,13 @@ export default function SignupPage() {
             </Formik>
 
             <Stack sx={{ position: 'absolute', bottom: 2, left: 0, width: '100%' }}>
-                <Typography variant="caption" color="text.secondary" sx={{ textAlign: 'center', width: '50%', mx: 'auto' }}>
-                    By clicking register, you accept Safaricom <MuiLink href="#">terms and conditions</MuiLink> concerning this application.
+                <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ textAlign: 'center', width: { md: '60%' }, mx: 'auto' }}
+                >
+                    By clicking register, you accept Safaricom <MuiLink href="#">terms and conditions</MuiLink>{' '}
+                    concerning this application.
                 </Typography>
             </Stack>
         </Stack>

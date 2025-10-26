@@ -3,11 +3,13 @@
 import { Stack, Box, Typography, Paper, IconButton } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { Frown, SmilePlus, Smile, Angry } from 'lucide-react';
+import { useResponsiveness } from '@/shared/hooks';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export const DocsBottomNavigator = ({ prevDoc, nextDoc }: any) => {
     const router = useRouter();
+    const { isMobile } = useResponsiveness();
 
     return (
         <Box sx={{ mt: 4 }} id="bottom-navigator">
@@ -30,10 +32,12 @@ export const DocsBottomNavigator = ({ prevDoc, nextDoc }: any) => {
                                 sx={{ cursor: 'pointer', opacity: 0.8, '&:hover': { opacity: 1 } }}
                                 onClick={() => router.push(doc.segment)}
                             >
-                                <Typography variant="body2">{index === 0 ? 'Previous' : 'Next'}</Typography>
+                                <Typography variant={isMobile ? 'caption' : 'body2'}>
+                                    {index === 0 ? 'Previous' : 'Next'}
+                                </Typography>
                                 <Stack sx={{ mt: 0.5 }} direction="row" alignItems="center" spacing={0.5}>
                                     {index === 0 && <ArrowBackIosIcon sx={{ fontSize: 14 }} />}
-                                    <Typography variant="body1" fontWeight={600}>
+                                    <Typography variant={isMobile ? 'body2' : 'body1'} fontWeight={600}>
                                         {doc?.title}
                                     </Typography>
                                     {index === 1 && <ArrowForwardIosIcon sx={{ fontSize: 14 }} />}

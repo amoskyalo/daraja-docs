@@ -61,7 +61,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                 position: 'relative',
                 flex: 1,
                 pl: { xs: 0, md: 0, lg: 4 },
-                pt: 1
+                pt: 1,
             }}
         >
             <Grid
@@ -72,7 +72,7 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                     <MDXRenderer mdxSource={mdxSource} />
                     <DocsBottomNavigator prevDoc={prevDoc} nextDoc={nextDoc} />
 
-                    {activeTab !== 'playground' && (
+                    {activeTab !== 'playground' && !isSmallScreen && (
                         <Stack
                             alignItems="center"
                             justifyContent="center"

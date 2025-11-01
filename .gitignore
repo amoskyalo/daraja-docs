@@ -1,7 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
+# dependencies - ignore at all levels
+**/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -11,17 +9,18 @@
 !.yarn/versions
 
 # testing
-/coverage
+**/coverage
 
 # next.js
-/.next/
-/out/
+**/.next/
+**/out/
 
 # production
-/build
+**/build
+**/dist
 
 # misc
-.DS_Store
+**/.DS_Store
 *.pem
 
 # debug
@@ -32,13 +31,26 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+**/.env*
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+**/next-env.d.ts
 
 # claude
 CLAUDE.md
+
+# turbo
+.turbo
+**/.turbo
+
+# lock files (keep only root lock file)
+apps/**/pnpm-lock.yaml
+packages/**/pnpm-lock.yaml
+apps/**/package-lock.json
+packages/**/package-lock.json
+apps/**/yarn.lock
+packages/**/yarn.lock

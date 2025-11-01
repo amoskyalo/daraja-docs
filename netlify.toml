@@ -1,0 +1,6 @@
+[build]
+  command = "npx turbo run build --filter=daraja-docs-platform"
+  publish = "apps/daraja-docs-platform/.next"
+
+[build.environment]
+  NPM_FLAGS = "--shamefully-hoist"

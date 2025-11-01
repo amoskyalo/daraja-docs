@@ -1,64 +1,12 @@
 {
-    "name": "daraja-docs",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev --turbopack --port 42069",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint",
-        "prepare": "husky"
-    },
-    "dependencies": {
-        "@anthropic-ai/sdk": "^0.61.0",
-        "@apollo/client": "^4.0.3",
-        "@emotion/cache": "^11.14.0",
-        "@emotion/react": "^11.14.0",
-        "@emotion/styled": "^11.14.1",
-        "@lottiefiles/dotlottie-react": "^0.16.1",
-        "@mui/icons-material": "^7.3.1",
-        "@mui/material": "^7.3.1",
-        "@mui/material-nextjs": "^7.3.0",
-        "@mui/x-data-grid": "^8.9.2",
-        "@tanstack/react-query": "^5.87.1",
-        "algoliasearch": "^5.35.0",
-        "formik": "^2.4.6",
-        "graphql": "^16.11.0",
-        "gray-matter": "^4.0.3",
-        "jsdom": "^26.1.0",
-        "libphonenumber-js": "^1.12.12",
-        "lucide-react": "^0.536.0",
-        "next": "15.4.6",
-        "next-mdx-remote": "^4.4.1",
-        "path-to-regexp": "^8.2.0",
-        "postman-code-generators": "^2.0.0",
-        "postman-collection": "^5.2.0",
-        "prismjs": "^1.30.0",
-        "react": "19.1.0",
-        "react-dom": "19.1.0",
-        "react-markdown": "8.0.6",
-        "rehype-prism-plus": "^2.0.1",
-        "rehype-slug": "^6.0.0",
-        "remark": "^15.0.1",
-        "remark-gfm": "^3.0.1",
-        "rxjs": "^7.8.2",
-        "supermemory": "^3.4.0",
-        "unist-util-visit": "^5.0.0",
-        "yaml": "^2.8.1",
-        "yup": "^1.7.0"
-    },
-    "devDependencies": {
-        "@eslint/eslintrc": "^3",
-        "@types/jsdom": "^21.1.7",
-        "@types/node": "^20",
-        "@types/postman-collection": "^3.5.11",
-        "@types/react": "^19",
-        "@types/react-dom": "^19",
-        "@types/react-syntax-highlighter": "^15.5.0",
-        "@types/unist": "^3.0.3",
-        "eslint": "^9",
-        "eslint-config-next": "15.4.6",
-        "husky": "^9.1.7",
-        "typescript": "^5"
-    }
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@9.0.0"
 }

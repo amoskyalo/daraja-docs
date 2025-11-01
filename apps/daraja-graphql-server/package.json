@@ -1,0 +1,37 @@
+{
+    "name": "daraja-graphql-server",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "compile": "tsc",
+        "build": "npx tsc",
+        "dev": "ts-node-dev src/index.ts",
+        "start:apollo-server": "npm run compile && node ./dist/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@apollo/datasource-rest": "^6.4.1",
+        "@apollo/server": "^5.0.0",
+        "@as-integrations/express5": "^1.1.2",
+        "@graphql-tools/merge": "^9.1.1",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.1",
+        "express": "^5.1.0",
+        "form-data": "^4.0.4",
+        "graphql": "^16.11.0",
+        "graphql-tag": "^2.12.6",
+        "graphql-upload": "^17.0.0",
+        "http": "^0.0.1-security",
+        "jwt-decode": "^4.0.0",
+        "ts-node-dev": "^2.0.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.3",
+        "@types/node": "^24.1.0",
+        "typescript": "^5.8.3"
+    }
+}

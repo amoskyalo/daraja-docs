@@ -30,7 +30,7 @@ const useLogin = () => {
             onCompleted: async (res: any) => {
                 snackbarToast.success("Login successful");
                 await handleSetSession({ token: res.login.token });
-                window.location.replace("/my-apps")
+                window.location.replace("/dev-console")
             },
             onError: (error) => {
                 snackbarToast.error("Login failed");

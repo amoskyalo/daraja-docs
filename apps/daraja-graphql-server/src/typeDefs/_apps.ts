@@ -39,8 +39,11 @@ export const Apps = gql`
         products: [PayloadProduct]
     }
 
-    type Mutation {
+    type Query {
         getMyApps: AppsResponse
+    }
+
+    type Mutation {
         createApp(payload: Payload): App
         deleteApp(AppName: String!): DeleteResponse
     }

@@ -1,47 +1,71 @@
-import { string, object } from 'yup';
+import { array, string, object, number, Schema } from 'yup';
 import { FieldTypes, GetFormikFieldPropsArgs } from '../../config/types';
 import { useResponsiveness } from '../hooks/useResponsiveness';
 import { GridColDef } from '@mui/x-data-grid';
 import { isValidPhoneNumber, validatePhoneNumberLength, AsYouType } from 'libphonenumber-js';
 
 export const utils = {
-    getValidationSchema<T>(args: Array<FieldTypes>) {
+    getValidationSchema(args: Array<FieldTypes>) {
         function getFieldValidationType(field: FieldTypes) {
+            let schema: Schema;
+
             switch (field.type) {
-                case 'phoneNumber':
-                    return object().shape({
-                        phone: string().required('Country phone code is required'),
-                        code: string().required('Country code is required'),
-                        value: string()
-                            .required('Phone number is required')
-                            .test('isValid', 'Invalid phone number', function (value) {
-                                const { code } = this.parent;
-                                if (!value || !code) return false;
-                                return isValidPhoneNumber(String(value), code);
-                            })
-                            .test('isValidLength', 'Invalid phone number length', function (value) {
-                                const { code } = this.parent;
-                                if (!value || !code) return false;
-                                return validatePhoneNumberLength(String(value), code) === undefined;
-                            }),
-                    });
                 case 'email':
-                    return string()
+                    schema = string()
                         .email()
                         .required(field.errorMessage ?? 'Email is required');
+                    break;
                 case 'password':
-                    return string().required(field.errorMessage ?? 'Password is required');
+                    schema = string().required(field.errorMessage ?? 'Password is required');
+                    break;
+                case 'array':
+                    schema = array()
+                        .of(string())
+                        .required(field.errorMessage ?? 'Array is required');
+                    break;
                 case 'otp':
-                    return string()
+                    schema = string()
                         .length(field.length, `Your OTP must be exactly ${field.length} digits long`)
                         .required(field.errorMessage ?? 'Please enter the OTP code to continue');
-                case 'url':
-                    return string()
-                        .url(field.errorMessage ?? 'Please enter a valid URL')
-                        .required(field.errorMessage ?? 'URL is required');
+                    break;
+                case 'number':
+                    if (field.num_type === 'min_max') {
+                        schema = number()
+                            .required(field.errorMessage ?? 'Field is required')
+                            .min(field.min, `Value cannot be less than ${field.min}`)
+                            .max(field.max, `Value cannot be more than ${field.max}`);
+                    } else if (field.num_type === 'min') {
+                        schema = number()
+                            .required(field.errorMessage ?? 'Field is required')
+                            .min(field.min, `Value cannot be less than ${field.min}`);
+                    } else if (field.num_type === 'max') {
+                        schema = number()
+                            .required(field.errorMessage ?? 'Field is required')
+                            .max(field.max, `Value cannot be more than ${field.max}`);
+                    } else {
+                        schema = number().required(field.errorMessage ?? 'Field is required');
+                    }
+                    break;
+                case 'phone_number':
+                    schema = string()
+                        .required(field.errorMessage ?? 'Phone number is required')
+                        .typeError('Invalid phone number')
+                        .test('isValid', 'Invalid phone number', (value) => isValidPhoneNumber(String(value), 'KE'))
+                        .test(
+                            'isValidLength',
+                            'Invalid phone number length',
+                            (value) => validatePhoneNumberLength(String(value), 'KE') === undefined
+                        );
+                    break;
                 default:
-                    return string().required(field.errorMessage ?? 'Field is required');
+                    schema = string().required(field.errorMessage ?? 'Field is required');
             }
+
+            if (field.extend) {
+                schema = field.extend(schema);
+            }
+
+            return schema;
         }
 
         const schema = args.reduce<Record<string, ReturnType<typeof getFieldValidationType>>>((acc, arg) => {
@@ -145,5 +169,43 @@ export const utils = {
 
     isDefaultPagination(param: string, value: any) {
         return (param === 'start' && value === 1) || (param === 'limit' && value === 10) || value === 'all';
+    },
+
+    formatters() {
+        const lowerCaseString = (str: string) => {
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        };
+
+        const formatDate = (date: Date | string | number, hideTime = false) => {
+            const defaultOptions: Intl.DateTimeFormatOptions = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                ...(hideTime ? {} : { hour: '2-digit', minute: '2-digit' }),
+            };
+            return new Intl.DateTimeFormat('en-US', defaultOptions).format(new Date(date));
+        };
+
+        const formatCurrency = (currency: string, amount: number | string) => {
+            const numericAmount = typeof amount === 'string' ? Number.parseFloat(amount) : amount;
+            const options: Intl.NumberFormatOptions = {
+                currency,
+                style: 'currency',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            };
+            return new Intl.NumberFormat('en-US', options).format(numericAmount);
+        };
+
+        const formatPhoneNumber = (phoneNumber: string) => {
+            return `254${phoneNumber.replaceAll(' ', '')}`;
+        };
+
+        return {
+            lowerCaseString,
+            formatDate,
+            formatCurrency,
+            formatPhoneNumber,
+        };
     },
 };

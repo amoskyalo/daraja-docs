@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_APPS = gql`
-    mutation {
+    query {
         response: getMyApps {
             apps {
                 no
@@ -18,6 +18,23 @@ export const GET_APPS = gql`
                 expired
                 status
             }
+        }
+    }
+`;
+
+export const DELETE_APP = gql`
+    mutation DeleteApp($AppName: String!) {
+        response: deleteApp(AppName: $AppName) {
+            title
+            content
+        }
+    }
+`;
+
+export const CREATE_APP = gql`
+    mutation CreateApp($payload: Payload!) {
+        response: createApp(payload: $payload) {
+            app
         }
     }
 `;

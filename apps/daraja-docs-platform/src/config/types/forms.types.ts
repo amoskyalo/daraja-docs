@@ -2,17 +2,43 @@ import { FormikProps } from 'formik';
 import { TextFieldProps, SelectProps } from '@mui/material';
 
 type OTPField = {
-    type: 'otp';
+    type: "otp";
     name: string;
     length: number;
 };
 
+type MinMax = {
+    num_type: "min_max";
+    min: number;
+    max: number;
+};
+
+type Min = {
+    num_type: "min";
+    min: number;
+};
+
+type Max = {
+    num_type: "max";
+    max: number;
+};
+
+type Default = {
+    num_type: "default";
+};
+
+type NumberField = { name: string; type: "number" } & (MinMax | Min | Max | Default);
+
 type OtherFields = {
-    type: 'email' | 'password' | 'string' | 'url' | 'phoneNumber';
+    type: "email" | "password" | "array" | "string" | "phone_number";
     name: string;
 };
 
-export type FieldTypes = { errorMessage?: string } & (OTPField | OtherFields);
+type YupExtension = {
+    extend?: (schema: any) => any;
+};
+
+export type FieldTypes = { errorMessage?: string } & (OTPField | OtherFields | NumberField) & YupExtension;
 
 export type GetFormikFieldPropsArgs<Type> = {
     formik: FormikProps<Type>;

@@ -1,73 +1,29 @@
 'use client';
 
-import { Box, Typography, Stack, Container, alpha, Chip } from '@mui/material';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
-import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
-import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import VpnLockOutlinedIcon from '@mui/icons-material/VpnLockOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { Box, Typography, Stack, Container, Chip, IconButton, Tooltip, Radio, Button, alpha } from '@mui/material';
 import { useState } from 'react';
 import { useApps } from './services';
 import { gridConstructor } from '../../features/datagrid';
-
-const dashboardTabs = [
-    {
-        label: 'Apps',
-        value: 0,
-        description: 'View, edit, delete, and manage all your developer apps',
-        icon: <AppsOutlinedIcon sx={{ fontSize: 18 }} />,
-    },
-    {
-        label: 'Test Credentials',
-        value: 1,
-        description:
-            'Encrypt your initiator password. Sandbox passwords are pre-set; production passwords are created on the M-PESA portal.',
-        icon: <LockOutlinedIcon sx={{ fontSize: 18 }} />,
-    },
-    {
-        label: 'Go Live',
-        value: 2,
-        description: "Tested the APIs in sandbox? You're ready for production!",
-        icon: <RocketLaunchOutlinedIcon sx={{ fontSize: 18 }} />,
-    },
-    {
-        label: 'URL Management',
-        value: 3,
-        description:
-            'Register, update, or delete your C2B URLs used by Daraja to send transaction callbacks and notifications.',
-        icon: <LinkOutlinedIcon fontSize="small" />,
-    },
-    {
-        label: 'Incident Management',
-        value: 4,
-        description: 'All tickets appear here',
-        icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 18 }} />,
-    },
-    {
-        label: 'VPN/MPLS Connection',
-        value: 5,
-        description: 'My Requests',
-        icon: <VpnLockOutlinedIcon sx={{ fontSize: 18 }} />,
-    },
-    {
-        label: 'Profile',
-        value: 6,
-        description: 'Keep your profile up to date with your latest email, username, and account details.',
-        icon: <PersonOutlineOutlinedIcon fontSize="small" />,
-    },
-];
+import { DeleteDialog, StatusButton, TextInputField, LoadingButton } from '@/shared/components/ui';
+import { utils } from '@/shared/utils';
+import { Eye, ScanBarcode, Trash, Copy, Info } from 'lucide-react';
+import { FormDialog } from '@/shared/components/ui/dialogs/FormDialog';
+import { useCopyToClipboard } from '@/shared/hooks';
+import { Formik, Form } from 'formik';
+import { PRODUCTS, DEVCONSOLETABS } from '@/config/constants';
 
 const DashboardPage = () => {
-    const { apps, loading } = useApps();
-    const [activeTab, setActiveTab] = useState(0);
-    const currentTabData = dashboardTabs[activeTab];
+    const { get, mutation } = useApps();
+    const { Copy: copyToClipboard, copied } = useCopyToClipboard();
 
-    const { render } = new gridConstructor({
+    const [activeTab, setActiveTab] = useState(0);
+    const [open, setOpen] = useState(false);
+    const [id, setId] = useState<string | null>(null);
+    const [formStep, setFormStep] = useState(0);
+
+    const currentTabData = DEVCONSOLETABS[activeTab];
+
+    const { render, record, reset, formOpen } = new gridConstructor({
         grid: {
             columns: [
                 { field: 'app', headerName: 'App', width: 200 },
@@ -75,15 +31,15 @@ const DashboardPage = () => {
                     field: 'CreatedAt',
                     headerName: 'Created On',
                     width: 150,
-                    valueGetter: (__, row) =>
-                        new Date(parseInt(row.CreatedAt)).toLocaleString('en-GB', {
-                            dateStyle: 'short',
-                            timeStyle: 'short',
-                        }),
+                    valueGetter: (__, row) => utils.formatters().formatDate(Number.parseInt(row.CreatedAt), true),
                 },
                 { field: 'domain', headerName: 'Domain' },
-                { field: 'expired', headerName: 'Expired', type: 'boolean' },
-                { field: 'status', headerName: 'Status' },
+                { field: 'expired', headerName: 'Expired', type: 'boolean', valueGetter: (__, row) => row.expired },
+                {
+                    field: 'status',
+                    headerName: 'Status',
+                    renderCell: ({ row }) => <StatusButton status={row.status} />,
+                },
                 {
                     field: 'products',
                     headerName: 'Total Products',
@@ -93,100 +49,299 @@ const DashboardPage = () => {
                 },
                 { field: 'ShortCode', headerName: 'Short Code' },
             ],
-            rows: apps ?? [],
-            loading,
+            rows: get.apps,
+            loading: get.loading,
             actions: ['options'],
             options: [
                 {
                     name: 'Secrets',
-                    icon: <RemoveRedEyeOutlinedIcon fontSize="small" />,
-                    onClick: () => {},
+                    icon: <Eye size={16} style={{ marginRight: '4px' }} />,
+                    onClick: () => {
+                        setOpen(true);
+                    },
                 },
                 {
                     name: 'Products',
-                    icon: <LabelOutlinedIcon fontSize="small" />,
+                    icon: <ScanBarcode size={16} style={{ marginRight: '4px' }} />,
                     onClick: () => {},
                 },
                 {
                     name: 'Delete',
-                    icon: <DeleteOutlineOutlinedIcon fontSize="small" color="error" />,
-                    onClick: () => {},
+                    icon: <Trash size={16} style={{ marginRight: '4px' }} />,
+                    onClick: (record) => {
+                        setId(record.app);
+                    },
+                    error: true,
                 },
             ],
         },
     }).grid();
 
+    const getValidationSchema = (step: number) => {
+        const fields = [
+            {
+                name: 'AppName',
+                type: 'string' as const,
+                errorMessage: 'App name is required',
+            },
+        ];
+
+        if (step === 1) {
+            fields.push({
+                name: 'products',
+                type: 'array' as const,
+                errorMessage: 'Please select at least one product',
+                extend: (schema: any) => schema.min(1, 'Please select at least one product'),
+            } as any);
+        }
+
+        return utils.getValidationSchema(fields);
+    };
+
     return (
-        <Container maxWidth="lg" sx={{ px: { xs: 1, md: 0 } }}>
-            <Box
-                sx={{
-                    position: 'relative',
-                    height: 130,
-                    borderRadius: 3,
-                    borderTopLeftRadius: 3,
-                    borderTopRightRadius: 3,
-                    backgroundImage: 'url(/images/green-background.svg)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    overflow: 'hidden',
-                }}
-            >
-                <Box
-                    sx={(theme) => ({
-                        position: 'absolute',
-                        inset: 0,
-                        px: 4,
-                        pt: 2,
-                        borderRadius: 3,
-                        borderTopLeftRadius: 3,
-                        borderTopRightRadius: 3,
-                        backgroundColor: alpha(theme.palette.primary.main, theme.palette.mode === 'dark' ? 0.85 : 0.5),
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                    })}
-                >
-                    <Box>
-                        <Typography variant="h6" fontWeight={600} color="white">
-                            {currentTabData.label}
+        <>
+            <Container maxWidth="sm" sx={{ px: { xs: 1, md: 0 }, position: 'relative' }}>
+                <Stack direction="row" justifyContent="center" sx={{ position: 'sticky', top: '68px', zIndex: 1 }}>
+                    <Stack
+                        direction="row"
+                        alignItems="flex-start"
+                        spacing={1}
+                        sx={{
+                            backgroundColor: (theme) => alpha(theme.palette.warning.main, 0.1),
+                            maxWidth: { lg: '60%' },
+                            padding: 1,
+                            borderRadius: 2,
+                            color: 'warning.main',
+                        }}
+                    >
+                        <Info size={16} style={{ marginTop: '1px' }} />
+                        <Typography variant="body2" sx={{ fontSize: 13 }}>
+                            You&apos;re viewing data from the Daraja 2.0 API. To use Daraja 3.0, visit the new Safaricom
+                            Daraja 3.0 platform.
                         </Typography>
-                        <Typography variant="body2" color="white" sx={{ opacity: 0.9 }}>
-                            {currentTabData.description}
-                        </Typography>
+                    </Stack>
+                </Stack>
+
+                <Box sx={{ mx: 'auto', maxWidth: { md: '85%' } }}>
+                    <Box
+                        sx={{
+                            pt: 3,
+                            pb: 2,
+                        }}
+                    >
+                        <Box>
+                            <Typography variant="h6" fontWeight={600}>
+                                {currentTabData.label}
+                            </Typography>
+                            <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                                {currentTabData.description}
+                            </Typography>
+                        </Box>
+
+                        <Stack direction="row" spacing={1} mt={3}>
+                            {DEVCONSOLETABS.map((tab, index) => {
+                                const active = tab.value === activeTab;
+                                return (
+                                    <Chip
+                                        key={tab.value}
+                                        icon={tab.icon}
+                                        label={index == 0 ? 'Apps' : tab.label}
+                                        onClick={() => setActiveTab(tab.value)}
+                                        variant={active ? 'filled' : 'outlined'}
+                                        sx={(theme) => ({
+                                            fontWeight: 500,
+                                            border: 'none',
+                                            pl: 0.5,
+                                            pr: 0.2,
+                                            borderRadius: 2,
+                                            opacity: active ? 1 : 0.6,
+                                        })}
+                                    />
+                                );
+                            })}
+                        </Stack>
                     </Box>
 
-                    <Stack direction="row" spacing={0.5}>
-                        {dashboardTabs.map((tab) => {
-                            const active = tab.value === activeTab;
-                            return (
-                                <Chip
-                                    key={tab.value}
-                                    icon={tab.icon}
-                                    label={tab.label}
-                                    onClick={() => setActiveTab(tab.value)}
-                                    variant={active ? 'filled' : 'outlined'}
-                                    sx={(theme) => ({
-                                        borderRadius: '8px 8px 0 0',
-                                        fontWeight: 500,
-                                        border: 'none',
-                                        backgroundColor: (theme) => (active ? 'background.default' : 'transparent'),
-                                        color: active ? theme.palette.text.primary : 'white',
-                                        pl: 1,
-                                        pr: 0.5,
-                                        pt: 1,
-                                        '& .MuiChip-icon': {
-                                            color: active ? theme.palette.text.secondary : alpha('#fff', 0.8),
-                                        },
-                                    })}
-                                />
-                            );
-                        })}
-                    </Stack>
+                    <Box sx={{ width: '100%', overflow: 'hidden' }}>{render()}</Box>
                 </Box>
-            </Box>
+            </Container>
 
-            <Box sx={{ py: 2, width: '100%', overflow: 'hidden' }}>{render()}</Box>
-        </Container>
+            <FormDialog
+                open={open}
+                dialogTitle={record?.app ?? 'App secrets'}
+                onClose={() => {
+                    reset();
+                    setOpen(false);
+                }}
+            >
+                <Stack spacing={2}>
+                    {[
+                        { label: 'Consumer Key', value: record?.ConsumerKey },
+                        { label: 'Consumer Secret', value: record?.ConsumerSecret },
+                    ].map((item) => (
+                        <TextInputField
+                            key={item.label}
+                            label={item.label}
+                            value={item.value ?? ''}
+                            isPassword
+                            slotProps={{
+                                input: {
+                                    endAdornment: (
+                                        <Tooltip title={copied ? 'Copied!' : 'Copy'}>
+                                            <IconButton edge="end" onClick={() => copyToClipboard(item.value)}>
+                                                <Copy size={16} />
+                                            </IconButton>
+                                        </Tooltip>
+                                    ),
+                                    readOnly: true,
+                                },
+                            }}
+                        />
+                    ))}
+                </Stack>
+            </FormDialog>
+
+            <FormDialog open={formOpen} dialogTitle="Create new app" onClose={reset}>
+                <Formik
+                    initialValues={{ AppName: '', products: [] as string[] }}
+                    validationSchema={getValidationSchema(formStep)}
+                    enableReinitialize
+                    onSubmit={({ AppName, products }) => {
+                        if (formStep === 0) {
+                            setFormStep(1);
+                        } else {
+                            mutation.handleCreate({
+                                payload: {
+                                    AppName,
+                                    products: PRODUCTS.filter((product) => products.includes(product.name)),
+                                },
+                                callback: () => {
+                                    reset();
+                                    setFormStep(0);
+                                },
+                            });
+                        }
+                    }}
+                >
+                    {(formik) => {
+                        return (
+                            <Form>
+                                {formStep === 0 && (
+                                    <TextInputField
+                                        label="App Name"
+                                        placeholder="Enter app name"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        {...utils.getFormikFieldProps({ formik, field: 'AppName' })}
+                                    />
+                                )}
+
+                                {formStep === 1 && (
+                                    <Stack spacing={1}>
+                                        <Typography variant="body2" color="text.secondary">
+                                            Select products to enable for this app.
+                                        </Typography>
+
+                                        <Stack spacing={1}>
+                                            {PRODUCTS.map((product) => {
+                                                const isSelected = formik.values.products.includes(product.name);
+
+                                                return (
+                                                    <Box
+                                                        key={product.name}
+                                                        onClick={() => {
+                                                            if (isSelected) {
+                                                                formik.setFieldValue(
+                                                                    'products',
+                                                                    formik.values.products.filter(
+                                                                        (p) => p !== product.name
+                                                                    )
+                                                                );
+                                                            } else {
+                                                                formik.setFieldValue('products', [
+                                                                    ...formik.values.products,
+                                                                    product.name,
+                                                                ]);
+                                                            }
+                                                        }}
+                                                        sx={{
+                                                            border: 1,
+                                                            borderColor: 'divider',
+                                                            backgroundColor: isSelected
+                                                                ? 'action.selected'
+                                                                : 'transparent',
+                                                            p: 1.5,
+                                                            borderRadius: 2,
+                                                            cursor: 'pointer',
+                                                            transition: 'all 0.2s ease-in-out',
+                                                            ':hover': {
+                                                                backgroundColor: 'action.hover',
+                                                            },
+                                                        }}
+                                                    >
+                                                        <Stack
+                                                            direction="row"
+                                                            alignItems="center"
+                                                            justifyContent="space-between"
+                                                        >
+                                                            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                                                                {product.alias}
+                                                            </Typography>
+                                                            <Radio
+                                                                size="small"
+                                                                sx={{ margin: 0, padding: 0 }}
+                                                                checked={isSelected}
+                                                            />
+                                                        </Stack>
+                                                        <Typography variant="caption" color="text.secondary">
+                                                            {product.description}
+                                                        </Typography>
+                                                    </Box>
+                                                );
+                                            })}
+                                        </Stack>
+                                    </Stack>
+                                )}
+                                <Stack
+                                    direction="row"
+                                    justifyContent="flex-end"
+                                    sx={{ mt: formStep === 0 ? 3 : 2 }}
+                                    spacing={1}
+                                >
+                                    <Button
+                                        variant="text"
+                                        sx={{ color: 'text.secondary' }}
+                                        onClick={() => setFormStep(formStep - 1)}
+                                        disabled={formStep === 0}
+                                    >
+                                        Back
+                                    </Button>
+                                    <LoadingButton variant="contained" type="submit" loading={mutation.loading}>
+                                        {formStep === 0 ? 'Next' : 'Submit app'}
+                                    </LoadingButton>
+                                </Stack>
+                            </Form>
+                        );
+                    }}
+                </Formik>
+            </FormDialog>
+
+            <DeleteDialog
+                open={Boolean(id)}
+                onCancel={() => setId(null)}
+                loading={mutation.loading}
+                onOkay={() => {
+                    mutation.handleDelete({
+                        payload: { AppName: id as string },
+                        callback: () => {
+                            setId(null);
+                        },
+                    });
+                }}
+                dialogTitle="Delete app"
+                contentText="Are you sure you want to delete this app? This action cannot be undone."
+            />
+        </>
     );
 };
 

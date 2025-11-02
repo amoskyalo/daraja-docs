@@ -2,7 +2,12 @@ import { Box, InputLabel, InputAdornment, IconButton, TextField, TextFieldProps 
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
-export const TextInputField = ({ label, isPassword = false, ...props }: TextFieldProps & { isPassword?: boolean }) => {
+export const TextInputField = ({
+    label,
+    isPassword = false,
+    slotProps,
+    ...props
+}: TextFieldProps & { isPassword?: boolean }) => {
     const [showPassword, setShowPassword] = useState(false);
     return (
         <Box>
@@ -14,14 +19,19 @@ export const TextInputField = ({ label, isPassword = false, ...props }: TextFiel
                 size="small"
                 slotProps={{
                     input: {
-                        endAdornment: isPassword ? (
-                            <InputAdornment position="end" sx={{ cursor: 'pointer' }}>
-                                <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? <EyeOff /> : <Eye />}
-                                </IconButton>
-                            </InputAdornment>
-                        ) : null,
+                        endAdornment:
+                            isPassword && !(slotProps?.input as any)?.endAdornment ? (
+                                <InputAdornment position="end" sx={{ cursor: 'pointer' }}>
+                                    <IconButton edge="end" onClick={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </IconButton>
+                                </InputAdornment>
+                            ) : (
+                                (slotProps?.input as any)?.endAdornment
+                            ),
+                        ...slotProps?.input,
                     },
+                    ...slotProps,
                 }}
             />
         </Box>

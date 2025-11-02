@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'Daraja',
-    description: '',
+    title: 'Safaricom Daraja API Documentation',
+    description:
+        'Daraja is a web platform that offers access to Safaricom and M-PESA APIs that creates a bridge for payment integration to web and mobile apps',
 };
 
 export default function RootLayout({

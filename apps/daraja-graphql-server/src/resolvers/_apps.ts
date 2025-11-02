@@ -1,5 +1,5 @@
 export const appsResolvers = {
-    mutations: {
+    queries: {
         getMyApps: async (_: any, __: any, { dataSources, token }: any) => {
             const response = await dataSources.darajaService.postDataSource({
                 api: 'GetApps/',
@@ -12,7 +12,9 @@ export const appsResolvers = {
                 apps: response[1],
             };
         },
+    },
 
+    mutations: {
         createApp: async (_: any, args: any, { dataSources, token }: any) => {
             const response = await dataSources.darajaService.postDataSource({
                 api: 'SandboxApps/CreateApp/',
@@ -26,12 +28,15 @@ export const appsResolvers = {
         },
 
         deleteApp: async (_: any, args: any, { dataSources, token }: any) => {
+            const body = {
+                token,
+                AppName: args.AppName,
+            };
+
+            console.log(body);
             const response = await dataSources.darajaService.postDataSource({
                 api: 'SandboxApps/DeleteApp/',
-                body: {
-                    token,
-                    AppName: args.AppName,
-                },
+                body,
             });
 
             return response;

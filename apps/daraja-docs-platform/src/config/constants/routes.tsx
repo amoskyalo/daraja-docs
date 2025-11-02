@@ -1,9 +1,64 @@
+import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import VpnLockOutlinedIcon from '@mui/icons-material/VpnLockOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+
 export const HEADERTABS = [
-    { label: 'Docs', href: '/docs/introduction'},
-    { label: 'Dev console', href: '/dev-console'},
-     { label: 'GitHub', href: '/github'},
-    { label: 'Blogs', href: '/blogs'},
-    { label: 'Changelog', href: '/changelog'},
+    { label: 'Docs', href: '/docs/introduction' },
+    { label: 'Dev console', href: '/dev-console' },
+    { label: 'GitHub', href: '/github' },
+    { label: 'Blogs', href: '/blogs' },
+    { label: 'Changelog', href: '/changelog' },
+];
+
+export const DEVCONSOLETABS = [
+    {
+        label: 'Developer Apps',
+        value: 0,
+        description: 'View, edit, delete, and manage all your sandbox and production developer apps',
+        icon: <AppsOutlinedIcon sx={{ fontSize: 18 }} />,
+    },
+    {
+        label: 'Test Credentials',
+        value: 1,
+        description:
+            'Encrypt your initiator password. Sandbox passwords are pre-set; production passwords are created on the M-PESA portal.',
+        icon: <LockOutlinedIcon sx={{ fontSize: 18 }} />,
+    },
+    {
+        label: 'Go Live',
+        value: 2,
+        description: "Tested the APIs in sandbox? You're ready for production!",
+        icon: <RocketLaunchOutlinedIcon sx={{ fontSize: 18 }} />,
+    },
+    {
+        label: 'URL Management',
+        value: 3,
+        description:
+            'Register, update, or delete your C2B URLs used by Daraja to send transaction callbacks and notifications.',
+        icon: <LinkOutlinedIcon fontSize="small" />,
+    },
+    {
+        label: 'Incident Management',
+        value: 4,
+        description: 'All tickets appear here',
+        icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 18 }} />,
+    },
+    {
+        label: 'VPN/MPLS Connection',
+        value: 5,
+        description: 'My Requests',
+        icon: <VpnLockOutlinedIcon sx={{ fontSize: 18 }} />,
+    },
+    {
+        label: 'Profile',
+        value: 6,
+        description: 'Keep your profile up to date with your latest email, username, and account details.',
+        icon: <PersonOutlineOutlinedIcon fontSize="small" />,
+    },
 ];
 
 export const SIDENAVITEMS = [
@@ -134,11 +189,11 @@ export const SIDENAVITEMS = [
         versions: ['v3'],
     },
     {
-        title: "Community"
+        title: 'Community',
     },
     {
         title: 'Contribution Guide',
         segment: '/docs/contribution-guide',
         versions: ['v2', 'v3'],
-    }
+    },
 ];

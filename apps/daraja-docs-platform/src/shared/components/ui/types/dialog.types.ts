@@ -1,3 +1,5 @@
+import { DialogProps } from '@mui/material';
+
 export type MenuDialogProps = {
     anchorEl: null | HTMLElement;
     setAnchorEl: (anchorEl: null | HTMLElement) => void;
@@ -13,4 +15,9 @@ export type DeleteDialogProps = {
     onCancelButtonText?: string;
     onCancel: () => void;
     onOkay: () => void;
+};
+
+export type FormDialogProps = DialogProps & {
+    dialogTitle: string;
+    showBottomBorder?: boolean;
 };

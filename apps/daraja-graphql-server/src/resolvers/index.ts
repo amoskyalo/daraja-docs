@@ -7,6 +7,7 @@ export const resolvers = {
     Query: {
         ...blogsResolvers.queries,
         ...repositoriesResolvers.queries,
+        ...appsResolvers.queries,
     },
     Mutation: {
         ...authResolvers.mutations,

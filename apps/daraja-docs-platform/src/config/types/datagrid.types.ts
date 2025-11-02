@@ -23,7 +23,13 @@ export type GridProps<TData, TParams> = Omit<DataGridProps, 'columns'> &
         params?: TParams;
         dataKey?: keyof TData;
         actions?: Array<'edit' | 'delete' | 'options' | 'custom'>;
-        options?: { name: string; onClick: (args: any) => void; icon?: ReactNode }[];
+        options?: {
+            name: string;
+            onClick: (args: any) => void;
+            icon?: ReactNode;
+            disabled?: boolean | ((args: any) => boolean);
+            error?: boolean;
+        }[];
         actionsWidth?: number;
         hideToolbar?: boolean;
         searchParams?: string[];

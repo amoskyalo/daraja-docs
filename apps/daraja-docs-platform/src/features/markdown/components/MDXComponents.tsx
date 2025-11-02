@@ -19,6 +19,7 @@ import {
     useTheme,
     Stack,
     Tooltip,
+    Dialog,
 } from '@mui/material';
 import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
@@ -36,6 +37,7 @@ import {
     ResponseExampleProps,
 } from '../types';
 import { useCopyToClipboard } from '../../../shared/hooks';
+import Image from 'next/image';
 
 export const MDXComponents = {
     h1: (props: MDXElementProps) => (
@@ -130,7 +132,95 @@ export const MDXComponents = {
         />
     ),
 
-    img: (props: MDXElementProps) => <Box component="img" sx={{ maxWidth: '100%', borderRadius: 1 }} {...props} />,
+    Image: ({ src, alt }: MDXElementProps) => {
+        const [open, setOpen] = useState(false);
+
+        return (
+            <>
+                <Box
+                    sx={{
+                        maxHeight: 'max-content',
+                        width: { xs: '100%', sm: '100%', md: '85%' },
+                        mx: 'auto',
+                        backgroundColor: 'action.hover',
+                        padding: 1.5,
+                        borderRadius: 6,
+                        position: 'relative',
+                        overflow: 'hidden',
+                        backgroundImage: (theme) => `
+                linear-gradient(to right, ${
+                    theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'
+                } 1px, transparent 1px),
+                linear-gradient(to bottom, ${
+                    theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'
+                } 1px, transparent 1px)
+            `,
+                        backgroundSize: '10px 10px',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            borderRadius: 4,
+                            maxHeight: { xs: 200, sm: 300 },
+                            minHeight: { xs: 200, sm: 300 },
+                            height: { xs: 200, sm: 300 },
+                            overflow: 'hidden',
+                            cursor: 'zoom-in',
+                        }}
+                        onClick={() => setOpen(true)}
+                    >
+                        <Image
+                            src={src!}
+                            alt={alt!}
+                            height={2640}
+                            width={2640}
+                            priority
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                                borderRadius: '16px',
+                                objectFit: 'cover',
+                            }}
+                        />
+                    </Box>
+                </Box>
+
+                <Dialog
+                    maxWidth="xl"
+                    open={open}
+                    sx={{
+                        backdropFilter: 'blur(10px)',
+                        '& .MuiPaper-root': {
+                            boxShadow: 'none',
+                            backgroundImage: 'none',
+                            backgroundColor: 'transparent !important',
+                        },
+                    }}
+                    onClose={() => setOpen(false)}
+                >
+                    <Box
+                        sx={{
+                            cursor: 'zoom-out',
+                        }}
+                        onClick={() => setOpen(false)}
+                    >
+                        <Image
+                            src={src!}
+                            alt={alt!}
+                            height={1440}
+                            width={1440}
+                            priority
+                            style={{
+                                height: 600,
+                                width: '100%',
+                                objectFit: 'contain',
+                            }}
+                        />
+                    </Box>
+                </Dialog>
+            </>
+        );
+    },
 
     hr: () => (
         <Box

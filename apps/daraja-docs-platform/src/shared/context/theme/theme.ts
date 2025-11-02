@@ -10,7 +10,7 @@ export const colors = {
 
 export const borderRadius = 8;
 
-const baseTypography = {
+export const baseTypography = {
     fontFamily: 'var(--font-geist-sans), system-ui, -apple-system, sans-serif',
     h1: {
         fontWeight: 800,
@@ -24,9 +24,6 @@ const baseTypography = {
         fontWeight: 600,
         fontSize: '2rem',
     },
-    button: {
-        textTransform: 'none' as const,
-    },
 };
 
 export const baseButtonStyles = {
@@ -37,21 +34,17 @@ export const baseButtonStyles = {
     },
 };
 
-const baseComponents = {
+export const baseComponents = {
     MuiButton: {
         styleOverrides: baseButtonStyles,
         defaultProps: {
             disableElevation: true,
         },
     },
-    MuiPaper: {
-        styleOverrides: {
-            root: {},
-        },
-    },
     MuiCard: {
         styleOverrides: {
             root: {
+                borderRadius: borderRadius * 2.5,
                 transition: 'all 0.3s ease',
                 '&:hover': {
                     transform: 'translateY(-4px)',
@@ -60,9 +53,6 @@ const baseComponents = {
         },
     },
     MuiTextField: {
-        defaultProps: {
-            size: 'small' as const,
-        },
         styleOverrides: {
             root: {
                 '& .MuiOutlinedInput-root': {
@@ -72,9 +62,6 @@ const baseComponents = {
         },
     },
     MuiSelect: {
-        defaultProps: {
-            size: 'small' as const,
-        },
         styleOverrides: {
             root: {
                 borderRadius: borderRadius,
@@ -135,9 +122,7 @@ export const lightTheme: Theme = createTheme({
         },
         MuiPaper: {
             styleOverrides: {
-                ...baseComponents.MuiPaper.styleOverrides,
                 root: {
-                    ...baseComponents.MuiPaper.styleOverrides.root,
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
                 },
             },
@@ -151,15 +136,6 @@ export const lightTheme: Theme = createTheme({
                     '&:hover': {
                         ...baseComponents.MuiCard.styleOverrides.root['&:hover'],
                         boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
-                    },
-                },
-            },
-        },
-        MuiToolbar: {
-            styleOverrides: {
-                root: {
-                    '@media (min-width: 600px)': {
-                        minHeight: '56px',
                     },
                 },
             },
@@ -212,13 +188,20 @@ export const darkTheme: Theme = createTheme({
                 },
             },
         },
+        MuiButton: {
+            ...baseComponents.MuiButton,
+            styleOverrides: {
+                ...baseButtonStyles,
+                root: {
+                    ...baseButtonStyles.root,
+                    color: '#F1F5F9',
+                },
+            },
+        },
         MuiPaper: {
             styleOverrides: {
-                ...baseComponents.MuiPaper.styleOverrides,
                 root: {
-                    ...baseComponents.MuiPaper.styleOverrides.root,
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
-                    backgroundColor: '#1e293b',
                 },
             },
         },
@@ -228,19 +211,9 @@ export const darkTheme: Theme = createTheme({
                 root: {
                     ...baseComponents.MuiCard.styleOverrides.root,
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
-                    backgroundColor: '#1e293b',
                     '&:hover': {
                         ...baseComponents.MuiCard.styleOverrides.root['&:hover'],
                         boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
-                    },
-                },
-            },
-        },
-        MuiToolbar: {
-            styleOverrides: {
-                root: {
-                    '@media (min-width: 600px)': {
-                        minHeight: '56px',
                     },
                 },
             },
@@ -250,7 +223,6 @@ export const darkTheme: Theme = createTheme({
                 paper: {
                     elevation: 0,
                     borderRadius,
-                    backgroundColor: '#1e293b',
                 },
             },
         },

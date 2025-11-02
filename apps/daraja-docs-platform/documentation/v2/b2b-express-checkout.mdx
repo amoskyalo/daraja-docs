@@ -27,11 +27,11 @@ Below is a sequential diagram overview of the process:
 
 ### Customer Journey – Customer Interface
 
-<img src="/customer-journey.png" alt="Customer Journey Flow" style={{ width: '100%', height: 'auto' }} />
+<Image src="/customer-journey.png" alt="Customer Journey Flow" />
 
 ### Low-Level Architecture
 
-<img src="/b2b-arch.png" alt="B2B USSD Push to Till Architecture" style={{ width: '40%', height: 'auto' }} />
+<Image src="/b2b-arch.png" alt="B2B USSD Push to Till Architecture" />
 
 ## Request Body
 
@@ -100,25 +100,25 @@ You are about to send Ksh `{[amount]}` to `{[Vendor Friendly Name]}` for payment
 
 Merchants are prompted to enter their operator ID.
 
-<img src="/merchant-operator-id.png" alt="Merchant operator ID" style={{ width: '40%', height: 'auto' }} />
+<Image src="/merchant-operator-id.png" alt="Merchant operator ID" />
 
 ### Step 2: PIN Entry
 
 Next step, they are prompted to enter their operator PIN.
 
-<img src="/pin-entry-screen.png" alt="PIN Entry Screen" style={{ width: '40%', height: 'auto' }} />
+<Image src="/pin-entry-screen.png" alt="PIN Entry Screen" />
 
 ### Step 3: Payment Confirmation
 
 Vendor Prompted to accept the amount.
 
-<img src="/payment-confirmation.png" alt="Payment Confirmation" style={{ width: '40%', height: 'auto' }} />
+<Image src="/payment-confirmation.png" alt="Payment Confirmation" />
 
 ### Step 4: Success Acknowledgment
 
 The merchant gets an acknowledgment they'll receive a text once done.
 
-<img src="/success-acknowledgment.png" alt="Success Acknowledgment" style={{ width: '40%', height: 'auto' }} />
+<Image src="/success-acknowledgment.png" alt="Success Acknowledgment" />
 
 ## USSD Fail Callback Response
 
@@ -185,13 +185,13 @@ An organisation operator is linked to a phone number(preferred MSISDN) where the
 
 An organisation can have multiple operators as shown in the screenshot below from Mpesa Web Portal
 
-<img src="/mpesa-web-portal-operators.png" alt="Mpesa Web Portal Operators" style={{ width: '100%', height: 'auto' }} />
+<Image src="/mpesa-web-portal-operators.png" alt="Mpesa Web Portal Operators" />  
 
 Transactions carried out for the shortcode/till from the operator are deducted from the till.
 
 The solution currently is limited to the operator whose phone number is under the **Nominated Number** under the Organization Details as configured in the Mpesa Web Portal
 
-<img src="/organization-details-config.png" alt="Mpesa Web Portal Operators" style={{ width: '100%', height: 'auto' }} />
+<Image src="/organization-details-config.png" alt="Mpesa Web Portal Operators" />
 
 <Note>
 **NB:** Access to the Mpesa Web Portal Platform is given upon successful registration of a shortcode

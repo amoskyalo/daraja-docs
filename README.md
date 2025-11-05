@@ -71,17 +71,11 @@ Before you begin, ensure you have the following installed:
    - **Frontend** (`apps/daraja-docs-platform/.env.local`):
      ```env
      NEXT_PUBLIC_GRAPHQL_ENDPOINT=http://localhost:4000/graphql
-     NEXT_PUBLIC_ALGOLIA_APP_ID=your_algolia_app_id
-     NEXT_PUBLIC_ALGOLIA_API_KEY=your_algolia_api_key
-     ANTHROPIC_API_KEY=your_anthropic_api_key
+     NEXT_PUBLIC_ALGOLIA_APPLICATION_ID=your_algolia_app_id
+     NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY=your_algolia_api_key
+     NEXT_PUBLIC_ANTHROPIC_API_KEY=your_anthropic_api_key
      ```
    
-   - **Backend** (`apps/daraja-graphql-server/.env`):
-     ```env
-     PORT=4000
-     DARAJA_API_BASE_URL=https://api.safaricom.co.ke
-     # Add other Daraja API credentials
-     ```
 
 ## 💻 Development
 

@@ -234,10 +234,6 @@ Deploy the GraphQL server to your preferred Node.js hosting platform:
 
 **Note**: Pre-commit hooks are configured with Husky to ensure code quality.
 
-## 📝 License
-
-hapa sijui.
-
 ## 🆘 Support
 
 For issues, questions, or contributions, please open an issue in the repository.

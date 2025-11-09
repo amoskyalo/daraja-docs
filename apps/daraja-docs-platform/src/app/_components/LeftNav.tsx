@@ -1,4 +1,4 @@
-import { Stack, ListItemButton, ListItemText, Link, Drawer, Typography } from '@mui/material';
+import { Stack, ListItemButton, ListItemText, Link, Typography, Collapse } from '@mui/material';
 import { useRouter, usePathname } from 'next/navigation';
 import { useResponsiveness } from '../../shared/hooks';
 import { useVersionManager } from '../../shared/context';
@@ -16,14 +16,23 @@ const LeftNav = () => {
     const { version } = useVersionManager();
 
     const [openOnMobile, setOpenOnMobile] = useState(false);
+    const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
     function matchPathname(path: any) {
         return path === pathname;
     }
 
+    const toggleExpanded = (title: string) => {
+        setExpandedItems((prev) => (prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]));
+    };
+
     const filteredSidenavItems = SIDENAVITEMS.filter((item) => {
-        if (!item.segment) {
+        if (!item.segment && !item.children) {
             return true;
+        }
+
+        if (item.children) {
+            return item.versions.includes(version);
         }
 
         return item.versions.includes(version);
@@ -81,7 +90,7 @@ const LeftNav = () => {
                             }}
                         >
                             {filteredSidenavItems?.map((item) => {
-                                if (!item.segment) {
+                                if (!item.segment && !item.children) {
                                     return (
                                         <Stack
                                             direction="row"
@@ -90,9 +99,81 @@ const LeftNav = () => {
                                             key={item.title}
                                             sx={{ my: 1 }}
                                         >
-                                            <Typography variant="body2" sx={{ fontWeight: 'medium' }} key={item.title}>
+                                            <Typography variant="body2" sx={{ fontWeight: '600' }}>
                                                 {item.title}
                                             </Typography>
+                                        </Stack>
+                                    );
+                                }
+
+                                if (item.children) {
+                                    const isExpanded = expandedItems.includes(item.title);
+                                    const filteredChildren = item.children.filter((child) =>
+                                        child.versions.includes(version)
+                                    );
+
+                                    return (
+                                        <Stack key={item.title}>
+                                            <Stack
+                                                direction="row"
+                                                alignItems="center"
+                                                justifyContent="space-between"
+                                                key={item.title}
+                                                sx={{ my: 1, cursor: 'pointer' }}
+                                                onClick={() => toggleExpanded(item.title)}
+                                            >
+                                                <Typography variant="body2" sx={{ fontWeight: '600' }}>
+                                                    {item.title}
+                                                </Typography>
+                                                <ChevronRightIcon
+                                                    sx={{
+                                                        transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+                                                        transition: 'transform 0.3s ease-in-out',
+                                                        fontSize: 20,
+                                                    }}
+                                                />
+                                            </Stack>
+
+                                            <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+                                                <Stack sx={{ ml: 2, pl: 2, borderLeft: 1, borderColor: 'divider' }}>
+                                                    <Stack>
+                                                        {filteredChildren.map((child) => (
+                                                            <Link
+                                                                href={child.segment}
+                                                                underline="none"
+                                                                color="text.primary"
+                                                                key={child.title}
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    router.push(child.segment);
+                                                                    if (openOnMobile) {
+                                                                        setOpenOnMobile(false);
+                                                                    }
+                                                                }}
+                                                                sx={{ ml: 1 }}
+                                                            >
+                                                                <ListItemButton
+                                                                    selected={matchPathname(child.segment)}
+                                                                    sx={{
+                                                                        '&.Mui-selected': {
+                                                                            color: 'primary.main',
+                                                                            '& .MuiListItemIcon-root': {
+                                                                                color: 'primary.main',
+                                                                            },
+                                                                        },
+                                                                        '& .MuiListItemText-root .MuiTypography-root': {
+                                                                            fontSize: '14px',
+                                                                        },
+                                                                    }}
+                                                                    disableRipple
+                                                                >
+                                                                    <ListItemText primary={child.title} />
+                                                                </ListItemButton>
+                                                            </Link>
+                                                        ))}
+                                                    </Stack>
+                                                </Stack>
+                                            </Collapse>
                                         </Stack>
                                     );
                                 }

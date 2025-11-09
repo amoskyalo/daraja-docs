@@ -1,0 +1,98 @@
+---
+title: Node.js SDK
+description: Official Node.js/TypeScript SDK for M-PESA Daraja API
+---
+
+# Node.js SDK
+
+Official Node.js/TypeScript SDK for M-PESA Daraja API with dual interface - use as a library or CLI tool.
+
+## Installation
+
+<Terminal title="Installation">
+{`
+# Using npm
+npm install mpesa-sdk
+
+# Using yarn
+
+yarn add mpesa-sdk
+
+# Using pnpm
+
+pnpm add mpesa-sdk
+
+# Install globally for CLI
+
+npm install -g mpesa-sdk
+`}
+
+</Terminal>
+
+## Usage
+
+### As a Library
+
+```typescript
+import { AuthService } from 'mpesa-sdk';
+
+const authService = new AuthService('your_consumer_key', 'your_consumer_secret', 'sandbox');
+
+const token = await authService.generateToken();
+```
+
+### As a CLI
+
+<Terminal title="CLI Usage">
+    {`
+mpesa auth
+mpesa auth --env production
+`}
+</Terminal>
+
+## API Reference
+
+### authService()
+
+Generate OAuth access tokens for M-PESA API calls.
+
+| Method                                                  | Description                                   |
+| ------------------------------------------------------- | --------------------------------------------- |
+| `constructor(consumerKey, consumerSecret, environment)` | Initialize auth service with your credentials |
+| `generateToken()`                                       | Generate access token (cached for 1 hour)     |
+| `getToken()`                                            | Get current token (same as generateToken)     |
+| `clearToken()`                                          | Clear cached token                            |
+
+**Constructor Parameters:**
+
+| Name           | Type                      | Description                                    |
+| -------------- | ------------------------- | ---------------------------------------------- |
+| consumerKey    | string                    | Your M-PESA Consumer Key from Daraja portal    |
+| consumerSecret | string                    | Your M-PESA Consumer Secret from Daraja portal |
+| environment    | 'sandbox' \| 'production' | API environment (defaults to 'sandbox')        |
+
+**Example:**
+
+```typescript
+const authService = new AuthService('your_consumer_key', 'your_consumer_secret', 'sandbox');
+
+// Generate token
+const token = await authService.generateToken();
+
+// Clear cache
+authService.clearToken();
+```
+
+**Error Handling:**
+
+```typescript
+import { MpesaError } from 'mpesa-sdk';
+
+try {
+    const token = await authService.generateToken();
+} catch (error) {
+    if (error instanceof MpesaError) {
+        console.error(error.statusCode, error.message);
+    }
+}
+```

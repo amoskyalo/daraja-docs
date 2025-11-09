@@ -5,13 +5,13 @@ import { DocsBottomNavigator } from './bottom-navigator';
 import { TableOfContents } from './table-of-contents';
 import { alpha, Grid, TextField, InputAdornment, Stack } from '@mui/material';
 import { useResponsiveness, useSearchParams } from '../../../shared/hooks';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo, useMemo } from 'react';
 import { useAIContext, useVersionManager } from '../../../shared/context';
 import { Playground } from '../../playground';
 import { extractTableOfContents } from '../utils/extractTableOfContents';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
-export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
+export const ContentsContainer = memo(({ doc, prevDoc, nextDoc, hideTabs }: any) => {
     const { isSmallScreen } = useResponsiveness();
     const { drawerOpen, question, setQuestion, handleSendRequest, handleKeyPress } = useAIContext();
     const { getParam } = useSearchParams();
@@ -49,8 +49,10 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
         }
     }, []);
 
-    const data = doc.docs[version] ?? doc.docs.v2;
+    const data = useMemo(() => doc.docs[version] ?? doc.docs.v2, [doc.docs, version]);
     const { serializedDocs: mdxSource, rawContent } = data;
+    
+    const tableOfContentsData = useMemo(() => extractTableOfContents(rawContent), [rawContent]);
 
     return (
         <Grid
@@ -137,9 +139,11 @@ export const ContentsContainer = ({ doc, prevDoc, nextDoc, hideTabs }: any) => {
                         py: 2,
                     }}
                 >
-                    <TableOfContents headings={extractTableOfContents(rawContent)} width={tableOfContentsWidth} />
+                    <TableOfContents headings={tableOfContentsData} width={tableOfContentsWidth} />
                 </Grid>
             )}
         </Grid>
     );
-};
+});
+
+ContentsContainer.displayName = 'ContentsContainer';

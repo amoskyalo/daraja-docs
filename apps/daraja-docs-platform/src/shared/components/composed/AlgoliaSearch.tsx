@@ -27,10 +27,18 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { algoliasearch } from 'algoliasearch';
 import { useRouter } from 'next/navigation';
 
-const applicationID = process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!;
-const apiKey = process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY!;
+const applicationID = process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID || '';
+const apiKey = process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY || '';
 
-const client = algoliasearch(applicationID, apiKey);
+let client: any;
+
+try {
+    if (applicationID && apiKey) {
+        client = algoliasearch(applicationID, apiKey);
+    }
+} catch (error) {
+    console.warn('Algolia client initialization failed:', error);
+}
 
 const RECENT_SEARCHES_KEY = 'search_modal_recent_searches';
 const MAX_RECENT_SEARCHES = 5;
@@ -218,7 +226,7 @@ export const SearchModal = ({ open, onClose }: { open: boolean; onClose: () => v
     };
 
     const showRecent = !query && recentSearches.length > 0;
-    
+
     return (
         <Dialog
             open={open}

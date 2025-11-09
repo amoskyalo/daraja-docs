@@ -11,6 +11,7 @@ import {
 import { SnackbarContainer } from '../../shared/components/ui/snackbar';
 import { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
+import ProgressBar from './ProgressBar';
 import Header from './Header';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -18,8 +19,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     const isAuthPage = pathname.startsWith('/auth');
 
     return (
-        <AppThemeProvider>
-            <Suspense fallback={<LinearProgress />}>
+        <>
+            <ProgressBar />
+            <AppThemeProvider>
+                <Suspense fallback={<LinearProgress />}>
                 <ApolloClientProvider>
                     <AuthContextProvider>
                         <AppAIProvider>
@@ -43,7 +46,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     </AuthContextProvider>
                 </ApolloClientProvider>
             </Suspense>
-        </AppThemeProvider>
+            </AppThemeProvider>
+        </>
     );
 };
 

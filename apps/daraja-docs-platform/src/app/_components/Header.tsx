@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import AccountMenu from './AccountMenu';
 import ThemeSwitcher from './ThemeSwitcher';
+import NProgress from 'nprogress';
 
 const NavigationLink = memo(
     ({
@@ -69,6 +70,7 @@ const Header = () => {
 
     const handleNavigate = useCallback(
         (href: string) => {
+            NProgress.start();
             router.push(href);
         },
         [router]
@@ -76,6 +78,7 @@ const Header = () => {
 
     const handleDrawerNavigate = useCallback(
         (href: string) => {
+            NProgress.start();
             router.push(href);
             setDrawerOpen(false);
         },
@@ -129,6 +132,7 @@ const Header = () => {
                 href="/"
                 onClick={(e) => {
                     e.preventDefault();
+                    NProgress.start();
                     router.push('/');
                 }}
             >

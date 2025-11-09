@@ -1,6 +1,6 @@
 'use client';
 
-import { Stack, Box, LinearProgress } from '@mui/material';
+import { Stack, Box } from '@mui/material';
 import {
     AuthContextProvider,
     VersionManagerContextProvider,
@@ -9,7 +9,6 @@ import {
     ApolloClientProvider,
 } from '../../shared/context';
 import { SnackbarContainer } from '../../shared/components/ui/snackbar';
-import { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import ProgressBar from './ProgressBar';
 import Header from './Header';
@@ -22,7 +21,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <>
             <ProgressBar />
             <AppThemeProvider>
-                <Suspense fallback={<LinearProgress />}>
                 <ApolloClientProvider>
                     <AuthContextProvider>
                         <AppAIProvider>
@@ -45,7 +43,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                         </AppAIProvider>
                     </AuthContextProvider>
                 </ApolloClientProvider>
-            </Suspense>
             </AppThemeProvider>
         </>
     );

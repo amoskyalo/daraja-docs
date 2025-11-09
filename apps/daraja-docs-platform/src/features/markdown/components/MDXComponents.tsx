@@ -81,6 +81,7 @@ export const MDXComponents = {
                 my: 2,
                 color: 'text.primary',
                 opacity: 0.9,
+                fontSize: '1.2rem',
             }}
             {...props}
         />
@@ -93,7 +94,7 @@ export const MDXComponents = {
             gutterBottom
             sx={{
                 fontWeight: 600,
-                fontSize: '1.1rem',
+                fontSize: '1rem',
                 my: 2,
                 color: 'text.primary',
                 opacity: 0.9,
@@ -304,10 +305,10 @@ export const MDXComponents = {
 
         const highlightTerminalContent = (content: any) => {
             return content
-                .replace(/^(#.*$)/gm, '<span style="color: #6272a4;">$1</span>')
-                .replace(/\b(npm|ngrok|lt|install|http|--port|-g)\b/g, '<span style="color: #50fa7b;">$1</span>')
-                .replace(/\b(\d+)\b/g, '<span style="color: #bd93f9;">$1</span>')
-                .replace(/(--\w+|-\w+)/g, '<span style="color: #f1fa8c;">$1</span>');
+                    .replaceAll(/^(#.*$)/gm, '<span style="color: #6272a4;">$1</span>')
+                    .replaceAll(/\b(npm|ngrok|lt|install|http|--port|-g|sdk|npx|mpesa)\b/g, '<span style="color: #50fa7b;">$1</span>')
+                    .replaceAll(/\b(\d+)\b/g, '<span style="color: #bd93f9;">$1</span>')
+                    .replaceAll(/(--\w+|-\w+)/g, '<span style="color: #f1fa8c;">$1</span>');
         };
 
         return (
@@ -382,7 +383,8 @@ export const MDXComponents = {
                     sx={{
                         backgroundColor: '#1a1a1a',
                         color: '#e6e6e6',
-                        p: 2,
+                        px: 2,
+                        pb: 2,
                         fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
                         fontSize: '14px',
                         lineHeight: '1.4',

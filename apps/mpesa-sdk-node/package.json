@@ -1,0 +1,37 @@
+{
+    "name": "mpesa-sdk-node",
+    "version": "1.0.0",
+    "description": "TypeScript SDK for Safaricom Daraja M-Pesa API",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "nodemon --exec ts-node src/index.ts",
+        "cli": "ts-node src/cli.ts",
+        "start": "node dist/index.js",
+        "clean": "rm -rf dist"
+    },
+    "keywords": [
+        "mpesa",
+        "daraja",
+        "safaricom",
+        "payment",
+        "sdk"
+    ],
+    "author": "Amos Kyalo",
+    "license": "MIT",
+    "dependencies": {
+        "commander": "^14.0.2"
+    },
+    "devDependencies": {
+        "@types/axios": "^0.14.4",
+        "@types/node": "^24.10.0",
+        "@typescript-eslint/eslint-plugin": "^8.46.3",
+        "@typescript-eslint/parser": "^8.46.3",
+        "eslint": "^9.39.1",
+        "nodemon": "^3.1.10",
+        "prettier": "^3.6.2",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
+    }
+}

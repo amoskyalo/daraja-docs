@@ -189,6 +189,37 @@ export const SIDENAVITEMS = [
         versions: ['v3'],
     },
     {
+        title: 'SDKs',
+        versions: ['v2', 'v3'],
+        children: [
+            {
+                title: 'Overview',
+                segment: '/docs/sdks/overview',
+                versions: ['v2', 'v3'],
+            },
+            {
+                title: 'Node.js SDK',
+                segment: '/docs/sdks/nodejs-sdk',
+                versions: ['v2', 'v3'],
+            },
+            {
+                title: 'Python SDK',
+                segment: '/docs/sdks/python-sdk',
+                versions: ['v2', 'v3'],
+            },
+            {
+                title: 'Java SDK',
+                segment: '/docs/sdks/java-sdk',
+                versions: ['v2', 'v3'],
+            },
+            {
+                title: 'C# SDK',
+                segment: '/docs/sdks/csharp-sdk',
+                versions: ['v2', 'v3'],
+            },
+        ],
+    },
+    {
         title: 'Community',
     },
     {

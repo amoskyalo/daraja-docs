@@ -27,7 +27,7 @@ export default function DocsNotFound() {
                 </Typography>
                 
                 <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '600px' }}>
-                    The documentation page you're looking for doesn't exist or has been moved.
+                    The documentation page you&apos;re looking for doesn&apos;t exist or has been moved.
                 </Typography>
                 
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>

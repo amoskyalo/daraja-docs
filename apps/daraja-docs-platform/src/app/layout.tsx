@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { Suspense } from 'react';
 import './globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'nprogress/nprogress.css';
@@ -29,7 +30,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <Layout>{children}</Layout>
+               <Suspense fallback={<p>Loading</p>}>
+                 <Layout>{children}</Layout>
+               </Suspense>
             </body>
         </html>
     );

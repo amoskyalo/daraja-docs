@@ -1,0 +1,122 @@
+---
+title: SDKs Overview
+description: SDKs Overview
+---
+
+# SDKs Overview
+
+M-PESA Daraja API provides official Software Development Kits (SDKs) in multiple programming languages to simplify integration and accelerate your development process. These SDKs handle authentication, request formatting, and response parsing, allowing you to integrate M-PESA payments with just a few lines of code.
+
+## Why Use Our SDKs?
+
+- **Simplified Integration**: No need to manually construct HTTP requests or handle authentication
+- **Type Safety**: Built-in type checking and IntelliSense support in your IDE
+- **Automatic Token Management**: Authentication tokens are generated and refreshed automatically
+- **Error Handling**: Comprehensive error messages for easier debugging
+- **Dual Interface**: Use as a library in your code OR as a CLI tool for testing and automation
+- **Production-Ready**: Thoroughly tested and regularly updated
+
+## Available SDKs
+
+### Node.js SDK
+
+For JavaScript and TypeScript developers building server-side applications with Node.js, Express, NestJS, or serverless functions.
+
+**Features:**
+
+- **Library Mode**: Import and use in your application code
+- **CLI Mode**: Run commands directly from your terminal for testing and automation
+
+<Terminal title="CLI Usage">
+{`
+# Use as CLI
+npx mpesa-sdk auth --consumer-key your-key --consumer-secret your-secret
+npx mpesa-sdk stk-push --phone 254712345678 --amount 100
+
+# Or install globally
+
+npm install -g mpesa-sdk
+mpesa auth
+`}
+
+</Terminal>
+
+### Python SDK
+
+For Python developers using Flask, Django, FastAPI, or standalone Python applications.
+
+### Java SDK
+
+For enterprise Java applications using Spring Boot, Jakarta EE, or Android backend integration.
+
+### C# SDK
+
+For .NET developers building ASP.NET Core applications, desktop apps, or Azure Functions.
+
+## Common Features
+
+All SDKs provide:
+
+- Support for all Daraja API endpoints (STK Push, C2B, B2C, B2B, Transaction Status, etc.)
+- Both Sandbox and Production environment support
+- Webhook/callback response handling utilities
+- Comprehensive documentation and code examples
+- Open source with community support
+
+## Usage Modes
+
+### As a Library (Code Integration)
+
+Perfect for production applications where you need programmatic access:
+
+```typescript
+import { MpesaSDK } from 'mpesa-sdk';
+
+const mpesa = new MpesaSDK({
+    consumerKey: 'your-key',
+    consumerSecret: 'your-secret',
+    environment: 'sandbox',
+});
+
+const response = await mpesa.stkPush({
+    phoneNumber: '254712345678',
+    amount: 100,
+    accountReference: 'INV-001',
+    transactionDesc: 'Payment',
+});
+```
+
+### As a CLI Tool (Testing & Automation)
+
+Perfect for quick testing, debugging, and CI/CD pipelines:
+
+<Terminal title="CLI Usage">
+{`
+# Test authentication
+mpesa auth --consumer-key your-key --consumer-secret your-secret
+
+# Initiate STK Push
+mpesa stk-push --phone 254712345678 --amount 100
+
+# Check transaction status
+mpesa status --transaction-id LHG31AA5TX
+
+# Register C2B URLs
+mpesa c2b-register --shortcode 174379
+`}
+
+</Terminal>
+
+**CLI Benefits:**
+
+- Quick testing without writing code
+- Debug API responses instantly
+- Automate workflows in shell scripts
+- Integrate with CI/CD pipelines
+
+## Getting Started
+
+1. Choose the SDK that matches your technology stack
+2. Install via your package manager (npm, pip, Maven, NuGet)
+3. Configure your API credentials
+4. Start making API calls - in code or via CLI

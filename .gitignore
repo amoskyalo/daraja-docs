@@ -40,9 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 **/next-env.d.ts
 
-# claude
-CLAUDE.md
-
 # turbo
 .turbo
 **/.turbo

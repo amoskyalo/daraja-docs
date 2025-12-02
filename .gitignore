@@ -51,3 +51,7 @@ apps/**/package-lock.json
 packages/**/package-lock.json
 apps/**/yarn.lock
 packages/**/yarn.lock
+
+#others
+CLAUDE.md
+.claude

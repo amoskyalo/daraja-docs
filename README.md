@@ -81,7 +81,7 @@ Create `apps/daraja-graphql-server/.env`:
 
 ```env
 PORT=4000
-BASE_URL=https://api.safaricom.co.ke
+BASE_URL=<backend-base-url>
 GITHUB_BASE_URL=https://api.github.com
 GITHUB_API_KEY=<your-github-personal-access-token>
 HASHNODE_APIS_BASE_URL=https://gql.hashnode.com

@@ -1,10 +1,7 @@
 import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material';
-import { useResponsiveness } from '../../shared/hooks';
 import Image from 'next/image';
 
 export const CtaSection = () => {
-    const { isMobile } = useResponsiveness();
-    
     return (
         <Box sx={{ pb: '100px', pt: { xs: '0px', sm: '50px', md: '50px' }, px: { xs: 2, sm: 2, md: 10 } }}>
             <Container
@@ -19,7 +16,7 @@ export const CtaSection = () => {
                 <Grid container>
                     <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={3}>
-                            <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ color: 'white' }}>
+                            <Typography variant={{ xs: 'h5', md: 'h4' }} sx={{ color: 'white' }}>
                                 Seamless Integration for Impactful Innovative Solutions
                             </Typography>
                             <Typography variant="body1" sx={{ color: 'white' }}>

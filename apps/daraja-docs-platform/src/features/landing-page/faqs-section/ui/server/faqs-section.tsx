@@ -1,17 +1,5 @@
-'use client';
-
-import {
-    Box,
-    Container,
-    Stack,
-    Typography,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    Button,
-} from '@mui/material';
-import { useState } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Container, Stack, Typography } from '@mui/material';
+import { FaqItem } from '../client/faq-item';
 
 const faqs = [
     {
@@ -23,13 +11,13 @@ const faqs = [
     {
         title: 'What Short code do you use?',
         description:
-            'When testing in the sandbox environment all APIs Short code 1 = all APIs except B2B i.e. ‘Party B’ where you use Short Code 2. Lipa na M-Pesa online Short code = 174379 (FOR LIPA NA MPESA ONLINE ONLY). The test credentials are provided in Sandbox.',
+            "When testing in the sandbox environment all APIs Short code 1 = all APIs except B2B i.e. 'Party B' where you use Short Code 2. Lipa na M-Pesa online Short code = 174379 (FOR LIPA NA MPESA ONLINE ONLY). The test credentials are provided in Sandbox.",
         category: 'General Concepts',
     },
     {
         title: 'How do I generate a token on sandbox?',
         description:
-            'Kindly go to the API menu, under the list of APIs click on the OAuth API, on the right, click on the GENERATE TOKEN, scroll down to the Query parameters and click on the HTTP BASIC, on the pop up, enter your Consumer key and Consumer Secret (This are found under my app, view app details tab, Keys), save to set authentications, click on send this request button, your requests will be generated and access token available below on tab “Response”.',
+            'Kindly go to the API menu, under the list of APIs click on the OAuth API, on the right, click on the GENERATE TOKEN, scroll down to the Query parameters and click on the HTTP BASIC, on the pop up, enter your Consumer key and Consumer Secret (This are found under my app, view app details tab, Keys), save to set authentications, click on send this request button, your requests will be generated and access token available below on tab "Response".',
         category: 'Authentication & Tokens',
     },
     {
@@ -101,7 +89,7 @@ const faqs = [
     {
         title: 'Do APIs work outside Kenya?',
         description:
-            'M-PESA is available in all the Vodacom countries. However, they all run as different stand-alone mobile money service providers within their borders, regulated with the different Central Banks for each country. Therefore, integrating with Safaricom’s M-PESA in Kenya means that only the users in Kenya will be able to consume the service. You will be required to have a collection account in all the countries and integrate with the APIs for all the countries.',
+            "M-PESA is available in all the Vodacom countries. However, they all run as different stand-alone mobile money service providers within their borders, regulated with the different Central Banks for each country. Therefore, integrating with Safaricom's M-PESA in Kenya means that only the users in Kenya will be able to consume the service. You will be required to have a collection account in all the countries and integrate with the APIs for all the countries.",
         category: 'General Concepts',
     },
     {
@@ -118,7 +106,7 @@ const faqs = [
     {
         title: 'I have tried deleting my app on Daraja, but I am getting an error. What should I do?',
         description:
-            'For an app to be deleted from our side, send an email request from the registered email on M-Pesa Org Portal or send us a stamped request letter on email, with a director’s signature, the company letter head and today’s date indicated.',
+            "For an app to be deleted from our side, send an email request from the registered email on M-Pesa Org Portal or send us a stamped request letter on email, with a director's signature, the company letter head and today's date indicated.",
         category: 'Account & Portal Management',
     },
     {
@@ -142,7 +130,7 @@ const faqs = [
     {
         title: 'How do I re-register URLs?',
         description:
-            'Yes, you can in the sandbox (testing environment) but you cannot change the registered URLs on production. However, we can delete them for you so that you can register new ones. For them to be deleted, send a stamped request letter via email with a director’s signature, the company letterhead and today’s date indicated. Send the email to APIfeedback@safaricom.co.ke or APIsupport@safaricom.co.ke.',
+            "Yes, you can in the sandbox (testing environment) but you cannot change the registered URLs on production. However, we can delete them for you so that you can register new ones. For them to be deleted, send a stamped request letter via email with a director's signature, the company letterhead and today's date indicated. Send the email to APIfeedback@safaricom.co.ke or APIsupport@safaricom.co.ke.",
         category: 'Integration & URL Configuration',
     },
     {
@@ -154,7 +142,7 @@ const faqs = [
     {
         title: 'For an administrator to be created on the M-PESA Organization Portal, the below details are required:',
         description:
-            'An official request letter on company letterhead signed and stamped by authorized signatories. The letter should have the following details: organization short code, organization name, administrator’s user name, first name, middle name (optional), last name, ID type (National ID, Passport, etc.), scanned ID front and back, ID number, nationality, date of birth, email address, and administrator phone number. Send the letter to M-PESABusiness@Safaricom.co.ke.',
+            "An official request letter on company letterhead signed and stamped by authorized signatories. The letter should have the following details: organization short code, organization name, administrator's user name, first name, middle name (optional), last name, ID type (National ID, Passport, etc.), scanned ID front and back, ID number, nationality, date of birth, email address, and administrator phone number. Send the letter to M-PESABusiness@Safaricom.co.ke.",
         category: 'Account & Portal Management',
     },
     {
@@ -194,53 +182,26 @@ const faqs = [
     },
 ];
 
-const faqCategories = [
-    'General Concepts',
-    'Authentication & Tokens',
-    'Sandbox Environment',
-    'Production & Go-Live Process',
-    'Integration & URL Configuration',
-    'Account & Portal Management',
-    'Transaction & Product Operations',
-];
-
-const icons = ['🧩', '🔐', '🧪', '🚀', '💬', '🏦', '💸'];
-
 export const FaqsSection = () => {
-    const [selectedCategory, setSelectedCategory] = useState<string>(faqCategories[0]);
-
-    const faqsByCategory = faqs.filter((faq) => faq.category === selectedCategory);
-    const index = faqCategories.indexOf(selectedCategory);
-    const icon = icons[index];
-
     return (
         <Container maxWidth="lg" sx={{ px: '0px !important', py: '100px' }}>
             <Stack direction="column" spacing={4} alignItems="center" justifyContent="center">
-                <Typography variant="h2" sx={{ textAlign: 'center' }}>
+                <Typography
+                    variant="h2"
+                    sx={{
+                        textAlign: 'center',
+                        fontSize: { xs: '2rem', md: '2.5rem' },
+                        fontWeight: { xs: 600, md: 700 },
+                        lineHeight: { xs: 1.167, md: 1.2 },
+                    }}
+                >
                     FAQs.{' '}
                     <Typography variant="h6" color="text.secondary" component="span" sx={{ fontWeight: 500 }}>
                         Your questions answered
                     </Typography>
                 </Typography>
 
-               <Box maxWidth="md">
-                        {/* <Typography variant="h6" sx={{ mb: 2 }}>
-                            {icon} {selectedCategory}
-                        </Typography> */}
-
-                        {faqs.map((faq, index) => (
-                            <Accordion key={index} elevation={0}>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1-content"
-                                    id="panel1-header"
-                                >
-                                    <Typography component="span">{faq.title}</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>{faq.description}</AccordionDetails>
-                            </Accordion>
-                        ))}
-                    </Box>
+                <FaqItem faqs={faqs} />
             </Stack>
         </Container>
     );

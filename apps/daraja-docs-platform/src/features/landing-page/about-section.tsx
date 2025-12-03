@@ -22,15 +22,15 @@ const cards = [
 export const AboutSection = () => {
     return (
         <Container maxWidth="lg" sx={{ px: { md: '0px !important' }, py: '80px' }}>
-            <Stack
-                direction="column"
-                spacing={{ xs: 2, md: 4 }}
-                alignItems="center"
-                justifyContent="center"
-            >
+            <Stack direction="column" spacing={{ xs: 2, md: 4 }} alignItems="center" justifyContent="center">
                 <Typography
-                    variant={{ xs: 'h3', md: 'h2' }}
-                    sx={{ textAlign: 'center' }}
+                    variant="h2"
+                    sx={{
+                        textAlign: 'center',
+                        fontSize: { xs: '2rem', md: '2.5rem' },
+                        fontWeight: { xs: 600, md: 700 },
+                        lineHeight: { xs: 1.167, md: 1.2 },
+                    }}
                 >
                     What is Daraja?{' '}
                     <Typography
@@ -43,8 +43,14 @@ export const AboutSection = () => {
                     </Typography>
                 </Typography>
                 <Typography
-                    variant={{ xs: 'body2', md: 'body1' }}
-                    sx={{ width: { xs: '100%', md: '65%' }, textAlign: 'center', lineHeight: 1.7, fontWeight: 500 }}
+                    variant="body1"
+                    sx={{
+                        width: { xs: '100%', md: '65%' },
+                        textAlign: 'center',
+                        fontSize: { xs: '0.875rem', md: '1rem' },
+                        fontWeight: 400,
+                        lineHeight: { xs: 1.43, md: 1.5 },
+                    }}
                 >
                     Daraja is a web platform that offers access to Safaricom and M-PESA APIs that creates a bridge for
                     payment integration to web and mobile apps. By connecting to our APIs, you open a world of

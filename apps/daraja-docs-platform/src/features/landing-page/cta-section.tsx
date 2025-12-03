@@ -16,7 +16,15 @@ export const CtaSection = () => {
                 <Grid container>
                     <Grid size={{ xs: 12, md: 6 }}>
                         <Stack spacing={3}>
-                            <Typography variant={{ xs: 'h5', md: 'h4' }} sx={{ color: 'white' }}>
+                            <Typography
+                                variant="h4"
+                                sx={{
+                                    color: 'white',
+                                    fontSize: { xs: '1.5rem', md: '2.125rem' },
+                                    fontWeight: 400,
+                                    lineHeight: { xs: 1.334, md: 1.235 },
+                                }}
+                            >
                                 Seamless Integration for Impactful Innovative Solutions
                             </Typography>
                             <Typography variant="body1" sx={{ color: 'white' }}>

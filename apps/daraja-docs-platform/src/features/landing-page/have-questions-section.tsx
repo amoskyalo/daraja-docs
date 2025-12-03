@@ -1,5 +1,4 @@
 import { Stack, Container, Typography, Grid, Box, Button } from '@mui/material';
-import { useResponsiveness } from '../../shared/hooks';
 import EastIcon from '@mui/icons-material/East';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -27,8 +26,6 @@ const help = [
 ];
 
 export const HaveQuestionsSection = () => {
-    const { isMobile } = useResponsiveness();
-
     return (
         <Stack
             direction="column"
@@ -42,7 +39,15 @@ export const HaveQuestionsSection = () => {
             }}
         >
             <Container maxWidth="lg" sx={{ px: { md: '0px !important' } }}>
-                <Typography variant={isMobile ? 'h3' : 'h2'} sx={{ textAlign: 'center' }}>
+                <Typography
+                    variant="h2"
+                    sx={{
+                        textAlign: 'center',
+                        fontSize: { xs: '2rem', md: '2.5rem' },
+                        fontWeight: { xs: 600, md: 700 },
+                        lineHeight: { xs: 1.167, md: 1.2 },
+                    }}
+                >
                     Have a question?{' '}
                     <Typography
                         variant="h6"

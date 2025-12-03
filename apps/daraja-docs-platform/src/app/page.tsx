@@ -14,12 +14,12 @@ const Home = () => {
     return (
         <Stack>
             <HeroSection />
-            {/* <AboutSection />
+            <AboutSection />
             <MiniProgramSection />
             <HaveQuestionsSection />
             <FaqsSection />
             <CtaSection />
-            <FooterSection /> */}
+            <FooterSection />
         </Stack>
     );
 };

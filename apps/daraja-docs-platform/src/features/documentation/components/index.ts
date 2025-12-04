@@ -1,4 +1,3 @@
-export * from './bottom-navigator';
-export * from './table-of-contents';
-export * from './containers';
-export * from './contents-container';
+export { TableOfContents } from './table-of-contents';
+export { BottomNavigation } from './bottom-navigation';
+export { DocumentationContent } from './documentation-content';

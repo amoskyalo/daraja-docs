@@ -1,6 +1,5 @@
 import { getDocumentationBySlug, getAllDocumentationSlugs } from '../../../shared/lib/mdx';
-import { Box, Container, Typography } from '@mui/material';
-import { ContentsContainer } from '../../../features/documentation';
+import { DocumentationContent } from '../../../features/documentation';
 import type { Metadata } from 'next';
 import { SIDENAVITEMS } from '../../../config';
 import { notFound } from 'next/navigation';
@@ -30,7 +29,7 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
     const prevDoc = ITEMS[currentDoc - 1];
     const nextDoc = ITEMS[currentDoc + 1];
 
-   return <ContentsContainer doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} hideTabs />;
+    return <DocumentationContent doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} hideTabs />;
 }
 
 export async function generateMetadata({ params }: Readonly<DocsPageProps>): Promise<Metadata> {

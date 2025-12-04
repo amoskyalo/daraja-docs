@@ -1,7 +1,7 @@
 'use client';
 
 import { Grid, Box } from '@mui/material';
-import { LoginCredentialsContextProvider } from '../../shared/context';
+import { LoginCredentialsContextProvider, ApolloClientProvider } from '../../shared/context';
 import Image from 'next/image';
 
 interface AuthLayoutProps {
@@ -10,7 +10,8 @@ interface AuthLayoutProps {
 
 export default function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
     return (
-        <LoginCredentialsContextProvider>
+        <ApolloClientProvider>
+            <LoginCredentialsContextProvider>
             <Grid container sx={{ height: '100dvh', maxHeight: '100dvh', overflow: 'hidden', position: 'relative' }}>
                 <Grid size={{ xs: 12, sm: 12, md: 5 }}>{children}</Grid>
 
@@ -35,5 +36,6 @@ export default function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
                 </Box>
             </Grid>
         </LoginCredentialsContextProvider>
+        </ApolloClientProvider>
     );
 }

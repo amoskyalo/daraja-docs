@@ -50,6 +50,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.87.1
         version: 5.90.11(react@19.1.0)
+      '@types/nprogress':
+        specifier: ^0.2.3
+        version: 0.2.3
       algoliasearch:
         specifier: ^5.35.0
         version: 5.45.0
@@ -138,9 +141,6 @@ importers:
       '@types/node':
         specifier: ^20
         version: 20.19.25
-      '@types/nprogress':
-        specifier: ^0.2.3
-        version: 0.2.3
       '@types/postman-collection':
         specifier: ^3.5.11
         version: 3.5.11
@@ -162,9 +162,6 @@ importers:
       eslint-config-next:
         specifier: 15.4.6
         version: 15.4.6(eslint@9.39.1)(typescript@5.9.3)
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
       typescript:
         specifier: ^5
         version: 5.9.3

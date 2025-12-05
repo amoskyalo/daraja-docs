@@ -96,7 +96,7 @@ const BlogsPage = () => {
                                         cursor: 'pointer',
                                         border: 1.5,
                                         borderColor: 'divider',
-                                        borderRadius: 1.5,
+                                        borderRadius: 4,
                                         overflow: 'hidden',
                                     }}
                                 >

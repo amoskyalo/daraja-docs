@@ -68,7 +68,7 @@ export const FieldInput = ({ label, type, required, description, value, placehol
                     sx={{
                         border: 1,
                         borderColor: 'divider',
-                        borderRadius: 2,
+                        borderRadius: 2.5,
                         paddingX: 1,
                     }}
                 />

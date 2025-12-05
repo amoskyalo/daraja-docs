@@ -34,6 +34,10 @@ const nextConfig: NextConfig = {
     compress: true,
     
     async headers() {
+        if (process.env.NODE_ENV !== 'production') {
+            return [];
+        }
+
         return [
             {
                 source: '/docs/:path*',

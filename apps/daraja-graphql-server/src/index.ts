@@ -29,8 +29,6 @@ async function startApolloServer(typeDefs: any, resolvers: any) {
 
     await server.start();
 
-    console.log(base_url)
-
     app.use(
         cors({
             origin: "*",

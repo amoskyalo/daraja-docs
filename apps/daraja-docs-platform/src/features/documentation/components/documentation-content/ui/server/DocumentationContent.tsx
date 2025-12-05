@@ -1,7 +1,10 @@
+'use client';
+
 import { Grid } from '@mui/material';
 import { ContentRenderer } from '../client/ContentRenderer';
 import { TableOfContents } from '../../../table-of-contents';
 import { extractTableOfContents } from '../../../../utils/extractTableOfContents';
+import { useSearchParams } from '../../../../../../shared/hooks';
 
 interface DocumentationContentProps {
     doc: any;
@@ -11,7 +14,10 @@ interface DocumentationContentProps {
 }
 
 export const DocumentationContent = ({ doc, prevDoc, nextDoc, hideTabs }: DocumentationContentProps) => {
-    // Extract table of contents from the default or v2 version
+    const { getParam } = useSearchParams();
+    const activeTab = getParam('tab') || 'documentation';
+    const isPlaygroundTab = activeTab === 'playground';
+
     const defaultVersion = doc.docs.v2 || Object.values(doc.docs)[0];
     const tableOfContentsData = extractTableOfContents(defaultVersion.rawContent);
 
@@ -28,7 +34,7 @@ export const DocumentationContent = ({ doc, prevDoc, nextDoc, hideTabs }: Docume
             }}
         >
             <Grid
-                size={{ xs: 12, md: 8.5 }}
+                size={{ xs: 12, md: isPlaygroundTab ? 12 : 8.5 }}
                 sx={{
                     pb: 4,
                     pl: { xs: 3, md: 1, lg: 0 },
@@ -39,16 +45,18 @@ export const DocumentationContent = ({ doc, prevDoc, nextDoc, hideTabs }: Docume
                 <ContentRenderer doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} hideTabs={hideTabs} />
             </Grid>
 
-            <Grid
-                id="table-of-contents"
-                size={{ xs: 0, md: 3.5 }}
-                sx={{
-                    py: 2,
-                    display: { xs: 'none', md: 'block' },
-                }}
-            >
-                <TableOfContents headings={tableOfContentsData} />
-            </Grid>
+            {!isPlaygroundTab && (
+                <Grid
+                    id="table-of-contents"
+                    size={{ xs: 0, md: 3.5 }}
+                    sx={{
+                        py: 2,
+                        display: { xs: 'none', md: 'block' },
+                    }}
+                >
+                    <TableOfContents headings={tableOfContentsData} />
+                </Grid>
+            )}
         </Grid>
     );
 };

@@ -19,7 +19,7 @@ export const PlaygroundControls = ({ method, url, onSend }: PlaygroundControlsPr
                     width: 250,
                     border: 1,
                     borderColor: 'divider',
-                    borderRadius: 2,
+                    borderRadius: 2.5,
                     pl: 1,
                     py: 0.5,
                     pr: 0.5,
@@ -41,7 +41,7 @@ export const PlaygroundControls = ({ method, url, onSend }: PlaygroundControlsPr
                     flex: 1,
                     border: 1,
                     borderColor: 'divider',
-                    borderRadius: 2,
+                    borderRadius: 2.5,
                     px: 0.7,
                     py: 0.75,
                     cursor: 'pointer',
@@ -73,7 +73,7 @@ export const PlaygroundControls = ({ method, url, onSend }: PlaygroundControlsPr
                 </Typography>
             </Stack>
 
-            <Button onClick={onSend} variant="contained" size="small" sx={{ borderRadius: 2 }}>
+            <Button onClick={onSend} variant="contained" size="small" sx={{ borderRadius: 2.5 }}>
                 Simulate
             </Button>
         </Stack>

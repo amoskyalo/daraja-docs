@@ -19,7 +19,7 @@ interface FieldGroupProps {
 
 export const FieldGroup = ({ label, inputs, fieldKey, fieldValues, onFieldChange }: FieldGroupProps) => {
     return (
-        <Box sx={{ borderRadius: 2, border: 1, borderColor: 'divider', py: 1, mt: 2, px: 2 }}>
+        <Box sx={{ borderRadius: 3, border: 1, borderColor: 'divider', py: 1, mt: 2, px: 2 }}>
             <Stack
                 direction="row"
                 alignItems="center"

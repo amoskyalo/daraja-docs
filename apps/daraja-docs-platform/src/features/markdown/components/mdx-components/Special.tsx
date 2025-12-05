@@ -114,7 +114,7 @@ export const SpecialComponents = {
                 sx={{
                     border: 1,
                     borderColor: 'divider',
-                    borderRadius: 1.5,
+                    borderRadius: 2,
                     px: 1,
                     py: 0.5,
                     mb: 2,

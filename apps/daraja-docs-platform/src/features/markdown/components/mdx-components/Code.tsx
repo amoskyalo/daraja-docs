@@ -8,44 +8,20 @@ import { useCopyToClipboard } from '../../../../shared/hooks';
 import { CodeContainer } from '../CodeContainer';
 
 export const CodeComponents = {
-    code: (props: MDXElementProps) => (
-        <Box
-            component="code"
-            sx={{
-                backgroundColor: 'action.hover',
-                borderRadius: 1,
-                fontFamily: 'monospace',
-                fontSize: '0.875rem',
-                paddingY: 0.3,
-                paddingX: 0.5,
-                maxHeight: 400,
-                color: 'text.primary',
-                ...(props.className?.includes('language-') && {
-                    display: 'block',
-                    backgroundColor: 'background.paper',
-                    color: 'text.primary',
-                    paddingX: 2,
-                    borderRadius: 2,
-                    overflow: 'auto',
-                }),
-            }}
-            {...props}
-        />
-    ),
-
     pre: (props: MDXElementProps) => (
         <Paper
             component="pre"
             sx={{
                 overflow: 'auto',
                 padding: '0px !important',
-                backgroundColor: 'background.paper',
+                backgroundColor: '#15191a !important',
+                borderRadius: '16px !important',
                 margin: '0px !important',
                 '& code': {
                     backgroundColor: 'transparent !important',
                     padding: '16px !important',
                     display: 'block',
-                    color: 'text.primary',
+                    fontSize: 14,
                 },
             }}
             {...props}

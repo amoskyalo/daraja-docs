@@ -21,6 +21,7 @@ body {
     scrollbar-color: rgba(255, 255, 255, 0.8) transparent !important;
 }
 
+.language-javascript,
 .nav-links-container,
 .MuiPaper-root,
 .MuiMenu-paper,

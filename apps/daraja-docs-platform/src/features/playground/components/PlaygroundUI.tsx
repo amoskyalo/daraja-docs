@@ -151,7 +151,7 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
     }, []);
 
     return (
-        <Box sx={{ backgroundColor: 'action.hover', mt: 2, borderRadius: 2, overflow: 'hidden' }}>
+        <Box sx={{ backgroundColor: 'action.hover', mt: 2, borderRadius: 3, overflow: 'hidden' }}>
             <PlaygroundHeader />
 
             <Box sx={{ px: 2, pb: 2 }}>

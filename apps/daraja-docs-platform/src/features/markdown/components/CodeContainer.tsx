@@ -45,21 +45,27 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
             elevation={0}
             sx={{
                 mt: 1,
-                position: 'relative',
-                borderRadius: 2,
+                borderRadius: 4.3,
                 backgroundColor: 'action.hover',
-                overflow: 'hidden',
+                p: 0.3,
+                border: 1,
+                borderColor: 'divider',
             }}
         >
             <Stack sx={{ py: 1, px: 2 }} direction="row" alignItems="center" justifyContent="space-between">
-                <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
+                <Typography variant="body2" color="text.secondary">
                     {title ?? 'Response'}
                 </Typography>
 
-                <Stack direction="row" alignItems="center" gap={2}>
+                <Stack direction="row" alignItems="center" gap={1.5}>
                     <Tooltip title="Explain with AI">
                         <AutoAwesomeIcon
-                            sx={{ fontSize: 18, cursor: 'pointer', display: { md: 'block', sm: 'none', xs: 'none' } }}
+                            sx={{
+                                fontSize: 16,
+                                cursor: 'pointer',
+                                color: 'text.secondary',
+                                display: { md: 'block', sm: 'none', xs: 'none' },
+                            }}
                             onClick={() => {
                                 const input = `Explain the code below in details \n\n\n${getCode()}`;
                                 setQuestion(input);
@@ -70,7 +76,7 @@ export const CodeContainer = ({ children, title }: { children: React.ReactNode; 
                     </Tooltip>
 
                     <Tooltip title={copied ? 'Copied!' : 'Copy'} onClick={() => Copy(getCode())}>
-                        <ContentCopyIcon sx={{ fontSize: 16, cursor: 'pointer' }} />
+                        <ContentCopyIcon sx={{ fontSize: 14, cursor: 'pointer', color: 'text.secondary' }} />
                     </Tooltip>
                 </Stack>
             </Stack>

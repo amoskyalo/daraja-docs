@@ -89,19 +89,23 @@ export const MarkdownComponents = ({
                         <Box
                             component="pre"
                             className="language-javascript"
+                            id='code'
                             sx={{
                                 overflow: 'auto',
                                 fontSize: '12px !important',
                                 margin: '0px !important',
-                                backgroundColor: '#282a36',
+                                backgroundColor: '#15191a !important',
                                 maxHeight: maxHeight ?? '400px',
-                                borderRadius: borderRadius ?? '8px !important',
+                                borderRadius: borderRadius ?? '16px !important',
+                                borderTopLeftRadius: '16px !important',
+                                borderTopRightRadius: '16px !important',
                                 position: 'relative',
                                 '& code': {
                                     fontFamily:
                                         '"Fira Code", "SF Mono", Monaco, Inconsolata, "Roboto Mono", Consolas, "Courier New", monospace',
                                     backgroundColor: 'transparent !important',
                                 },
+                                // border: '1px solid red',
                             }}
                         >
                             {/* <Box sx={{ position: 'absolute', top: 10, right: 10 }}>

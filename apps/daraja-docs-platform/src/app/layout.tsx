@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import './globals.css';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'nprogress/nprogress.css';
-import Layout from './_components/_layout';
+import Layout from './_components/Layout';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',

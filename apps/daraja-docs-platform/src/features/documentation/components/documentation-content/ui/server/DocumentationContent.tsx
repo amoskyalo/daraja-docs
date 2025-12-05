@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import { ContentRenderer } from '../client/content-renderer';
+import { ContentRenderer } from '../client/ContentRenderer';
 import { TableOfContents } from '../../../table-of-contents';
 import { extractTableOfContents } from '../../../../utils/extractTableOfContents';
 

@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, Paper, IconButton } from '@mui/material';
 import { Frown, SmilePlus, Smile, Angry } from 'lucide-react';
-import { NavInteractive } from '../client/nav-interactive';
+import { NavInteractive } from '../client/NavInteractive';
 
 interface NavDoc {
     title: string;

@@ -1,5 +1,5 @@
 import { Container, Stack, Typography } from '@mui/material';
-import { FaqItem } from '../client/faq-item';
+import { FaqItem } from '../client/FaqItem';
 
 const faqs = [
     {

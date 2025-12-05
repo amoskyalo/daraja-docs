@@ -6,7 +6,7 @@ import { useSearchParams } from '../../../../../../shared/hooks';
 import { MDXRenderer } from '../../../../../markdown/components';
 import { Playground } from '../../../../../playground';
 import { BottomNavigation } from '../../../bottom-navigation';
-import { AIQuestionInput } from './ai-question-input';
+import { AIQuestionInput } from './AiQuestionInput';
 
 interface ContentRendererProps {
     doc: any;

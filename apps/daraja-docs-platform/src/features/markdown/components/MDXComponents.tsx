@@ -25,7 +25,7 @@ import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
-import { CodeContainer } from './code-container';
+import { CodeContainer } from './CodeContainer';
 import { Playground } from '../../playground';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {

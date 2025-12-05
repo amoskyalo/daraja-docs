@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import SegmentIcon from '@mui/icons-material/Segment';
-import { TocInteractive } from '../client/toc-interactive';
+import { TocInteractive } from '../client/TocInteractive';
 import type { HeadingItem } from '../../../../utils/extractTableOfContents';
 
 interface TableOfContentsProps {

@@ -1,1 +1,1 @@
-export { BottomNavigation } from './ui/server/bottom-navigation';
+export { BottomNavigation } from './ui/server/BottomNavigation';

@@ -1,2 +1,2 @@
-export * from './status-button';
-export * from './loading-button';
+export * from './StatusButton';
+export * from './LoadingButton';

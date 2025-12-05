@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState, useCallback } from 'react';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { lightTheme, darkTheme } from './theme';
@@ -38,7 +38,7 @@ export const AppThemeProvider = ({ children }: Readonly<ThemeProviderProps>) => 
         setMounted(true);
     }, []);
 
-    const toggleTheme = (theme: ThemeType) => {
+    const toggleTheme = useCallback((theme: ThemeType) => {
         const setLightTheme = () => {
             setIsDark(false);
             document.documentElement.classList.remove('dark');
@@ -74,7 +74,7 @@ export const AppThemeProvider = ({ children }: Readonly<ThemeProviderProps>) => 
             setDarkTheme();
             setCurrentTheme('dark');
         }
-    };
+    }, []);
 
     const value = useMemo(() => ({ isDark, toggleTheme, currentTheme }), [isDark, toggleTheme, currentTheme]);
 

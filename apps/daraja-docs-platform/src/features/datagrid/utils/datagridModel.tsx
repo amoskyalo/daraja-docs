@@ -4,9 +4,9 @@ import { useSearchParams } from '../../../shared/hooks/useSearchParams';
 import { GridProps, QueryParams } from '../../../config/types/datagrid.types';
 import { Box, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { DataGridToolbar } from '../components/datagrid-toolbar';
-import { DataGridFooter } from '../components/datagrid-footer';
-import { DataGridActions } from '../components/datagrid-actions';
+import { DataGridToolbar } from '../components/DatagridToolbar';
+import { DataGridFooter } from '../components/DatagridFooter';
+import { DataGridActions } from '../components/DatagridActions';
 import { utils } from '../../../shared/utils';
 declare module '@mui/x-data-grid' {
     interface ToolbarPropsOverrides {

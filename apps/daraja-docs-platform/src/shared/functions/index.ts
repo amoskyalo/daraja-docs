@@ -1,1 +1,1 @@
-export * from './serverAction';
+export * from './serverActions';

@@ -1,7 +1,7 @@
 'use client';
 
 import { Typography, Button, Stack, Link } from '@mui/material';
-import { SignUpForm } from './_components/sign-up-form';
+import { SignUpForm } from './_components/SignUpForm';
 import { useSearchParams } from '../../shared/hooks';
 
 const MiniApps = () => {

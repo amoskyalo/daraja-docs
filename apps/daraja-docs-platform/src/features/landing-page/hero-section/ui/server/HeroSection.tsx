@@ -1,5 +1,5 @@
 import { Container, Stack, Typography, Button } from '@mui/material';
-import { GridBackground } from '../client/grid-background';
+import { GridBackground } from '../client/GridBackground';
 
 export const HeroSection = () => {
     return (

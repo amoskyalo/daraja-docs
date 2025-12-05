@@ -1,5 +1,5 @@
 import { GridProps } from '../../../config/types/datagrid.types';
-import { GridModel } from './datagrid-model';
+import { GridModel } from './datagridModel';
 
 export const gridConstructor = class<TData, TParams> {
     public config: {

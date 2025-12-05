@@ -1,4 +1,4 @@
 export * from './MDXComponents';
 export * from './MDXRenderer';
-export * from './code-container';
+export * from './CodeContainer';
 export * from './MarkdownComponents';

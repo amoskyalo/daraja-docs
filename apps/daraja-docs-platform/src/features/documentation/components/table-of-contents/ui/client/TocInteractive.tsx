@@ -1,28 +1,23 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Box, Typography, Link, Stack } from '@mui/material';
-import { useSearchParams } from '../../../shared/hooks';
-import type { HeadingItem } from '../utils/extractTableOfContents';
+import { Box, Link, Stack, Typography } from '@mui/material';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
-import SegmentIcon from '@mui/icons-material/Segment';
+import type { HeadingItem } from '../../../../utils/extractTableOfContents';
 
-interface TableOfContentsProps {
+interface TocInteractiveProps {
     headings: HeadingItem[];
-    width: number;
 }
 
-export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsProps>) => {
+export const TocInteractive = ({ headings }: TocInteractiveProps) => {
     const [activeId, setActiveId] = useState<string>(headings[0]?.id || '');
     const [isScrolled, setIsScrolled] = useState(false);
-    const { getParam } = useSearchParams();
-    const activeTab = getParam('tab') || 'documentation';
 
     useEffect(() => {
         const container = document.getElementById('layout');
 
         const handleScroll = () => {
-            if (container && container?.scrollTop >= 100) {
+            if (container && container.scrollTop >= 100) {
                 setIsScrolled(true);
             } else {
                 setIsScrolled(false);
@@ -34,12 +29,7 @@ export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsPro
         return () => {
             container?.removeEventListener('scroll', handleScroll);
         };
-    }, [activeTab]);
-
-    const handleScrollTop = () => {
-        const container = document.getElementById('layout');
-        container?.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    }, []);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -68,10 +58,15 @@ export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsPro
         }
     };
 
+    const handleScrollTop = () => {
+        const container = document.getElementById('layout');
+        container?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     function arrangeHeaders() {
         let cachePrevLastParentLevel: number | null = null;
 
-        return headings.map((heading, index) => {
+        return headings.map((heading) => {
             if (cachePrevLastParentLevel === null || cachePrevLastParentLevel >= heading?.level) {
                 cachePrevLastParentLevel = heading?.level;
             }
@@ -84,24 +79,7 @@ export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsPro
     }
 
     return (
-        <Box
-            sx={{
-                position: 'fixed',
-                top: '66px',
-                height: 'calc(100vh - 66px)',
-                overflowY: 'auto',
-                py: 3,
-                px: 2,
-                width,
-            }}
-        >
-            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
-                <SegmentIcon fontSize="small" />
-                <Typography variant="body2" fontWeight="bold">
-                    On this page
-                </Typography>
-            </Stack>
-
+        <>
             {arrangeHeaders().map(({ text, id, isChild }) => (
                 <Box
                     key={id}
@@ -137,12 +115,12 @@ export const TableOfContents = ({ headings, width }: Readonly<TableOfContentsPro
                     direction="row"
                     alignItems="center"
                     spacing={1}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: 'pointer', mt: 2 }}
                 >
                     <Typography sx={{ fontSize: '14px', color: 'text.secondary' }}>Scroll to top</Typography>
                     <ArrowCircleUpOutlinedIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
                 </Stack>
             )}
-        </Box>
+        </>
     );
 };

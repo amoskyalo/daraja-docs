@@ -1,0 +1,17 @@
+echo "Running pre-push checks..."
+
+# Run linting
+echo "Running lint..."
+if ! pnpm --filter daraja-docs-platform lint; then
+  echo "Error: Linting failed. Please fix the issues above."
+  exit 1
+fi
+
+# Run type checking
+echo "Running type-check..."
+if ! pnpm --filter daraja-docs-platform type-check; then
+  echo "Error: Type checking failed. Please fix the issues above."
+  exit 1
+fi
+
+echo "Pre-push checks passed!"

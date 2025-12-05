@@ -1,6 +1,7 @@
-import { Stack, ListItemButton, ListItemText, Link, Typography, Collapse } from '@mui/material';
+'use client';
+
+import { Stack, ListItemButton, ListItemText, Link, Typography, Collapse, Box } from '@mui/material';
 import { useRouter, usePathname } from 'next/navigation';
-import { useResponsiveness } from '../../shared/hooks';
 import { useVersionManager } from '../../shared/context';
 import { SIDENAVITEMS } from '../../config/constants/routes';
 import { useState } from 'react';
@@ -12,7 +13,6 @@ const DRAWER_WIDTH = 275;
 const LeftNav = () => {
     const router = useRouter();
     const pathname = usePathname();
-    const { isSmallScreen } = useResponsiveness();
     const { version } = useVersionManager();
 
     const [openOnMobile, setOpenOnMobile] = useState(false);
@@ -44,7 +44,7 @@ const LeftNav = () => {
                 sx={{
                     width: { xs: '100%', md: DRAWER_WIDTH },
                     minWidth: { xs: '100%', md: DRAWER_WIDTH },
-                    overflow: 'auto',
+                    overflow: 'hidden',
                     pl: { xs: 0, md: 2, lg: 0 },
                     pr: 0,
                     position: 'sticky',
@@ -76,19 +76,32 @@ const LeftNav = () => {
                     />
                     <Typography fontWeight="medium">Menu</Typography>
                 </Stack>
-                {(openOnMobile && isSmallScreen) || !isSmallScreen ? (
-                    <>
-                        <VersionSwitcher />
-                        <Stack
-                            direction="column"
-                            className="nav-links-container"
-                            sx={{
-                                flex: 1,
-                                overflow: 'auto',
-                                pl: { xs: 2, md: 2, lg: 0 },
-                                pb: 2,
-                            }}
-                        >
+
+                <Box
+                    sx={{
+                        display: {
+                            xs: openOnMobile ? 'block' : 'none',
+                            md: 'block',
+                        },
+                    }}
+                >
+                    <VersionSwitcher />
+                </Box>
+
+                <Stack
+                    direction="column"
+                    className="nav-links-container"
+                    sx={{
+                        flex: 1,
+                        overflow: 'auto',
+                        pl: { xs: 2, md: 2, lg: 0 },
+                        pb: 2,
+                        display: {
+                            xs: openOnMobile ? 'flex' : 'none',
+                            md: 'flex',
+                        },
+                    }}
+                >
                             {filteredSidenavItems?.map((item) => {
                                 if (!item.segment && !item.children) {
                                     return (
@@ -215,9 +228,7 @@ const LeftNav = () => {
                                     </Link>
                                 );
                             })}
-                        </Stack>
-                    </>
-                ) : null}
+                </Stack>
             </Stack>
         );
     }

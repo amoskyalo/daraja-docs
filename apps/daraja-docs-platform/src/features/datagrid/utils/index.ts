@@ -1,2 +1,2 @@
-export * from './datagrid-constructor';
-export * from './datagrid-model';
+export * from './datagridConstructor';
+export * from './datagridModel';

@@ -3,9 +3,11 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "turbo": "latest"
   },
   "packageManager": "pnpm@9.0.0"

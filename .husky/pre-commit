@@ -1,0 +1,10 @@
+echo "Running pre-commit checks..."
+
+# Run linting for frontend
+echo "Running lint..."
+if ! pnpm --filter daraja-docs-platform lint; then
+  echo "Error: Linting failed. Please fix the issues above."
+  exit 1
+fi
+
+echo "Pre-commit checks passed!"

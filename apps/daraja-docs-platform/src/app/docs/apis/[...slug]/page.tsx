@@ -1,7 +1,7 @@
 import { getDocumentationBySlug } from '../../../../shared/lib/mdx';
 import { Container, Stack, Typography } from '@mui/material';
 import { SIDENAVITEMS } from '../../../../config';
-import { ContentsContainer } from '../../../../features/documentation';
+import { DocumentationContent } from '../../../../features/documentation';
 import type { Metadata } from 'next';
 interface DocsPageProps {
     params: Promise<{ slug: string[] }>;
@@ -35,7 +35,7 @@ export default async function DocsPage({ params }: Readonly<DocsPageProps>) {
     const prevDoc = ITEMS[currentDoc - 1];
     const nextDoc = ITEMS[currentDoc + 1];
 
-    return <ContentsContainer doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} />;
+    return <DocumentationContent doc={doc} prevDoc={prevDoc} nextDoc={nextDoc} />;
 }
 
 export async function generateMetadata({ params }: Readonly<DocsPageProps>): Promise<Metadata> {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Stack, Typography, Grid } from '@mui/material';
-import { useResponsiveness } from '../../shared/hooks';
 
 const cards = [
     {
@@ -21,12 +20,18 @@ const cards = [
 ];
 
 export const AboutSection = () => {
-    const { isMobile } = useResponsiveness();
-
     return (
         <Container maxWidth="lg" sx={{ px: { md: '0px !important' }, py: '80px' }}>
-            <Stack direction="column" spacing={isMobile ? 2 : 4} alignItems="center" justifyContent="center">
-                <Typography variant={isMobile ? 'h3' : 'h2'} sx={{ textAlign: 'center' }}>
+            <Stack direction="column" spacing={{ xs: 2, md: 4 }} alignItems="center" justifyContent="center">
+                <Typography
+                    variant="h2"
+                    sx={{
+                        textAlign: 'center',
+                        fontSize: { xs: '2rem', md: '2.5rem' },
+                        fontWeight: { xs: 600, md: 700 },
+                        lineHeight: { xs: 1.167, md: 1.2 },
+                    }}
+                >
                     What is Daraja?{' '}
                     <Typography
                         variant="h6"
@@ -38,8 +43,14 @@ export const AboutSection = () => {
                     </Typography>
                 </Typography>
                 <Typography
-                    variant={isMobile ? 'body2' : 'body1'}
-                    sx={{ width: { xs: '100%', md: '65%' }, textAlign: 'center', lineHeight: 1.7, fontWeight: 500 }}
+                    variant="body1"
+                    sx={{
+                        width: { xs: '100%', md: '65%' },
+                        textAlign: 'center',
+                        fontSize: { xs: '0.875rem', md: '1rem' },
+                        fontWeight: 400,
+                        lineHeight: { xs: 1.43, md: 1.5 },
+                    }}
                 >
                     Daraja is a web platform that offers access to Safaricom and M-PESA APIs that creates a bridge for
                     payment integration to web and mobile apps. By connecting to our APIs, you open a world of
@@ -47,7 +58,11 @@ export const AboutSection = () => {
                 </Typography>
             </Stack>
 
-            <Grid container spacing={isMobile ? 2 : 3} sx={{ mt: isMobile ? 4 : 6, width: { xs: '100%', md: '80%' }, mx: 'auto' }}>
+            <Grid
+                container
+                spacing={{ xs: 2, md: 3 }}
+                sx={{ mt: { xs: 4, md: 6 }, width: { xs: '100%', md: '80%' }, mx: 'auto' }}
+            >
                 {cards.map((card, index) => (
                     <Grid
                         key={index}
@@ -55,7 +70,6 @@ export const AboutSection = () => {
                         sx={{ border: 1, borderColor: 'divider', borderRadius: 3, p: 3 }}
                     >
                         <Stack spacing={1}>
-                            {/* <Image src={card.icon} alt={card.title} width={50} height={50} /> */}
                             <Typography variant="h6" fontWeight={600}>
                                 {card.title}
                             </Typography>

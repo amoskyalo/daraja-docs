@@ -1,9 +1,9 @@
-import { createContext, useContext, Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { createContext, useContext, Dispatch, SetStateAction, useMemo, useState, useCallback } from 'react';
 
 export type VersionManagerContextType = {
     version: string;
     mappedVersion: string;
-    setVersion: Dispatch<SetStateAction<string>>;
+    setVersion: (version: string) => void;
 };
 
 const VersionManagerContext = createContext<VersionManagerContextType>({
@@ -20,7 +20,11 @@ export const MAPPED_VERSIONS = {
 };
 
 export const VersionManagerContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const [version, setVersion] = useState(DEFAULT_VERSION);
+    const [version, setVersionState] = useState(DEFAULT_VERSION);
+
+    const setVersion = useCallback((newVersion: string) => {
+        setVersionState(newVersion);
+    }, []);
 
     const values = useMemo(
         () => ({ version, mappedVersion: MAPPED_VERSIONS[version as keyof typeof MAPPED_VERSIONS], setVersion }),

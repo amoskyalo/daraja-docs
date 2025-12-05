@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState, useCallback } from 'react';
 import { snackbarToast } from '../components';
 
 export interface AIContextType {
@@ -46,7 +46,7 @@ export const AppAIProvider = ({ children }: Readonly<AIProviderProps>) => {
     const [question, setQuestion] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleAIRequest = async (input?: string) => {
+    const handleAIRequest = useCallback(async (input?: string) => {
         const user_question = input ?? question;
         if (!user_question.trim() || loading) return;
 
@@ -82,20 +82,20 @@ export const AppAIProvider = ({ children }: Readonly<AIProviderProps>) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [conversation, loading, question]);
 
-    const handleSendRequest = () => {
+    const handleSendRequest = useCallback(() => {
         if (!question.trim()) return;
         setDrawerOpen(true);
         handleAIRequest();
-    };
+    }, [question, handleAIRequest]);
 
-    const handleKeyPress = (e: React.KeyboardEvent) => {
+    const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSendRequest();
         }
-    };
+    }, [handleSendRequest]);
 
     const value = useMemo(
         () => ({
@@ -111,7 +111,7 @@ export const AppAIProvider = ({ children }: Readonly<AIProviderProps>) => {
             handleAIRequest,
             handleSendRequest,
         }),
-        [question, drawerOpen, conversation, loading],
+        [question, drawerOpen, conversation, loading, handleKeyPress, handleAIRequest, handleSendRequest],
     );
 
     return <AIContext.Provider value={value}>{children}</AIContext.Provider>;

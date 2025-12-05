@@ -49,7 +49,7 @@ const NavigationLink = memo(
                 </Typography>
             </Stack>
         </Link>
-    )
+    ),
 );
 
 NavigationLink.displayName = 'NavigationLink';
@@ -65,7 +65,7 @@ const Header = () => {
         (path: string) => {
             return path.split('/')[1] === pathname.split('/')[1];
         },
-        [pathname]
+        [pathname],
     );
 
     const handleNavigate = useCallback(
@@ -73,7 +73,7 @@ const Header = () => {
             NProgress.start();
             router.push(href);
         },
-        [router]
+        [router],
     );
 
     const handleDrawerNavigate = useCallback(
@@ -82,7 +82,7 @@ const Header = () => {
             router.push(href);
             setDrawerOpen(false);
         },
-        [router]
+        [router],
     );
 
     const toggleDrawer = useCallback(() => {
@@ -141,7 +141,7 @@ const Header = () => {
                 </Stack>
             </Link>
         ),
-        [router]
+        [router],
     );
 
     return (

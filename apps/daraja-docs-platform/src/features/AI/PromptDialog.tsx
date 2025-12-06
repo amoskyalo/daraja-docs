@@ -7,6 +7,7 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import AddIcon from '@mui/icons-material/Add';
 
 interface Conversation {
     type: 'user' | 'assistant';
@@ -42,6 +43,7 @@ export const PromptDialog = ({
                 '& .MuiDrawer-paper': {
                     width: 400,
                     overflow: 'hidden',
+                    backgroundColor: 'background.paper',
                 },
             }}
         >
@@ -139,50 +141,45 @@ export const PromptDialog = ({
                     {loading && <Typography variant="body2">Thinking...</Typography>}
                 </Stack>
 
-                <Box sx={{ px: 2, py: 1.5, maxHeight: 300, overflow: 'auto', backgroundColor: 'action.hover' }}>
-                    <Stack spacing={1} direction="row" alignItems="end" sx={{ position: 'relative' }}>
-                        <TextField
-                            placeholder="Ask a question"
-                            value={question}
-                            variant="standard"
-                            onChange={(e) => setQuestion(e.target.value)}
-                            onKeyDown={handleKeyPress}
-                            disabled={loading}
-                            multiline
-                            sx={{
-                                width: '100%',
-                                flex: 1,
-                                '& .MuiOutlinedInput-root': {
-                                    fontSize: 14,
-                                    paddingRight: 1,
-                                    cursor: 'pointer',
-                                },
-                            }}
-                            slotProps={{
-                                input: {
-                                    disableUnderline: true,
-                                },
-                            }}
-                        />
+                <Box sx={{ px: 2, py: 1.5, maxHeight: 300, overflow: 'auto', border: 1, borderColor: 'divider' }}>
+                    <TextField
+                        placeholder="Ask a question..."
+                        value={question}
+                        variant="standard"
+                        onChange={(e) => setQuestion(e.target.value)}
+                        onKeyDown={handleKeyPress}
+                        disabled={loading}
+                        multiline
+                        rows={2}
+                        sx={{
+                            width: '100%',
+                            flex: 1,
+                            '& .MuiOutlinedInput-root': {
+                                fontSize: 14,
+                                paddingRight: 1,
+                                cursor: 'pointer',
+                            },
+                        }}
+                        slotProps={{
+                            input: {
+                                disableUnderline: true,
+                            },
+                        }}
+                    />
 
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="center"
+                    <Stack spacing={1} direction="row" alignItems="end" justifyContent="space-between">
+                        <IconButton size="small" sx={{ backgroundColor: 'action.hover' }}>
+                            <AddIcon sx={{ color: 'text.secondary' }} />
+                        </IconButton>
+
+                        <IconButton
+                            size="small"
                             sx={{
-                                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.5),
-                                backdropFilter: 'blur(10px)',
-                                height: 32,
-                                width: 32,
-                                borderRadius: '50%',
-                                position: 'fixed',
-                                right: 10,
-                                bottom: 10,
-                                zIndex: 1,
+                                backgroundColor: 'white',
                             }}
                         >
-                            <ArrowUpwardIcon fontSize="small" sx={{ color: 'white' }} />
-                        </Stack>
+                            <ArrowUpwardIcon fontSize="small" sx={{ color: '#000000' }} />
+                        </IconButton>
                     </Stack>
                 </Box>
             </Stack>

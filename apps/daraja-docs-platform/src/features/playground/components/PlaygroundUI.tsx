@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Stack, Typography, Grid, alpha, TextField, Tooltip } from '@mui/material';
+import { Box, Typography, Grid } from '@mui/material';
 import ResponseUI from './ResponseUI';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import CodeTwoToneIcon from '@mui/icons-material/CodeTwoTone';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { PlaygroundHeader, PlaygroundControls, FieldGroup } from './playground-parts';
+
 interface ApiSpecsYaml {
     headers?: {
         properties: Record<string, any>;
@@ -21,21 +18,6 @@ interface ApiSpecsYaml {
         method: string;
         url: string;
     };
-}
-
-interface FieldInput {
-    label: string;
-    type: string;
-    required: boolean;
-    description: string;
-    value: string;
-    placeholder: string;
-}
-
-interface RequiredField {
-    label: string;
-    key: string;
-    inputs: FieldInput[];
 }
 
 interface FieldValues {
@@ -169,111 +151,11 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
     }, []);
 
     return (
-        <Box sx={{ backgroundColor: 'action.hover', mt: 2, borderRadius: 2, overflow: 'hidden' }}>
-            <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                sx={{
-                    mb: 2,
-                    py: 1.2,
-                    px: 2,
-                    backgroundColor: 'action.selected',
-                }}
-            >
-                <Stack
-                    direction="row"
-                    alignItems="center"
-                    sx={{ border: 1, borderColor: 'text.primary', padding: 0.2, borderRadius: '50%' }}
-                >
-                    <CodeTwoToneIcon sx={{ fontSize: 14 }} />
-                </Stack>
-                <Typography variant="body2">Daraja Console</Typography>
-                <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="center"
-                    sx={{
-                        height: 18,
-                        width: 18,
-                        backgroundColor: 'error.main',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                        transform: 'rotate(45deg)',
-                    }}
-                >
-                    <ArrowLeftIcon sx={{ fontSize: 18, color: 'white', mr: -0.7 }} />
-                    <ArrowRightIcon sx={{ fontSize: 18, color: 'white', ml: -0.7 }} />
-                </Stack>
-            </Stack>
+        <Box sx={{ backgroundColor: 'action.hover', mt: 2, borderRadius: 3, overflow: 'hidden' }}>
+            <PlaygroundHeader />
 
             <Box sx={{ px: 2, pb: 2 }}>
-                <Stack direction="row" alignItems="center" spacing={1.5}>
-                    <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        sx={{
-                            maxWidth: 250,
-                            width: 250,
-                            border: 1,
-                            borderColor: 'divider',
-                            borderRadius: 2,
-                            pl: 1,
-                            py: 0.5,
-                            pr: 0.5,
-                            cursor: 'pointer',
-                            backgroundColor: 'action.hover',
-                            '&:hover': { backgroundColor: 'action.selected' },
-                        }}
-                    >
-                        <Typography sx={{ opacity: 0.9 }} variant="body2" fontWeight={500}>
-                            Select an app
-                        </Typography>
-                        <KeyboardArrowDownIcon />
-                    </Stack>
-
-                    <Stack
-                        direction="row"
-                        alignItems="center"
-                        sx={{
-                            flex: 1,
-                            border: 1,
-                            borderColor: 'divider',
-                            borderRadius: 2,
-                            px: 0.7,
-                            py: 0.75,
-                            cursor: 'pointer',
-                            backgroundColor: 'action.hover',
-                            '&:hover': { backgroundColor: 'action.selected' },
-                        }}
-                    >
-                        <Typography
-                            sx={{
-                                opacity: 0.9,
-                                backgroundColor: 'primary.main',
-                                borderRadius: 1,
-                                px: 1,
-                                fontWeight: 500,
-                                mr: 1,
-                            }}
-                            variant="caption"
-                            color="white"
-                        >
-                            {apiSpecsYaml.info.method}
-                        </Typography>
-                        <Tooltip title="https://sandbox.safaricom.co.ke">
-                            <Typography color="primary" fontWeight={500} variant="body2">{`{BASE_URL}`}</Typography>
-                        </Tooltip>
-                        <Typography sx={{ opacity: 0.9 }} variant="body2">
-                            {apiSpecsYaml.info.url?.replace('https://sandbox.safaricom.co.ke', '')}
-                        </Typography>
-                    </Stack>
-
-                    <Button onClick={handleSend} variant="contained" size="small" sx={{ borderRadius: 2 }}>
-                        Simulate
-                    </Button>
-                </Stack>
+                <PlaygroundControls method={apiSpecsYaml.info.method} url={apiSpecsYaml.info.url} onSend={handleSend} />
 
                 <Grid spacing={2} container>
                     <Grid size={7}>
@@ -287,99 +169,14 @@ export const PlaygroundUI = ({ apiSpecsYaml }: { apiSpecsYaml: ApiSpecsYaml }) =
                         </Box>
 
                         {requiredFields.map((field) => (
-                            <Box
-                                sx={{ borderRadius: 2, border: 1, borderColor: 'divider', py: 1, mt: 2, px: 2 }}
+                            <FieldGroup
                                 key={field.label}
-                            >
-                                <Stack
-                                    direction="row"
-                                    alignItems="center"
-                                    sx={{ borderBottom: 1, borderColor: 'divider', pb: 1, cursor: 'pointer' }}
-                                    gap={0.5}
-                                >
-                                    <KeyboardArrowRightIcon color="disabled" sx={{ fontSize: 22 }} />
-                                    <Typography variant="body2" fontWeight={600}>
-                                        {field.label}
-                                    </Typography>
-                                </Stack>
-
-                                {field.inputs.map((input, index) => {
-                                    const isLast = index === field.inputs.length - 1;
-
-                                    return (
-                                        <Grid
-                                            container
-                                            sx={{ paddingY: 2, borderBottom: isLast ? 0 : 1, borderColor: 'divider' }}
-                                            spacing={2}
-                                            key={input.label}
-                                        >
-                                            <Grid size={6}>
-                                                <Stack direction="row" alignItems="center" spacing={1}>
-                                                    <Typography variant="body1" fontWeight={500}>
-                                                        {input.label}
-                                                    </Typography>
-                                                    <Typography variant="body2" color="text.secondary">
-                                                        {`<${input.type}>`}
-                                                    </Typography>
-                                                    {input?.required && (
-                                                        <Typography
-                                                            variant="body2"
-                                                            color="error"
-                                                            sx={{
-                                                                paddingTop: 0.1,
-                                                                paddingBottom: 0.2,
-                                                                paddingX: 0.7,
-                                                                borderRadius: 1,
-                                                                fontSize: 12,
-                                                                backgroundColor: (theme) =>
-                                                                    alpha(theme.palette.error.main, 0.2),
-                                                            }}
-                                                        >
-                                                            required
-                                                        </Typography>
-                                                    )}
-                                                </Stack>
-                                                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                                                    {input.description}
-                                                </Typography>
-                                            </Grid>
-
-                                            <Grid size={6}>
-                                                <TextField
-                                                    placeholder={input.placeholder}
-                                                    variant="standard"
-                                                    size="small"
-                                                    fullWidth
-                                                    value={fieldValues[field.key]?.[input.label] || input.value}
-                                                    onChange={(e) =>
-                                                        handleFieldChange(field.key, input.label, e.target.value)
-                                                    }
-                                                    slotProps={{
-                                                        input: {
-                                                            style: {
-                                                                height: '34px',
-                                                                fontSize: '14px',
-                                                            },
-                                                            disableUnderline: true,
-                                                        },
-                                                        htmlInput: {
-                                                            style: {
-                                                                padding: 0,
-                                                            },
-                                                        },
-                                                    }}
-                                                    sx={{
-                                                        border: 1,
-                                                        borderColor: 'divider',
-                                                        borderRadius: 2,
-                                                        paddingX: 1,
-                                                    }}
-                                                />
-                                            </Grid>
-                                        </Grid>
-                                    );
-                                })}
-                            </Box>
+                                label={field.label}
+                                inputs={field.inputs}
+                                fieldKey={field.key}
+                                fieldValues={fieldValues[field.key] || {}}
+                                onFieldChange={(fieldName, value) => handleFieldChange(field.key, fieldName, value)}
+                            />
                         ))}
                     </Grid>
 

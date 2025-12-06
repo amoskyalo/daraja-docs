@@ -59,14 +59,22 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
 
                 {requests && (
                     <>
-                        <Box sx={{ borderRadius: 2, backgroundColor: 'action.hover' }}>
+                        <Box
+                            sx={{
+                                borderRadius: 4.3,
+                                backgroundColor: 'action.hover',
+                                p: 0.3,
+                                border: 1,
+                                borderColor: 'divider',
+                            }}
+                        >
                             <Stack
                                 direction="row"
                                 alignItems="center"
                                 justifyContent="space-between"
-                                sx={{ py: 1, px: 1.5 }}
+                                sx={{ padding: 1, px: 1.5 }}
                             >
-                                <Typography variant="body2" fontWeight={500}>
+                                <Typography variant="body2" fontWeight={500} fontSize={13} color="text.secondary">
                                     Request
                                 </Typography>
 
@@ -90,17 +98,17 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                                             '&:hover': { backgroundColor: 'action.selected', color: 'primary.main' },
                                         }}
                                     >
-                                        <Typography variant="body2" sx={{ fontSize: 13 }}>
+                                        <Typography variant="body2" sx={{ fontSize: 13 }} color="text.secondary">
                                             {selectedLanguage?.label}
                                         </Typography>
-                                        <Stack direction="column" alignItems="center">
+                                        <Stack direction="column" alignItems="center" color="text.secondary">
                                             <KeyboardArrowUpIcon sx={{ fontSize: 13, mt: 0 }} />
                                             <KeyboardArrowDownIcon sx={{ fontSize: 13, mt: -0.8 }} />
                                         </Stack>
                                     </Stack>
                                     <Tooltip title="Explain with AI">
                                         <AutoAwesomeIcon
-                                            sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }}
+                                            sx={{ fontSize: 14, cursor: 'pointer', mr: 1, color: 'text.secondary' }}
                                             onClick={() => {
                                                 const code = `\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``;
                                                 const input = `Explain the code below in details \n\n\n${code}`;
@@ -112,7 +120,7 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                                     </Tooltip>
                                     <Tooltip title={copied ? 'Copied!' : 'Copy'}>
                                         <ContentCopyIcon
-                                            sx={{ fontSize: 14, cursor: 'pointer' }}
+                                            sx={{ fontSize: 13, cursor: 'pointer', color: 'text.secondary' }}
                                             onClick={() => Copy(requests[selectedLanguage.variant])}
                                         />
                                     </Tooltip>
@@ -123,19 +131,27 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                                 <MarkdownComponents
                                     message={`\`\`\`${selectedLanguage.key === 'nodejs' ? 'javascript' : selectedLanguage.key}\n${requests[selectedLanguage.variant]}\n\`\`\``}
                                     maxHeight="100%"
-                                    borderRadius="8px !important"
+                                    borderRadius="16px !important"
                                 />
                             )}
                         </Box>
 
-                        <Box sx={{ borderRadius: 2, backgroundColor: 'action.hover' }}>
+                        <Box
+                            sx={{
+                                borderRadius: 4.3,
+                                backgroundColor: 'action.hover',
+                                p: 0.3,
+                                border: 1,
+                                borderColor: 'divider',
+                            }}
+                        >
                             <Stack
                                 direction="row"
                                 alignItems="center"
                                 justifyContent="space-between"
-                                sx={{ py: 1, px: 1.5 }}
+                                sx={{ padding: 1 }}
                             >
-                                <Typography variant="body2" fontWeight={500}>
+                                <Typography variant="body2" fontWeight={500} fontSize={13} color="text.secondary">
                                     Response
                                 </Typography>
 
@@ -147,12 +163,12 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                                     gap={1}
                                 >
                                     <Tooltip title="Explain with AI">
-                                        <AutoAwesomeIcon sx={{ fontSize: 15, cursor: 'pointer', mr: 1 }} />
+                                        <AutoAwesomeIcon sx={{ fontSize: 14, cursor: 'pointer', mr: 1, color: 'text.secondary' }} />
                                     </Tooltip>
 
                                     <Tooltip title="Copy">
                                         <ContentCopyIcon
-                                            sx={{ fontSize: 14, cursor: 'pointer' }}
+                                            sx={{ fontSize: 13, cursor: 'pointer', color: 'text.secondary' }}
                                             // onClick={() => navigator.clipboard.writeText(requests[selectedLanguage])}
                                         />
                                     </Tooltip>
@@ -173,13 +189,13 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                 slotProps={{
                     paper: {
                         sx: {
-                            minWidth: 200,
-                            maxHeight: 300,
+                            maxHeight: 250,
                             border: 1,
                             borderColor: 'divider',
                             mt: 0.5,
                             elevation: '0 !important',
                             boxShadow: 'none !important',
+                            borderRadius: 4
                         },
                     },
                 }}
@@ -204,7 +220,7 @@ const ResponseUI = ({ requests, languages }: ResponseUIProps) => {
                                 gap={1}
                                 sx={{ width: '100%' }}
                             >
-                                <Typography variant="body2" fontWeight={500}>
+                                <Typography variant="body2" fontWeight={500} fontSize={13}>
                                     {item?.label}
                                 </Typography>
                                 {selectedLanguage?.label === item?.label && <CheckIcon sx={{ fontSize: 18 }} />}

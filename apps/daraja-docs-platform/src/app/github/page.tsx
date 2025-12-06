@@ -122,7 +122,7 @@ const CommunityProjectsPage: React.FC = () => {
                                 <Grid
                                     key={project.id}
                                     size={{ xs: 12, sm: 6, md: 3, lg: 4 }}
-                                    sx={{ border: 1, borderColor: 'divider', borderRadius: 2, p: 2, cursor: 'pointer' }}
+                                    sx={{ border: 1, borderColor: 'divider', borderRadius: 4, p: 2, cursor: 'pointer' }}
                                 >
                                     <Link href={project.html_url} target="_blank" color="inherit" underline="none">
                                         <Stack spacing={1} direction="row" alignItems="center">

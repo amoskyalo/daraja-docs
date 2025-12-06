@@ -29,6 +29,7 @@ export const Playground = ({ children, apiSpecsYaml, hideTabs }: PlaygroundProps
                     value={activeTab}
                     onChange={handleTabChange}
                     sx={{
+                        display: { xs: 'none', sm: 'none', md: 'none', lg: 'flex' },
                         borderBottom: 1,
                         borderColor: 'divider',
                         '& .MuiTab-root': {

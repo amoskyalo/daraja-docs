@@ -341,7 +341,7 @@ export const darkTheme: Theme = createTheme({
                     elevation: 0,
                     borderRadius: borderRadius.sm,
                     boxShadow: '0 0.5rem 2rem 0 rgba(0, 0, 0, 0.37)',
-                    backgroundColor: 'rgba(30, 41, 59, 0.85)',
+                    //backgroundColor: 'rgba(30, 41, 59, 0.85)',
                     backdropFilter: 'blur(0.8rem)',
                     WebkitBackdropFilter: 'blur(0.8rem)',
                     border: '0.0625rem solid rgba(255, 255, 255, 0.08)',

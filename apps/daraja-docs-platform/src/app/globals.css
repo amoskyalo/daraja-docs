@@ -30,6 +30,10 @@ body {
     scrollbar-width: thin !important;
 }
 
+#code{
+     scrollbar-width: thin !important;
+}
+
 .MuiListItemButton-gutters {
     padding: 0px !important;
     height: 32px;

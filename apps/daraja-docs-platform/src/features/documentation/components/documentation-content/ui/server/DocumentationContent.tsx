@@ -34,7 +34,7 @@ export const DocumentationContent = ({ doc, prevDoc, nextDoc, hideTabs }: Docume
             }}
         >
             <Grid
-                size={{ xs: 12, md: isPlaygroundTab ? 12 : 8.5 }}
+                size={{ xs: 12, lg: isPlaygroundTab ? 12 : 8.5 }}
                 sx={{
                     pb: 4,
                     pl: { xs: 3, md: 1, lg: 0 },
@@ -48,10 +48,10 @@ export const DocumentationContent = ({ doc, prevDoc, nextDoc, hideTabs }: Docume
             {!isPlaygroundTab && (
                 <Grid
                     id="table-of-contents"
-                    size={{ xs: 0, md: 3.5 }}
+                    size={{ xs: 0, lg: 3.5 }}
                     sx={{
                         py: 2,
-                        display: { xs: 'none', md: 'block' },
+                        display: { xs: 'none', lg: 'block' },
                     }}
                 >
                     <TableOfContents headings={tableOfContentsData} />

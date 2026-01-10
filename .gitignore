@@ -41,7 +41,3 @@ apps/**/pnpm-lock.yaml
 packages/**/pnpm-lock.yaml
 apps/**/package-lock.json
 packages/**/package-lock.json
-
-#others
-CLAUDE.md
-.claude
